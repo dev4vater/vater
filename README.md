@@ -32,15 +32,53 @@
   * Virtualbox Version 6.1.22 r144080 (Qt5.6.2)
   * Windows 10 Home Version 10.0.19043 Build 19043
 * Guests
-  * [Ubuntu 20.04.1-live-server-amd64 ISO (Focal Fossa)](http://old-releases.ubuntu.com/releases/20.04.1/ubuntu-20.04.1-live-server-amd64.iso)
-  * [Kali Linux 2021.2-virtualbox-amd64 OVA](https://images.kali.org/virtual-images/kali-linux-2021.2-virtualbox-amd64.ova)
+  * ContainerHost configuration
+    * [Ubuntu 20.04.1-live-server-amd64 ISO (Focal Fossa)](http://old-releases.ubuntu.com/releases/20.04.1/ubuntu-20.04.1-live-server-amd64.iso)
+    * General (Basic) - Type: Linux
+    * General (Basic) - Version: Ubuntu (64-bit)
+    * System (MotherBoard) - Base Memory: 4096 MB
+    * System (Processor) - Processors: 2
+    * System (Processor) - Enable Nested VT-x/AMD0V: Enabled
+    * Storage - Normal (VDI) 70.00 GB, dynamically allocated 
+    * Network (Adapter 1) - Attached to: NAT
+    * Network (Adapter 2) - Attached to: Internal Network (intnet)
+  * Kali
+    * [Kali Linux 2021.2-virtualbox-amd64 OVA](https://images.kali.org/virtual-images/kali-linux-2021.2-virtualbox-amd64.ova)
 * Services
   * docker-ce (5:20.10.8~3-0~ubuntu-focal)
   * containerd.io (1.4.9-1)
   * docker-ce-cli (5:20.10.8~3-0~ubuntu-focal)
   * docker-compose (1.29.2, build 5becea4c)
 
-### Container Host VM (Ubuntu 20.04.1) Configuration Post Install
+### Files
+
+`dev@dev:~/dev$ tree .`
+```
+.
+├── README.md
+├── setupUbuntuFirstTime.sh           # Script to perform initial containerHost setup 
+├── twoMetasploitableContainers       # Proof of concept for two metasploitable containers on one host 
+│   ├── clean.sh                      # Script to stops and remove containers and docker network
+│   ├── docker-compose.yml            # Instructions to build two metasploitable containers
+│   ├── ms2
+│   │   ├── Dockerfile                # Instructions to build one metasploitable container
+│   │   └── entrypoint.sh             # Script to run inside the container after it starts
+│   └── start.sh                      # Script to clean dangling docker objects and execute docker-compose.yml
+└── windowsContainerOnLinux           # Proof of concept for a windows container on a Linux system
+    ├── clean.sh                       
+    ├── docker-compose.yml
+    ├── start.sh
+    └── win
+        ├── Dockerfile
+        └── entrypoint.sh
+```
+### Diagrams
+
+<details>
+ <summary></summary>
+</details>
+
+### containerHost VM (Ubuntu 20.04.1) Configuration Post Install
 
 1. Optional: You may choose to work through PuTTy via SSH rather than the hypervisor manager (Virtualbox). PuTTy provides host to guest copy and paste, text appearance configuration, and does not have the Virtualbox cursor capture behavior
     * When installing the Ubuntu ISO for the Container Host VM, either choose to install OpenSSH during the installation process or install it with `apt-get` later
