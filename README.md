@@ -67,12 +67,6 @@
         ├── Dockerfile
         └── entrypoint.sh
 ```
-### Diagrams
-
-<details>
- <summary>Range Model A</summary>
- ![Map](https://github.com/uwardlaw/dev/blob/main/diagrams/modelA.png)
-</details>
 
 ### containerHost VM (Ubuntu 20.04.1) Configuration
 
@@ -183,7 +177,7 @@
 
 ### Kali VM Configuration
 
-Place the Kali box on the internal network, with the 192.168.1.1/24 address listed in the diagram. [Kali network configuration](https://kali.training/topic/configuring-the-network/). [Ifupdown tutorial](https://techpiezo.com/linux/switch-back-to-ifupdown-etc-network-interfaces-in-ubuntu/)
+Place the Kali box on the internal network, with 192.168.1.1/24 address. [Kali network configuration](https://kali.training/topic/configuring-the-network/). [Ifupdown tutorial](https://techpiezo.com/linux/switch-back-to-ifupdown-etc-network-interfaces-in-ubuntu/)
 
 Edit `/etc/network/interfaces`
 
