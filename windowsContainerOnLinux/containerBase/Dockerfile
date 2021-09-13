@@ -21,8 +21,8 @@ RUN vagrant plugin install vagrant-libvirt
 RUN vagrant box add --provider libvirt peru/windows-server-2019-standard-x64-eval 
 RUN vagrant init peru/windows-server-2019-standard-x64-eval 
 
-COPY containerScripts/startup.sh /
-ENTRYPOINT ["/startup.sh"]
+COPY ./entrypoint.sh /
+ENTRYPOINT ["/entrypoint.sh"]
 
 
 
