@@ -12,7 +12,8 @@
 - [ ] Build VyOS docker container with this [demo](https://github.com/vyos/vyos-build/tree/current/docker-vyos)
 - [x] Pursue concurrent os-family containers with this [demo](https://medium.com/axon-technologies/installing-a-windows-virtual-machine-in-a-linux-docker-container-c78e4c3f9ba1)
 - [x] Complete first pass proof of concept diagram
-- [ ] R
+- [x] Confirm exploitation of one service in metasploitable container does not affect the other
+- [ ] Confirm that crashing a service in one metasploitable container does not affect the other
 
 ## Parking lot
 
