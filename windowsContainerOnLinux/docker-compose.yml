@@ -1,16 +1,21 @@
 version: '3'
 services:
-  rdp:
-    build: containerBase/.
+  win:
+    build: win/.
     image: ubuntukvm
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    privileged: true
+    tty: true
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
     networks:
-      devNet:
+      winNet:
         ipv4_address: 192.168.1.3
 networks:
-  devNet:
-    driver: macvlan
-    driver_opts:
-      parent: enp0s8
-    ipam:
-      config:
-        - subnet: 192.168.1.0/24
+  winNet:
+    external: true

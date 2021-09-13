@@ -10,4 +10,4 @@ sudo docker network create -d ipvlan \
   --ip-range 192.168.1.0/24 \
   winNet
 
-sudo docker-compose up -d --build
+sudo docker-compose up --build
