@@ -7,24 +7,18 @@
 - [x] Set up git repository on Container Host VM
 - [x] Set up Kali VM from OVA (Kali Linux 2021.2)
 - [x] Configure Virtualbox networking
-- [ ] Build initial docker-compose setup
-- [ ] Create script to set up Container Host VM network
+- [x] Build initial docker-compose setup
+- [x] Create script to set up Container Host VM network
 - [ ] Build VyOS docker container with this [demo](https://github.com/vyos/vyos-build/tree/current/docker-vyos)
-- [ ] Pursue concurrent os-family containers with this [demo](https://medium.com/axon-technologies/installing-a-windows-virtual-machine-in-a-linux-docker-container-c78e4c3f9ba1)
+- [x] Pursue concurrent os-family containers with this [demo](https://medium.com/axon-technologies/installing-a-windows-virtual-machine-in-a-linux-docker-container-c78e4c3f9ba1)
 - [x] Complete first pass proof of concept diagram
+- [ ] R
 
 ## Parking lot
 
 - [ ] Should the development environment emulate the Kali VM connecting to infrastructure available via VPN?
 - [ ] Install wireguard on Kali?
-
-## Endstate
-
-
-
-## Development Environment
-
-![Map](https://github.com/uwardlaw/dev/blob/main/diagrams/proofOfConcept.drawio.png)
+- [ ] Rewrite the iptables rules for windows machine
 
 ### Specifications
 
