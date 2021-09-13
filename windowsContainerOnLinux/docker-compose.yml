@@ -1,0 +1,16 @@
+version: '3'
+services:
+  rdp:
+    build: containerBase/.
+    image: ubuntukvm
+    networks:
+      devNet:
+        ipv4_address: 192.168.1.3
+networks:
+  devNet:
+    driver: macvlan
+    driver_opts:
+      parent: enp0s8
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
