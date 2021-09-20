@@ -1,8 +1,10 @@
-https://docs.gitea.io/en-us/install-with-docker/
-https://github.com/boschkundendienst/guacamole-docker-compose
-https://techblog.jeppson.org/2021/03/guacamole-docker-quick-and-easy/
+#!/bin/bash
 
----
+# https://docs.gitea.io/en-us/install-with-docker/
+# https://github.com/boschkundendienst/guacamole-docker-compose
+# https://techblog.jeppson.org/2021/03/guacamole-docker-quick-and-easy/
+
+# ---
 sudo apt-get update
 sudo apt-get upgrade
 
@@ -24,11 +26,6 @@ sudo systemctl start docker
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
-mkdir gitea
-cd gitea
-nano docker-compose.yml
-sudo docker-compose up -d
-
 sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
@@ -36,15 +33,17 @@ sudo apt-get update && sudo apt-get install terraform
 
 sudo apt-get update && sudo apt-get install packer
 
---
+./start.sh
 
-CentOS 7
-http://mirrors.tripadvisor.com/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-NetInstall-2009.iso
+# --
 
-Repo:
-http://mirror.centos.org/centos/7/os/x86_64/
+# CentOS 7
+# http://mirrors.tripadvisor.com/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-NetInstall-2009.iso
 
-yum -y update
-systemctl enable sshd
-systemctl status sshd
+# Repo:
+# http://mirror.centos.org/centos/7/os/x86_64/
+
+# yum -y update
+# systemctl enable sshd
+# systemctl status sshd
 
