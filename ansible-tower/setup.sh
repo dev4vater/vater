@@ -7,5 +7,5 @@ yum -y update
 systemctl enable sshd
 systemctl status sshd
 tar -zxvf ansible-automation-platform-setup-bundle-1.2.1-1.tar.gz
-mv ./inventory ./ansible-automation-platform-setup-bundle-1.2.1-1/inventory 
+cp ./inventory ./ansible-automation-platform-setup-bundle-1.2.1-1/inventory 
 ./ansible-automation-platform-setup-bundle-1.2.1-1/setup.sh
