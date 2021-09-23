@@ -38,4 +38,6 @@ sudo apt-get update && sudo apt-get install -y packer
 # Install a tool used in start script
 sudo apt-get install -y wait-for-it
 
+# Pull git repo
+
 ./start.sh
