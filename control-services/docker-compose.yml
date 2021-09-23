@@ -15,7 +15,7 @@ networks:
     external: false
   guac_network:
     external: false
-  semphore_network:
+  semaphore_network:
     external: false
 
 services:
