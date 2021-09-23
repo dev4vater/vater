@@ -24,28 +24,18 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io
 sudo systemctl enable docker
 sudo systemctl start docker
 
+# Install docker-compose
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
+# Point to hashicorp repo and install terraform and packer
 sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 sudo apt-get update && sudo apt-get install -Y terraform
-
 sudo apt-get update && sudo apt-get install -y packer
+
+# Install a tool used in start script
 sudo apt-get install -y wait-for-it
 
 ./start.sh
-
-# --
-
-# CentOS 7
-# http://mirrors.tripadvisor.com/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-NetInstall-2009.iso
-
-# Repo:
-# http://mirror.centos.org/centos/7/os/x86_64/
-
-# yum -y update
-# systemctl enable sshd
-# systemctl status sshd
-
