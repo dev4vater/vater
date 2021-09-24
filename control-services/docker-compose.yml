@@ -38,11 +38,10 @@ services:
       - gitea_network
     ports:
        - "3000:3000"
-       - "222:22"
+       - "2000:22"
     depends_on:
        - gitea_db
     restart: always
-
  
   gitea_db:
      image: mysql:8
@@ -95,7 +94,7 @@ services:
     networks:
       - guac_network
     ports:
-      - 8080:8080/tcp
+      - "8080:8080/tcp"
     depends_on:
       - guacd
       - guac_db
@@ -104,41 +103,40 @@ services:
     restart: always
 
   semaphore:
-    image: playniuniu/ansible-semaphore
-    container_name: sempahore
+    image: ansiblesemaphore/semaphore:latest
+    container_name: semaphore
+    environment:  
+      SEMAPHORE_DB_USER: semaphore
+      SEMAPHORE_DB_PASS: semaphore
+      SEMAPHORE_DB_HOST: semaphore_db
+      SEMAPHORE_DB_PORT: 3306
+      SEMAPHORE_DB: semaphore
+      SEMAPHORE_PLAYBOOK_PATH: /data/semaphore/
+      SEMAPHORE_ADMIN_PASSWORD: cangetin
+      SEMAPHORE_ADMIN_NAME: admin
+      SEMAPHORE_ADMIN_EMAIL: admin@localhost
+      SEMAPHORE_ADMIN: admin
     volumes:
       - ./data/semaphore:/data
     networks:
       - semaphore_network
     ports:
-      - 4000:3000
+      - "4000:3000"
     depends_on:
       - semaphore_db
-    restart: always
-
-  gogs:
-    image: gogs/gogs
-    container_name: gogs
-    volumes:
-      - ./data/gogs:/data
-    networks:
-      - semaphore_network
-    ports:
-      - 3000:3000
-      - 2222:22
-    depends_on:
-      - semaphore_db
-    restart: always
+   # restart: always
 
   semaphore_db:
-    image: mariadb
+    image: mysql:5.6
     container_name: semaphore_db
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_DATABASE: semaphore
+      MYSQL_USER: semaphore
+      MYSQL_PASSWORD: semaphore
     volumes:
       - ./data/semaphore_db:/var/lib/mysql
     networks:
       - semaphore_network
     ports:
-      - 3306:3306
-    restart: always
+      - "3306:3306"
