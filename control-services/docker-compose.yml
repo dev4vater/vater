@@ -11,8 +11,6 @@
 version: "3"
 
 networks:
-  frontend:
-    external: false
   gitea_network:
     external: false
   guacamole_network:
@@ -21,17 +19,6 @@ networks:
     external: false
 
 services:
-  nginx:
-    image: nginxproxy/nginx-proxy
-    container_name: nginx
-    ports:
-      - "80:80"
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-    depends_on:
-      - gitea
-      - semaphore
-      - guacamole
 
   gitea:
     image: gitea/gitea:1.15.2
@@ -49,10 +36,9 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     networks:
-      - frontend
       - gitea_network
-    expose:
-      - "3000"
+    ports:
+       - "3000:3000"
     depends_on:
        - gitea_db
     restart: always
@@ -81,10 +67,9 @@ services:
       POSTGRES_PASSWORD: guacamole_user
       POSTGRES_USER: guacamole_user
     networks:
-      - frontend
       - guacamole_network
-    expose:
-      - "8080"
+    ports:
+      - "8080:8080/tcp"
     depends_on:
       - guacd
       - guac_db
@@ -131,15 +116,12 @@ services:
       SEMAPHORE_ADMIN_NAME: admin
       SEMAPHORE_ADMIN_EMAIL: admin@localhost
       SEMAPHORE_ADMIN: admin
-      VIRTUAL_HOST: semaphore
-      VIRTUAL_PORT: 3000
     volumes:
       - ./data/semaphore:/data
     networks:
-      - frontend
       - semaphore_network
-    expose:
-      - "3000"
+    ports:
+      - "4000:3000"
     depends_on:
       - semaphore_db
     restart: always
