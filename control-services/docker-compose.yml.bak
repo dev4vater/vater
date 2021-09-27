@@ -11,23 +11,23 @@
 version: "3"
 
 networks:
-  frontend:
-    external: false
   gitea_network:
     external: false
-  guacamole_network:
+  guac_network:
     external: false
   semaphore_network:
+    external: false
+  nginx_network:
     external: false
 
 services:
   nginx:
-    image: nginxproxy/nginx-proxy
+    image: nginx
     container_name: nginx
     ports:
       - "80:80"
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - nginx_network
     depends_on:
       - gitea
       - semaphore
@@ -49,10 +49,10 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     networks:
-      - frontend
       - gitea_network
-    expose:
-      - "3000"
+    ports:
+       - "3000:3000"
+       - "2000:22"
     depends_on:
        - gitea_db
     restart: always
@@ -71,27 +71,6 @@ services:
        - gitea_network
      restart: always
 
-  guacamole:
-    image: guacamole/guacamole
-    container_name: guacamole
-    environment:
-      GUACD_HOSTNAME: guacd
-      POSTGRES_DATABASE: guacamole_db
-      POSTGRES_HOSTNAME: guac_db
-      POSTGRES_PASSWORD: guacamole_user
-      POSTGRES_USER: guacamole_user
-    networks:
-      - frontend
-      - guacamole_network
-    expose:
-      - "8080"
-    depends_on:
-      - guacd
-      - guac_db
-    links:
-      - guacd
-    restart: always
-
   guacd:
     image: guacamole/guacd
     container_name: guacd_compose
@@ -99,7 +78,7 @@ services:
       - ./data/guacd/drive:/drive:rw
       - ./data/guacd/record:/record:rw
     networks:
-      - guacamole_network
+      - guac_network
     restart: always
 
   guac_db:
@@ -114,7 +93,27 @@ services:
       - ./temp:/docker-entrypoint-initdb.d:ro
       - ./data/guac_db:/var/lib/postgresql/data:rw
     networks:
-      - guacamole_network
+      - guac_network
+    restart: always
+
+  guacamole:
+    image: guacamole/guacamole
+    container_name: guacamole
+    environment:
+      GUACD_HOSTNAME: guacd
+      POSTGRES_DATABASE: guacamole_db
+      POSTGRES_HOSTNAME: guac_db
+      POSTGRES_PASSWORD: guacamole_user
+      POSTGRES_USER: guacamole_user
+    networks:
+      - guac_network
+    ports:
+      - "8080:8080/tcp"
+    depends_on:
+      - guacd
+      - guac_db
+    links:
+      - guacd
     restart: always
 
   semaphore:
@@ -131,15 +130,12 @@ services:
       SEMAPHORE_ADMIN_NAME: admin
       SEMAPHORE_ADMIN_EMAIL: admin@localhost
       SEMAPHORE_ADMIN: admin
-      VIRTUAL_HOST: semaphore
-      VIRTUAL_PORT: 3000
     volumes:
       - ./data/semaphore:/data
     networks:
-      - frontend
       - semaphore_network
-    expose:
-      - "3000"
+    ports:
+      - "4000:3000"
     depends_on:
       - semaphore_db
     restart: always

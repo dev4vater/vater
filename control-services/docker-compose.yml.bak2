@@ -22,12 +22,13 @@ networks:
 
 services:
   nginx:
-    image: nginxproxy/nginx-proxy
+    image: nginx
+    build: ./images/nginx/
     container_name: nginx
+    networks:
+      - frontend
     ports:
       - "80:80"
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
     depends_on:
       - gitea
       - semaphore
@@ -51,8 +52,9 @@ services:
     networks:
       - frontend
       - gitea_network
-    expose:
-      - "3000"
+    ports:
+       - "3000:3000"
+       - "2000:22"
     depends_on:
        - gitea_db
     restart: always
@@ -83,8 +85,8 @@ services:
     networks:
       - frontend
       - guacamole_network
-    expose:
-      - "8080"
+    ports:
+      - "8080:8080/tcp"
     depends_on:
       - guacd
       - guac_db
@@ -131,15 +133,13 @@ services:
       SEMAPHORE_ADMIN_NAME: admin
       SEMAPHORE_ADMIN_EMAIL: admin@localhost
       SEMAPHORE_ADMIN: admin
-      VIRTUAL_HOST: semaphore
-      VIRTUAL_PORT: 3000
     volumes:
       - ./data/semaphore:/data
     networks:
       - frontend
       - semaphore_network
-    expose:
-      - "3000"
+    ports:
+      - "4000:3000"
     depends_on:
       - semaphore_db
     restart: always
