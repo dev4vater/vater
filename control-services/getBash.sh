@@ -5,7 +5,8 @@ case "$1" in
                exit
                ;;
 
-            *) echo "./getBash [containerName]"
+            *) echo "Connects terminal to bash in container specified by argument [containerName]"
+               echo "./getBash [containerName]"
                exit
                ;;
 esac
