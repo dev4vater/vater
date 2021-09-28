@@ -104,8 +104,8 @@ services:
     restart: always
 
   semaphore:
-    image: ansiblesemaphore/semaphore:v2.7.22
-#    build: ./images/semaphore/
+    image: semaphore
+    build: ./images/semaphore/
     container_name: semaphore
     environment:  
       SEMAPHORE_DB_USER: semaphore
