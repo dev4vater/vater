@@ -31,6 +31,7 @@ services:
       - GITEA__database__NAME=gitea
       - GITEA__database__USER=gitea
       - GITEA__database__PASSWD=gitea
+      - GITEA__server_ROOT_URL=192.168.100.1
     volumes:
       - ./data/gitea:/data
       - /etc/timezone:/etc/timezone:ro
@@ -103,7 +104,8 @@ services:
     restart: always
 
   semaphore:
-    image: ansiblesemaphore/semaphore:latest
+    image: ansiblesemaphore/semaphore:v2.7.22
+#    build: ./images/semaphore/
     container_name: semaphore
     environment:  
       SEMAPHORE_DB_USER: semaphore
