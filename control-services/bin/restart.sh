@@ -1,6 +1,7 @@
 
 #!/bin/bash
 
+cd ..
 mkdir --parents ./data
 mkdir --parents ./temp
 chmod -R +x ./temp
