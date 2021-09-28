@@ -26,7 +26,7 @@ Control exposes a frontend for developers, students, and instructors to interact
 
 [ ] Install Nginx reverse proxy
 [ ] Install and evaluate AWX vs Semaphore
-
+B
 ## Resources
  
 ### Ansible
@@ -37,11 +37,12 @@ Control exposes a frontend for developers, students, and instructors to interact
 [Dynammic vCenter inventory](http://vcloud-lab.com/entries/devops/ansible-for-vmwary-using-vmware-vm-inventory-dynamic-inventory-plugin)
 [Implicit localhost](https://docs.ansible.com/ansible/2.6/inventory/implicit_localhost.html)
 [vCenter guide](https://pelegit.co.il/how-to-run-ansible-on-vcenter/)
+[Primary Ansible reference for VMware](https://docs.ansible.com/ansible/latest/collections/community/vmware/index.html#scenario-guide)
 
 ### Containers
 [Root user in Semaphore](https://stackoverflow.com/questions/61683448/how-to-run-bash-as-user-root-on-alpine-images-with-docker-su-must-be-suid-to-w)
 
-### Gitea
+#B## Gitea
 
 ### Semaphore
 [Semaphore dockerfile](https://github.com/ansible-semaphore/semaphore/blob/develop/deployment/docker/dev/Dockerfile)
