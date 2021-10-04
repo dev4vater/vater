@@ -8,14 +8,21 @@
 sudo apt-get update
 sudo apt-get upgrade
 
+# Install tools for python script to configure management project
+sudo apt install \
+    pip3
+
+# Install required module for python script to configure management project
+sudo pip3 install cookielib
+
 # Install docker
 sudo apt-get install \
     apt-transport-https \
     ca-certificates \
     curl \
     gnupg \
-    lsb-release \ 
-    jq
+    lsb-release \
+
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo \
   "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
