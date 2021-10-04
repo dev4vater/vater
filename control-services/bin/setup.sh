@@ -10,7 +10,7 @@ sudo apt-get upgrade
 
 # Install tools for python script to configure management project
 sudo apt install \
-    pip3
+    python3-pip
 
 # Install required module for python script to configure management project
 sudo pip3 install cookielib
