@@ -8,13 +8,6 @@
 sudo apt-get update
 sudo apt-get upgrade
 
-# Install tools for python script to configure management project
-sudo apt install \
-    python3-pip
-
-# Install required module for python script to configure management project
-sudo pip3 install cookielib
-
 # Install docker
 sudo apt-get install \
     apt-transport-https \
