@@ -35,37 +35,50 @@ def getIDFromName(s, url, headers, name):
     return None
 
 def createTaskTemplate(
-    s, url, headers,
-    templateName, playbookPath,
+    s, host, headers,
+    templateName, playbookName,
     projectID, repositoryID, repositoryKeyID,
     inventoryID, environmentID):
 
+    print("---CHECKING FOR TEMPLATE: " + templateName)
+    api = "/project/" + str(projectID) + "/templates"
+    response = s.get(url=host+api, headers=headers)
+    checkStatus(response)
+
     # Check to see if the template exists
-    templateID = getIDFromName(s=s, url=host+api, headers=headers, name=templateName)
+    templates = json.loads(response.text)
+    for template in templates:
+        if template["alias"] == templateName:
+            print("Found template: " + templateName + " with ID: " + str(template["id"]))
+            return template["id"]
 
-    if templateID == None:
-        print("---CREATING TEMPLATE: " + templateName)
+    # Create the template if it does not exist
+    print("---CREATING TEMPLATE: " + templateName)
 
-        data = '{"name": "EmptyEnvironment", ' +                     \
-               '"project_id": ' + str(managementProjectID) + ', ' +  \
-               '"json": "{}"} '
+    data = '{"ssh_key_id": ' + str(repositoryKeyID) +  ', ' +  \
+           '"project_id": ' + str(projectID) + ', ' +          \
+           '"inventory_id": ' + str(inventoryID) + ', ' +      \
+           '"repository_id": ' + str(repositoryID) + ', ' +    \
+           '"environment_id": ' + str(environmentID) + ', ' +  \
+           '"alias": "' + templateName + '", ' +               \
+           '"playbook": "' + playbookName + '", ' +            \
+           '"arguments": "", ' +                               \
+           '"override_args": false}'
 
-'{"id": 0, ' +
-  '"ssh_key_id": 0, ' +
-  '"project_id": 0, ' +
-  '"inventory_id": 0, ' +
-  '"repository_id": 0, ' +
-  '"environment_id": 0, ' +
-  '"alias": "string", ' +
-  '"playbook": "string", ' +
-  '"arguments": "string", ' +
-  '"override_args": true} ' +
+    response = s.post(url=host+api, headers=headers, data=data)
+    checkStatus(response)
 
-        response = s.post(url=host+api, headers=headers, data=data)
-        checkStatus(response)
+    # Retrieve templates ID
+    response = s.get(url=host+api, headers=headers)
+    checkStatus(response)
 
-        environmentID = getIDFromName(s=s, url=host+api, headers=headers, name="EmptyEnvironment")    
+    templates = json.loads(response.text)
+    for template in templates:
+        if template["alias"] == templateName:
+            "Created template: " + templateName + "with ID: " + str(template["id"])
+            return template["id"]
 
+    return templateID
 
 def main():
     ### CONFIGURATION ITEMS ###
@@ -228,9 +241,21 @@ def main():
 
         environmentID = getIDFromName(s=s, url=host+api, headers=headers, name="EmptyEnvironment")
 
-    print("---CHECKING FOR ENVIRONMENT")
-    api = "/project/"+str(managementProjectID)+"/environment"
+    # Create any task templates needed in the project
+    # Arugments for convenience:
 
+    # def createTaskTemplate(
+    #       s, host, headers,
+    #       templateName, playbookName,
+    #       projectID, repositoryID, repositoryKeyID,
+    #       inventoryID, environmentID):
+
+    # Task template for create class
+    createTaskTemplate(
+        s=s, host=host, headers=headers,
+        templateName="createClassInSemaphore", playbookName="createClassInSemaphore.yml",
+        projectID=managementProjectID, repositoryID=repositoryID, repositoryKeyID=repositoryKeyID,
+        inventoryID=inventoryID, environmentID=environmentID)
 
     # If a token was generated at the start, clean it out
     print("---CLEANING ANY GENERATED TOKENS")
