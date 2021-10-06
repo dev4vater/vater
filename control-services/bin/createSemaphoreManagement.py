@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 import requests
 import json
+import time
 
 # Checks the status code from the html request and exits
 #   the program if the operation was not successful
 def checkStatus(response):
-    if response.status_code == 204 or response.status_code == 200:
-        print("Success")
+    if response.status_code >= 200 and response.status_code <= 206:
         return
     elif response.status_code == 404:
         print("Response 404, URI not found")
@@ -17,12 +17,71 @@ def checkStatus(response):
         print("Error contents, if they exist: " + str(response.text))
     exit()
 
+# Most items are given a name when created, but
+#  need to specified by ID when used to create other items
+#  This function looks up an item by its name and returns
+#  the ID
+def getIDFromName(s, url, headers, name):
+    response = s.get(url=url, headers=headers)
+    checkStatus(response)
+
+    dict = json.loads(response.text)
+    for item in dict:
+        if item["name"] == name:
+            print("Found ID: " + str(item["id"]))
+            return item["id"]
+
+    print("ID not found")
+    return None
+
+def createTaskTemplate(
+    s, url, headers,
+    templateName, playbookPath,
+    projectID, repositoryID, repositoryKeyID,
+    inventoryID, environmentID):
+
+    # Check to see if the template exists
+    templateID = getIDFromName(s=s, url=host+api, headers=headers, name=templateName)
+
+    if templateID == None:
+        print("---CREATING TEMPLATE: " + templateName)
+
+        data = '{"name": "EmptyEnvironment", ' +                     \
+               '"project_id": ' + str(managementProjectID) + ', ' +  \
+               '"json": "{}"} '
+
+'{"id": 0, ' +
+  '"ssh_key_id": 0, ' +
+  '"project_id": 0, ' +
+  '"inventory_id": 0, ' +
+  '"repository_id": 0, ' +
+  '"environment_id": 0, ' +
+  '"alias": "string", ' +
+  '"playbook": "string", ' +
+  '"arguments": "string", ' +
+  '"override_args": true} ' +
+
+        response = s.post(url=host+api, headers=headers, data=data)
+        checkStatus(response)
+
+        environmentID = getIDFromName(s=s, url=host+api, headers=headers, name="EmptyEnvironment")    
+
+
 def main():
-    # Configuration items
+    ### CONFIGURATION ITEMS ###
+
+    # The semaphore host URL
     host = "http://localhost:4000/api"
+
+    # The URL for the git repo holding the playbooks
     playbookRepositoryUrl = "http://192.168.100.1:3000/uwardlaw/playbook-repo.git"
 
-    # Top level variables
+    # The relative path from the playbook repository to the inventory file
+    #  This will usually just be the name of the inventory file if the
+    #  if the inventory file sits in the root directory
+    inventoryFilePath = "vm.vmware.yml"
+
+    ### TOP LEVEL VARIABLES ###
     headers = {
         "Content-Type": "application/json",
         "Accept": "application/json"
@@ -30,14 +89,20 @@ def main():
     s = requests.Session()
     sessionToken = ""
     cleanSessionToken = False
-    createManagementProject = True
-    managementProjectID = -1
-    repositoryKeyID = -1
+
+    managementProjectID = None
+    repositoryID = None
+    repositoryKeyID = None
+    inventoryID = None
+    environmentID = None
 
     print("---LOGINING IN")
     api = "/auth/login"
     data = '{"auth":"admin", "password":"cangetin"}'
     response = s.post(url=host+api, headers=headers, data=data)
+
+     # Code to delete one off token-- useful if a token was generated
+     #  but the code didn't complete during dev, so the token was left
 
 #    t = "1lh0lppoehqdw0msbkp79xg3nqlqcaeittjlus1-8zw="
 #    response = s.delete(url="http://localhost:4000/api/user/tokens/"+t, headers=headers)
@@ -74,63 +139,101 @@ def main():
     #   and if there is, exit the program
     print("---CHECKING FOR MANAGEMENT PROJECT")
     api = "/projects"
-    response = s.get(url=host+api, headers=headers)
-    checkStatus(response)
 
-    projects = json.loads(response.text)
-    for project in projects:
-        if project["name"] == "Management":
-            print("Found Management Project")
-            createManagementProject = False
-            #exit()
-
-    # Create a project if one did not exist
-    if createManagementProject == True:
+    managementProjectID = getIDFromName(s=s, url=host+api, headers=headers, name="Management")
+    if (managementProjectID == None):
         print("---CREATING MANAGEMENT PROJECT")
-        api = "/projects"
+
         data = '{"name":"Management", "alert":false}'
         response = s.post(url=host+api, headers=headers, data=data)
         checkStatus(response)
 
-    # Get the ID for the project just created
-    print("---GET MANAGEMENT PROJECT ID")
-    response = s.get(url=host+api, headers=headers)
-    checkStatus(response)
-    projects = json.loads(response.text)
-    for project in projects:
-        if project["name"] == "Management":
-            managementProjectID = project["id"]
+        managementProjectID = getIDFromName(s=s, url=host+api, headers=headers, name="Management")
 
-    # Add none key type
-    print("---ADD KEY OF TYPE NONE")
+    # Check to see if the key of type None exists bedore creating it
+    print("---CHECKING FOR KEY ID OF TYPE NONE")
     api = "/project/" + str(managementProjectID) + "/keys"
-    data = '{"name": "None", "type": "None", "project_id": ' + str(managementProjectID) + '}'
-    response = s.post(url=host+api, headers=headers, data=data)
-    checkStatus(response)
 
-    # Get the none key type ID
-    print("---GET NONE KEY ID")
-    api = "/project/" + str(managementProjectID) + "/keys"
-    response = s.get(url=host+api, headers=headers)
-    checkStatus(response)
-    keys = json.loads(response.text)
-    for key in keys:
-        if key["name"] == "None":
-            repositoryKeyID = key["id"]
-    print("repo key id: " + str(repositoryKeyID))
+    repositoryKeyID = getIDFromName(s=s, url=host+api, headers=headers, name="NoneKey")
 
-    # Add repo
-    print("---ADD PLAYBOOK REPOSITORY")
+    if repositoryKeyID == None:
+
+        # Create the key
+        print("---CREATING KEY OF TYPE NONE")
+        data = '{"name": "NoneKey", ' +                               \
+               '"type": "None", ' +                                   \
+               '"project_id": ' + str(managementProjectID) + '}'
+        response = s.post(url=host+api, headers=headers, data=data)
+        checkStatus(response)
+
+        # Get the created key ID
+        repositoryKeyID = getIDFromName(s=s, url=host+api, headers=headers, name="NoneKey")
+
+    # Check to see if the playbook repo exists before creating it
+    print("---CHECKING FOR PLAYBOOK REPOSITORY")
     api = "/project/"+str(managementProjectID)+"/repositories"
-    data = '{"name": "Playbook repo", "project_id": ' + str(managementProjectID) + ', "git_url": "' + str(playbookRepositoryUrl) + '", "ssh_key_id": ' + str(repositoryKeyID) + '}'
-    print(data)
-    response = s.post(url=host+api, headers=headers, data=data)
-    checkStatus(response)
 
-    # Add inventory
-    # Add env
+    repositoryID = getIDFromName(s=s, url=host+api, headers=headers, name="Playbooks")
 
-    print("---ATTEMPTING TO CLEAN GENERATED TOKEN")
+    if repositoryID == None:
+
+        # Create the playbook repo
+        print("---CREATING PLAYBOOK REPOSITORY")
+        data = '{"name": "Playbooks", ' +                             \
+               '"project_id": ' + str(managementProjectID) + ', ' +   \
+               '"git_url": "' + str(playbookRepositoryUrl) + '", ' +  \
+               '"ssh_key_id": ' + str(repositoryKeyID) + '}'
+
+        response = s.post(url=host+api, headers=headers, data=data)
+        checkStatus(response)
+
+        # Get the ID of the new playbook repository
+        repositoryID = getIDFromName(s=s, url=host+api, headers=headers, name="Playbooks")
+
+    # Check to see if the vCenter inventory exists before creating it
+    print("---CHECKING FOR VCENTER INVENTORY")
+    api = "/project/"+str(managementProjectID)+"/inventory"
+
+    inventoryID = getIDFromName(s=s, url=host+api, headers=headers, name="vCenter")
+
+    if inventoryID == None:
+
+        # Create the vCenter inventory
+        print("---CREATING VCENTER INVENTORY")
+        data = '{"name": "vCenter", ' +                              \
+               '"project_id": ' + str(managementProjectID) + ', ' +  \
+               '"inventory": "' + inventoryFilePath  + '", ' +       \
+               '"key_id": ' + str(repositoryKeyID) + ', ' +          \
+               '"ssh_key_id": ' + str(repositoryKeyID) + ', ' +      \
+               '"type": "file"}'
+        response = s.post(url=host+api, headers=headers, data=data)
+        checkStatus(response)
+
+        # Get the ID of the new vCenter inventory
+        inventoryID = getIDFromName(s=s, url=host+api, headers=headers, name="vCenter")
+
+    # Check to see if the blank environment exists before creating it
+    print("---CHECKING FOR ENVIRONMENT")
+    api = "/project/"+str(managementProjectID)+"/environment"
+
+    environmentID = getIDFromName(s=s, url=host+api, headers=headers, name="EmptyEnvironment")
+
+    if environmentID == None:
+        print("---CREATING ENVIRONMENT")
+        data = '{"name": "EmptyEnvironment", ' +                     \
+               '"project_id": ' + str(managementProjectID) + ', ' +  \
+               '"json": "{}"} '
+        response = s.post(url=host+api, headers=headers, data=data)
+        checkStatus(response)
+
+        environmentID = getIDFromName(s=s, url=host+api, headers=headers, name="EmptyEnvironment")
+
+    print("---CHECKING FOR ENVIRONMENT")
+    api = "/project/"+str(managementProjectID)+"/environment"
+
+
+    # If a token was generated at the start, clean it out
+    print("---CLEANING ANY GENERATED TOKENS")
     api = "/user/tokens"
 
     if cleanSessionToken == True:
