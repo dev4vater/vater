@@ -2,6 +2,7 @@
 import requests
 import json
 import time
+import getpass
 
 # Checks the status code from the html request and exits
 #   the program if the operation was not successful
@@ -109,10 +110,29 @@ def main():
     inventoryID = None
     environmentID = None
 
-    print("---LOGINING IN")
+
     api = "/auth/login"
-    data = '{"auth":"admin", "password":"cangetin"}'
-    response = s.post(url=host+api, headers=headers, data=data)
+
+    # Loop until the user can login
+    while(True):
+        print("---LOGINING IN")
+        print("Please enter Semaphore admin credentials")
+
+        user = input("Semaphore User: ")
+        passwd = getpass.getpass(prompt="Password: ")
+        data = '{"auth":"'+ user + '" , ' +          \
+               '"password":"' + passwd + '"}'
+        response = s.post(url=host+api, headers=headers, data=data)
+
+        # If the code is a 401, we want to loop
+        #    it it's not, checkStatus will could see success
+        #    and continue, or a failure we don't wan to handle
+        #    and end
+        if response.status_code != 401:
+            checkStatus(response)
+            break
+
+        print("Incorrect username or password")
 
      # Code to delete one off token-- useful if a token was generated
      #  but the code didn't complete during dev, so the token was left
@@ -242,7 +262,7 @@ def main():
         environmentID = getIDFromName(s=s, url=host+api, headers=headers, name="EmptyEnvironment")
 
     # Create any task templates needed in the project
-    # Arugments for convenience:
+    # Parameters for convenience:
 
     # def createTaskTemplate(
     #       s, host, headers,
@@ -253,7 +273,7 @@ def main():
     # Task template for create class
     createTaskTemplate(
         s=s, host=host, headers=headers,
-        templateName="createClassInSemaphore", playbookName="createClassInSemaphore.yml",
+        templateName="Create Class", playbookName="createClassInSemaphore.yml",
         projectID=managementProjectID, repositoryID=repositoryID, repositoryKeyID=repositoryKeyID,
         inventoryID=inventoryID, environmentID=environmentID)
 
