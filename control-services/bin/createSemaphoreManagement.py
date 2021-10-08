@@ -107,6 +107,7 @@ def main():
     managementProjectID = None
     repositoryID = None
     repositoryKeyID = None
+    inventoryKeyID = None
     inventoryID = None
     environmentID = None
 
@@ -202,6 +203,26 @@ def main():
         # Get the created key ID
         repositoryKeyID = getIDFromName(s=s, url=host+api, headers=headers, name="NoneKey")
 
+    # Check to see if the key of type password login that does not have a password set
+    #     exists bedore creating it
+    print("---CHECKING FOR KEY ID OF TYPE LP")
+    api = "/project/" + str(managementProjectID) + "/keys"
+
+    inventoryKeyID = getIDFromName(s=s, url=host+api, headers=headers, name="NoneKeyLP")
+
+    if inventoryKeyID == None:
+
+        # Create the key
+        print("---CREATING KEY OF TYPE LP")
+        data = '{"name": "NoneKeyLP", ' +                               \
+               '"type": "None", ' +                                   \
+               '"project_id": ' + str(managementProjectID) + '}'
+        response = s.post(url=host+api, headers=headers, data=data)
+        checkStatus(response)
+
+        # Get the created key ID
+        inventoryKeyID = getIDFromName(s=s, url=host+api, headers=headers, name="NoneKeyLP")
+
     # Check to see if the playbook repo exists before creating it
     print("---CHECKING FOR PLAYBOOK REPOSITORY")
     api = "/project/"+str(managementProjectID)+"/repositories"
@@ -237,7 +258,7 @@ def main():
                '"project_id": ' + str(managementProjectID) + ', ' +  \
                '"inventory": "' + inventoryFilePath  + '", ' +       \
                '"key_id": ' + str(repositoryKeyID) + ', ' +          \
-               '"ssh_key_id": ' + str(repositoryKeyID) + ', ' +      \
+               '"ssh_key_id": ' + str(inventoryKeyID) + ', ' +       \
                '"type": "file"}'
         response = s.post(url=host+api, headers=headers, data=data)
         checkStatus(response)
@@ -274,6 +295,12 @@ def main():
     createTaskTemplate(
         s=s, host=host, headers=headers,
         templateName="Create Class", playbookName="createClassInSemaphore.yml",
+        projectID=managementProjectID, repositoryID=repositoryID, repositoryKeyID=repositoryKeyID,
+        inventoryID=inventoryID, environmentID=environmentID)
+
+    createTaskTemplate(
+        s=s, host=host, headers=headers,
+        templateName="Get VM Info", playbookName="get.vm.info.yml",
         projectID=managementProjectID, repositoryID=repositoryID, repositoryKeyID=repositoryKeyID,
         inventoryID=inventoryID, environmentID=environmentID)
 
