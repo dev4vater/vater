@@ -7,6 +7,7 @@ Control exposes a frontend for developers, students, and instructors to interact
 - Guacamole is a clientless remote administration gateway
 
 ## Structure
+```
 .
 |-- README.md
 |-- clean.sh
@@ -21,6 +22,7 @@ Control exposes a frontend for developers, students, and instructors to interact
 |-- restart.sh
 |-- setup.sh
 `-- stop.sh
+```
 
 ## TODO
 
