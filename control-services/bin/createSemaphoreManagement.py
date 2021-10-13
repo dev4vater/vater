@@ -56,6 +56,7 @@ def createTaskTemplate(
     # Create the template if it does not exist
     print("---CREATING TEMPLATE: " + templateName)
 
+    # Templates expect an empty dict for arguments, not null, represented by two quotes ("")
     data = '{"ssh_key_id": ' + str(repositoryKeyID) +  ', ' +  \
            '"project_id": ' + str(projectID) + ', ' +          \
            '"inventory_id": ' + str(inventoryID) + ', ' +      \
@@ -63,7 +64,7 @@ def createTaskTemplate(
            '"environment_id": ' + str(environmentID) + ', ' +  \
            '"alias": "' + templateName + '", ' +               \
            '"playbook": "' + playbookName + '", ' +            \
-           '"arguments": "", ' +                               \
+           '"arguments": "[]", ' +                             \
            '"override_args": false}'
 
     response = s.post(url=host+api, headers=headers, data=data)
@@ -214,9 +215,11 @@ def main():
 
         # Create the key
         print("---CREATING KEY OF TYPE LP")
-        data = '{"name": "NoneKeyLP", ' +                               \
-               '"type": "None", ' +                                   \
+        data = '{"name": "NoneKeyLP", ' +                                 \
+               '"type": "login_password", ' +                             \
+               '"login_password": {"login": "", "password": "none"}, ' +  \
                '"project_id": ' + str(managementProjectID) + '}'
+
         response = s.post(url=host+api, headers=headers, data=data)
         checkStatus(response)
 
