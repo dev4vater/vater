@@ -7,6 +7,7 @@ Control exposes a frontend for developers, students, and instructors to interact
 - Guacamole is a clientless remote administration gateway
 
 ## Structure
+```
 .
 |-- README.md
 |-- clean.sh
@@ -21,16 +22,17 @@ Control exposes a frontend for developers, students, and instructors to interact
 |-- restart.sh
 |-- setup.sh
 `-- stop.sh
+```
 
 ## TODO
 
-[ ] Install Nginx reverse proxy
-[ ] Install and evaluate AWX vs Semaphore
-[ ] Write a config script that makes semaphore API calls to make a project that makes and removes classes, this can be invoked during the image build and should be available after a clean
-[ ] Create playbook to deploy a range
-[ ] Create playbook to destroy a range
-[ ] Create a playbook to redeploy
-[ ] Create a playbook to reset a container on a VM
+- [ ] Install Nginx reverse proxy
+- [ ] Install and evaluate AWX vs Semaphore
+- [ ] Write a config script that makes semaphore API calls to make a project that makes and removes classes, this can be invoked during the image build and should be available after a clean
+- [ ] Create playbook to deploy a range
+- [ ] Create playbook to destroy a range
+- [ ] Create a playbook to redeploy
+- [ ] Create a playbook to reset a container on a VM
 
 ## Resources
  
