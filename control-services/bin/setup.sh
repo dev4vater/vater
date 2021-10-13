@@ -41,4 +41,4 @@ sudo apt-get install -y wait-for-it
 
 # Pull git repo
 
-./start.sh
+./restart.sh
