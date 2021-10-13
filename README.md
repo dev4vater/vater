@@ -1,5 +1,5 @@
 # Environment 
-![Range Diagram](diagram/range.xml)
+![Range Diagram](diagram/range.svg)
 
 ## Lexicon
 
