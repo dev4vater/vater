@@ -48,7 +48,7 @@ TODO
 ### Containers
 [Root user in Semaphore](https://stackoverflow.com/questions/61683448/how-to-run-bash-as-user-root-on-alpine-images-with-docker-su-must-be-suid-to-w)
 
-#B## Gitea
+### Gitea
 
 ### Semaphore
 [Semaphore dockerfile](https://github.com/ansible-semaphore/semaphore/blob/develop/deployment/docker/dev/Dockerfile)
