@@ -24,8 +24,9 @@ def checkStatus(response):
 #  the ID
 def getIDFromName(s, url, headers, name):
     response = s.get(url=url, headers=headers)
-    checkStatus(response)
-
+    # This is great if you need to view every piece of the response
+    #   when debugging
+    # print(vars(response))
     dict = json.loads(response.text)
     for item in dict:
         if item["name"] == name:
@@ -137,6 +138,7 @@ def main():
         print("Incorrect username or password")
 
      # Code to delete one off token-- useful if a token was generated
+     #  and expected to be removed at the end,
      #  but the code didn't complete during dev, so the token was left
 
 #    t = "1lh0lppoehqdw0msbkp79xg3nqlqcaeittjlus1-8zw="
@@ -273,17 +275,17 @@ def main():
     print("---CHECKING FOR ENVIRONMENT")
     api = "/project/"+str(managementProjectID)+"/environment"
 
-    environmentID = getIDFromName(s=s, url=host+api, headers=headers, name="EmptyEnvironment")
+    environmentID = getIDFromName(s=s, url=host+api, headers=headers, name="Env")
 
     if environmentID == None:
         print("---CREATING ENVIRONMENT")
-        data = '{"name": "EmptyEnvironment", ' +                     \
+        data = '{"name": "Env", ' +                                  \
                '"project_id": ' + str(managementProjectID) + ', ' +  \
-               '"json": "{}"} '
+               '"json": "{\\"api_key\\": \\"' + str(sessionToken) + '\\"}"}'
         response = s.post(url=host+api, headers=headers, data=data)
         checkStatus(response)
 
-        environmentID = getIDFromName(s=s, url=host+api, headers=headers, name="EmptyEnvironment")
+        environmentID = getIDFromName(s=s, url=host+api, headers=headers, name="Env")
 
     # Create any task templates needed in the project
     # Parameters for convenience:
@@ -307,17 +309,20 @@ def main():
         projectID=managementProjectID, repositoryID=repositoryID, repositoryKeyID=repositoryKeyID,
         inventoryID=inventoryID, environmentID=environmentID)
 
-    # If a token was generated at the start, clean it out
-    print("---CLEANING ANY GENERATED TOKENS")
-    api = "/user/tokens"
+    # Not currently cleaning token because the Create Class project needs
+    # the token to call the api to create other projects
 
-    if cleanSessionToken == True:
-        print("Trying to clean")
-        response = s.delete(url=host+api+'/'+sessionToken, headers=headers)
-        checkStatus(response)
-        print("Deleted: " + sessionToken)
-    else:
-        print("No token to clean")
+    # If a token was generated at the start, clean it out
+    # print("---CLEANING ANY GENERATED TOKENS")
+    # api = "/user/tokens"
+
+    #if cleanSessionToken == True:
+    #    print("Trying to clean")
+    #    response = s.delete(url=host+api+'/'+sessionToken, headers=headers)
+    #    checkStatus(response)
+    #    print("Deleted: " + sessionToken)
+    #else:
+    #    print("No token to clean")
 
 if __name__ == "__main__":
     main()
