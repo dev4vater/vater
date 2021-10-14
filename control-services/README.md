@@ -10,29 +10,24 @@ Control exposes a frontend for developers, students, and instructors to interact
 ```
 .
 |-- README.md
-|-- clean.sh
-|-- data
-|   |-- gitea
+|-- bin                                # Holds scripts used to manage host VM and containers
+|   |-- accessContainer.sh               # Convenience script for getting a shell from some containers
+|   |-- clean.sh                         # Cleans all artifacts, including data-- execute bit off by default
+|   |-- createSemaphoreManagement.py     # Used by restart.sh to configure Semaphore, idempotent
+|   |-- restart.sh                       # Prepares folders and configurations for containers and starts them, idempotent
+|   |-- setup.sh                         # Run once when the host VM is first installed
+|   `-- stop.sh                          # Stops all containers and cleans hanging artificats 
+|-- data                               # Persistent data for the containers
+|   |-- gitea 
 |   |-- gitea_db
 |   |-- guac_db
 |   |-- guacd
 |   |-- semaphore
 |   `-- semaphore_db
-|-- docker-compose.yml
-|-- restart.sh
-|-- setup.sh
-`-- stop.sh
+|-- docker-compose.yml                # Manages relationships between multiple containers
+`-- images                            # Holds instructions to build modified images
+    `-- semaphore
 ```
-
-## TODO
-
-- [ ] Install Nginx reverse proxy
-- [ ] Install and evaluate AWX vs Semaphore
-- [ ] Write a config script that makes semaphore API calls to make a project that makes and removes classes, this can be invoked during the image build and should be available after a clean
-- [ ] Create playbook to deploy a range
-- [ ] Create playbook to destroy a range
-- [ ] Create a playbook to redeploy
-- [ ] Create a playbook to reset a container on a VM
 
 ## Resources
  
