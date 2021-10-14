@@ -29,6 +29,10 @@ Control exposes a frontend for developers, students, and instructors to interact
     `-- semaphore
 ```
 
+## Day 0 Installation
+
+TODO
+
 ## Resources
  
 ### Ansible
