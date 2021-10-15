@@ -32,6 +32,7 @@ services:
       - GITEA__database__USER=gitea
       - GITEA__database__PASSWD=gitea
       - GITEA__server_ROOT_URL=192.168.100.1
+      - GITEA__security__INSTALL_LOCK=true
     volumes:
       - ./data/gitea:/data
       - /etc/timezone:/etc/timezone:ro
