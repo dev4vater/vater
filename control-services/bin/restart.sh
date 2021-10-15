@@ -25,7 +25,7 @@ python3 ./setupSemaphore.py
 
 # Configure gitea with mirrored ROUS repo
 
-sudo docker exec -it gitea su git bash -c "gitea admin user create --admin --username config --random-password --email a@a.a"
+sudo docker exec -it gitea su git bash -c "gitea admin user create --admin --username config --password config --email a@a.a"
 
 python3 ./setupGitea.py
 
