@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Ensure folders are prepared for first time deployments
-cd ..
 mkdir --parents ./data
 mkdir --parents ./temp
 chmod -R +x ./temp
@@ -22,4 +21,4 @@ rm -r ./temp
 
 # Configure the management semaphore project
 
-./createSemaphoreManagement
+python3 ./setupSemaphore.py
