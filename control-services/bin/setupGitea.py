@@ -70,8 +70,39 @@ def main():
 
         data = '{"name": "configurationToken"}'
         response = s.post(url=host+api, headers=headers, data=data, verify=False, auth=('config', 'config'))
+        sessionToken = json.loads(response.text)["sha1"]
+        print(sessionToken)
+        checkStatus(response)
 
         tokenID = getIDFromName(s, url, headers, "configurationToken")
+
+
+    print("---CREATING ROUS REPOSITORY ")
+
+    authHeaders = {
+        "Accept": "application/json",
+        "Authorization": "token " + sessionToken,
+        "Content-Type": "application/json"
+    }
+
+    api = "/repos/migrate"
+
+    data = '{ "auth_token": "token ' + sessionToken + '", ' + \
+           '"clone_addr": "' + playbookRepositoryUrl + '", ' + \
+           '"repo_name": "playbooks" }'
+
+    print(authHeaders)
+
+    print(data)
+    response = s.post(url=host+api, headers=authHeaders, verify=False, data=data)
+    checkStatus(response)
+
+    print("---REVOKING TOKEN")
+
+    api = "/users/" + configurationUser + "/tokens/" + str(tokenID)
+
+    response = s.delete(url=host+api, headers=headers, verify=False, auth=('config', 'config'))
+    checkStatus(response)
 
 if __name__ == "__main__":
     main()
