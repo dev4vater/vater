@@ -17,6 +17,11 @@ else
 fi
 cat $SSH_KEY_PATH.pub
 
+echo
+echo "Copy this key to the ROUS repo. Press any key when done."
+
+read -n 1 -s
+
 sudo apt-get update
 sudo apt-get upgrade
 
