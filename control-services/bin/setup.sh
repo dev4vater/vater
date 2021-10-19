@@ -6,6 +6,7 @@
 
 # ---
 
+# https://docs.github.com/en/developers/overview/managing-deploy-keys#deploy-keys
 # Generate an SSH key with prompt and print out the public key
 SSH_KEY_PATH="$HOME/.ssh/$HOSTNAME"
 echo "Checking for key at $SSH_KEY_PATH"
@@ -18,7 +19,7 @@ fi
 cat $SSH_KEY_PATH.pub
 
 echo
-echo "Copy this key to the ROUS repo. Press any key when done."
+echo "Copy this key to the ROUS repo as a deploy key. Press any key when done."
 
 read -n 1 -s
 
