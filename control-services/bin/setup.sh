@@ -5,6 +5,18 @@
 # https://techblog.jeppson.org/2021/03/guacamole-docker-quick-and-easy/
 
 # ---
+
+# Generate an SSH key with prompt and print out the public key
+SSH_KEY_PATH="$HOME/.ssh/$HOSTNAME"
+echo "Checking for key at $SSH_KEY_PATH"
+if test -f "$SSH_KEY_PATH"; then
+    echo "Key exists"
+else
+    echo "Key does not exist"
+    ssh-keygen -b 2048 -t rsa -f ~/.ssh/control
+fi
+cat $SSH_KEY_PATH.pub
+
 sudo apt-get update
 sudo apt-get upgrade
 
