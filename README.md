@@ -1,10 +1,11 @@
 # Environment 
 ![Range Diagram](diagram/range.svg)
 
+## Old OCO Network Map
+![Old OCO Network Map](diagram/Old_OCO_practice.svg)
+
 ## Instructor Experience
 ![Instructor Experience Diagram](diagram/instructorExperience.svg)
-
-(Developed in Nano)
 
 ## Day 0 Deployment
 - **Manually** provision `Control` VM
@@ -16,3 +17,5 @@
 - `setup.sh` will pull `uwardlaw/rous` locally
 - `setup.sh` will execute `pythohn3 setupGitea.py`
 - `setupGitea.py` will locally import `uwardlaw/rous` into `config/rous`
+
+(Developed in Nano)
