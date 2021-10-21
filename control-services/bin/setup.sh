@@ -53,15 +53,20 @@ sudo apt-get install -y wait-for-it
 sudo apt autoremove -y
 
 # Key creation for key deployment and git setup
+eval `ssh-agent -s`
 
 echo "Checking for key at $SETUP_SSH_KEY_PATH"
 if test -f "$SETUP_SSH_KEY_PATH"; then
+    echo
     echo "Key exists"
 else
+    echo
     echo "Key does not exist"
-    ssh-keygen -b 2048 -t rsa -f ~/.ssh/$SETUP_REPO -q -N ""
+    ssh-keygen -b 2048 -t rsa -f $SETUP_SSH_KEY_PATH -q -N ""
 fi
 cat $SETUP_SSH_KEY_PATH.pub
+ssh-keygen -l -f $SETUP_SSH_KEY_PATH
+ssh-add $SETUP_SSH_KEY_PATH
 
 echo
 echo "Copy this key to the $SETUP_REPO repo as a deploy key. Press any key when done."
@@ -70,12 +75,16 @@ read -n 1 -s
 
 echo "Checking for key at $CONFIG_SSH_KEY_PATH"
 if test -f "$CONFIG_SSH_KEY_PATH"; then
+    echo
     echo "Key exists"
 else
+    echo
     echo "Key does not exist"
-    ssh-keygen -b 2048 -t rsa -f ~/.ssh/$CONFIG_REPO -q -N ""
+    ssh-keygen -b 2048 -t rsa -f $CONFIG_SSH_KEY_PATH -q -N ""
 fi
 cat $CONFIG_SSH_KEY_PATH.pub
+ssh-keygen -l -f $CONFIG_SSH_KEY_PATH
+ssh-add $CONFIG_SSH_KEY_PATH
 
 echo
 echo "Copy this key to the ROUS $CONFIG_REPO as a deploy key. Press any key when done."
@@ -85,27 +94,64 @@ read -n 1 -s
 # Setup SSH config file
 
 cat <<EOF >$SSH_PATH/config
-Host $SETUP_REPO
-  Hostname ssh.github.com
-  Port 443
-  IdentityFile $SETUP_SSH_KEY_PATH
-
-Host $CONFIG_REPO
+Host github.com
   Hostname ssh.github.com
   Port 443
   IdentityFile $CONFIG_SSH_KEY_PATH
+  StrictHostKeyChecking no
 EOF
 
-# Pull the git repos
+# Pull the config repo first, if it does not exist
 
-git clone git@github.com:$ORG_OR_USER/$SETUP_REPO.git
-git clone git@github.com:$ORG_OR_USER/$CONFIG_REPO.git
+if test -f /home/control/$CONFIG_REPO/.git/config; then
+    echo
+    echo "$CONFIG_REPO exists"
+else
+    git clone git@github.com:$ORG_OR_USER/$CONFIG_REPO.git /home/control/rous
+fi
+
+# Set up for using SSH keys moving forward with 2 repos
+
+cat <<EOF >$SSH_PATH/config
+Host $SETUP_REPO
+  HostName ssh.github.com
+  User git
+  Port 443
+  IdentityFile $SETUP_SSH_KEY_PATH
+  IdentitiesOnly yes
+
+Host $CONFIG_REPO
+  HostName ssh.github.com
+  User git
+  Port 443
+  IdentityFile $CONFIG_SSH_KEY_PATH
+  IdentitiesOnly yes
+EOF
 
 # Setup the URLs
+# GIT_SSH_COMMAND="ssh -vvv" git --git-dir /home/control/$SETUP_REPO/.git remote set-url origin "git@github.com-$SETUP_REPO:$ORG_OR_USER/$SETUP_REPO.git"
+# GIT_SSH_COMMAND="ssh -vvv" git --git-dir /home/control/$CONFIG_REPO/.git remote set-url origin "git@github.com-$CONFIG_REPO:$ORG_OR_USER/$CONFIG_REPO.git
+# git --git-dir /home/control/$SETUP_REPO/.git remote set-url origin "git@$SETUP_REPO/$SETUP_REPO:$ORG_OR_USER/$SETUP_REPO"
+# git --git-dir /home/control/$CONFIG_REPO/.git remote set-url origin "git@SETUP_REPO/$CONFIG_REPO:$ORG_OR_USER/$CONFIG_REPO"=
+# git --git-dir /home/control/$SETUP_REPO/.git remote set-url origin "ssh://git@github.com/$ORG_OR_USER/$SETUP_REPO.git"
+# git --git-dir /home/control/$CONFIG_REPO/.git remote set-url origin "$CONFIG_REPO:$ORG_OR_USER/$CONFIG_REPO"=
+# git --git-dir /home/control/$SETUP_REPO/.git remote set-url origin "ssh://git@github.com/$ORG_OR_USER/$SETUP_REPO.git"
+# git --git-dir /home/control/$CONFIG_REPO/.git remote set-url origin "ssh://git@github.com/$ORG_OR_USER/$CONFIG_REPO.git"
 
-git remote set-url origin "ssh://git@$SETUP_REPO/$ORG_OR_USER/$SETUP_REPO.git
-git remote set-url origin "ssh://git@$CONFIG_REPO/$ORG_OR_USER/$CONFIG_REPO.git
+echo
+GIT_SSH_COMMAND="ssh -vvv" git --git-dir /home/control/$SETUP_REPO/.git remote set-url origin "git@$SETUP_REPO:$ORG_OR_USER/$SETUP_REPO.git"
+echo
+GIT_SSH_COMMAND="ssh -vvv" git --git-dir /home/control/$CONFIG_REPO/.git remote set-url origin "git@$CONFIG_REPO:$ORG_OR_USER/$CONFIG_REPO.git"
 
+# git --git-dir /home/control/$SETUP_REPO/.git remote set-url origin "https://github.com/$ORG_OR_USER/$SETUP_REPO.git"
+# git --git-dir /home/control/$CONFIG_REPO/.git remote set-url origin "https://github.com/$ORG_OR_USER/$CONFIG_REPO.git"
 
+# Git pull to check all is well
+echo
+GIT_SSH_COMMAND="ssh -vvv" git --git-dir /home/control/$SETUP_REPO/.git pull
+echo
+GIT_SSH_COMMAND="ssh -vvv" git --git-dir /home/control/$CONFIG_REPO/.git pull
+
+exit
 
 ./restart.sh
