@@ -129,29 +129,16 @@ Host $CONFIG_REPO
 EOF
 
 # Setup the URLs
-# GIT_SSH_COMMAND="ssh -vvv" git --git-dir /home/control/$SETUP_REPO/.git remote set-url origin "git@github.com-$SETUP_REPO:$ORG_OR_USER/$SETUP_REPO.git"
-# GIT_SSH_COMMAND="ssh -vvv" git --git-dir /home/control/$CONFIG_REPO/.git remote set-url origin "git@github.com-$CONFIG_REPO:$ORG_OR_USER/$CONFIG_REPO.git
-# git --git-dir /home/control/$SETUP_REPO/.git remote set-url origin "git@$SETUP_REPO/$SETUP_REPO:$ORG_OR_USER/$SETUP_REPO"
-# git --git-dir /home/control/$CONFIG_REPO/.git remote set-url origin "git@SETUP_REPO/$CONFIG_REPO:$ORG_OR_USER/$CONFIG_REPO"=
-# git --git-dir /home/control/$SETUP_REPO/.git remote set-url origin "ssh://git@github.com/$ORG_OR_USER/$SETUP_REPO.git"
-# git --git-dir /home/control/$CONFIG_REPO/.git remote set-url origin "$CONFIG_REPO:$ORG_OR_USER/$CONFIG_REPO"=
-# git --git-dir /home/control/$SETUP_REPO/.git remote set-url origin "ssh://git@github.com/$ORG_OR_USER/$SETUP_REPO.git"
-# git --git-dir /home/control/$CONFIG_REPO/.git remote set-url origin "ssh://git@github.com/$ORG_OR_USER/$CONFIG_REPO.git"
-
 echo
-GIT_SSH_COMMAND="ssh -vvv" git --git-dir /home/control/$SETUP_REPO/.git remote set-url origin "git@$SETUP_REPO:$ORG_OR_USER/$SETUP_REPO.git"
+git --git-dir /home/control/$SETUP_REPO/.git remote set-url origin "git@$SETUP_REPO:$ORG_OR_USER/$SETUP_REPO.git"
 echo
-GIT_SSH_COMMAND="ssh -vvv" git --git-dir /home/control/$CONFIG_REPO/.git remote set-url origin "git@$CONFIG_REPO:$ORG_OR_USER/$CONFIG_REPO.git"
-
-# git --git-dir /home/control/$SETUP_REPO/.git remote set-url origin "https://github.com/$ORG_OR_USER/$SETUP_REPO.git"
-# git --git-dir /home/control/$CONFIG_REPO/.git remote set-url origin "https://github.com/$ORG_OR_USER/$CONFIG_REPO.git"
+git --git-dir /home/control/$CONFIG_REPO/.git remote set-url origin "git@$CONFIG_REPO:$ORG_OR_USER/$CONFIG_REPO.git"
 
 # Git pull to check all is well
 echo
-GIT_SSH_COMMAND="ssh -vvv" git --git-dir /home/control/$SETUP_REPO/.git pull
+git --git-dir /home/control/$SETUP_REPO/.git pull
 echo
-GIT_SSH_COMMAND="ssh -vvv" git --git-dir /home/control/$CONFIG_REPO/.git pull
+git --git-dir /home/control/$CONFIG_REPO/.git pull
 
 exit
-
 ./restart.sh
