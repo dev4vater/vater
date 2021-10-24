@@ -18,4 +18,7 @@
 - `setup.sh` will execute `pythohn3 setupGitea.py`
 - `setupGitea.py` will locally import `uwardlaw/rous` into `config/rous`
 
+## CWONext
+![cwonext](diagram/cwonext.svg)
+
 (Developed in Nano)
