@@ -1,6 +1,9 @@
 # Environment 
 ![Range Diagram](diagram/range.svg)
 
+## CWONext
+![cwonext](diagram/cwonext.svg)
+
 ## Old OCO Network Map
 ![Old OCO Network Map](diagram/Old_OCO_practice.svg)
 
@@ -18,7 +21,5 @@
 - `setup.sh` will execute `pythohn3 setupGitea.py`
 - `setupGitea.py` will locally import `uwardlaw/rous` into `config/rous`
 
-## CWONext
-![cwonext](diagram/cwonext.svg)
 
 (Developed in Nano)
