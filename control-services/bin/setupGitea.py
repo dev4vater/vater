@@ -4,14 +4,15 @@ import json
 import time
 import getpass
 import os
+import pprint
 
 # Checks the status code from the html request and exits
 #   the program if the operation was not successful
 def checkStatus(response):
     # Debugging tool
-    print()
-    print(vars(response))
-    print()
+    # print()
+    # print(vars(response))
+    # print()
     if response.status_code >= 200 and response.status_code <= 206:
         return
     else:
@@ -23,18 +24,27 @@ def checkStatus(response):
 #  need to specified by ID when used to create other items
 #  This function looks up an item by its name and returns
 #  the ID
-def getIDFromName(s, url, headers, name):
-    response = s.get(url=url, headers=headers)
+def getIDFromName(s, url, key, name):
+    response = s.get(url=url)
     # This is great if you need to view every piece of the response
     #   when debugging
     # print()
-    print(vars(response))
+    # pprint.pprint(vars(response))
     # print()
-    dict = json.loads(response.text)
-    for item in dict:
-        if item["name"] == name:
-            print("Found ID: " + str(item["id"]))
-            return item["id"]
+
+    reply = json.loads(response.text)
+
+    #pprint.pprint(dict)
+
+    if isinstance(reply, list):
+        for item in reply:
+            if item[key] == name:
+                print("Found ID: " + str(item["id"]))
+                return item["id"]
+    elif isinstance(reply, dict):
+        if reply[key] == name:
+            print("Found ID: " + str(reply["id"]))
+            return reply["id"]
 
     print("ID not found")
     return None
@@ -47,9 +57,12 @@ def main():
 
     # The local filepath for ROUS in the Gitea container
     configurationRepositoryPath = "/data/git/rous"
+    configurationRepositoryName = "rous"
 
     # User for configurations and administration
     configurationUser = "config"
+    passwd = ''
+    organizationName = "333TRS"
 
     ### TOP LEVEL VARIABLES ###
     headers = {
@@ -57,34 +70,36 @@ def main():
         "Accept": "application/json"
     }
     s = requests.Session()
+    s.headers.update(headers)
     sessionToken = ""
     cleanSessionToken = False
 
     print("-----GITEA CONFIGURATION")
 
-    tokenID = getIDFromName(s, url, headers, "configurationToken")
-
-    exit()
-
+    # Check to see if the configuration user exists
     stream = os.popen("sudo docker exec -it gitea su git bash -c"       + \
                       "\"gitea admin user list "                        + \
                       "| grep " + configurationUser                     + \
                       "| tr -s ' ' "                                    + \
                       "| cut -d ' ' -f 2\"")
 
-    user = stream.read()
+    user = stream.read().strip()
 
     print("---LOGGING IN")
 
+    # If the user does not exist, create them
     if user != configurationUser:
         print("---CREATING " + configurationUser + " USER")
         passwd = getpass.getpass(prompt="Password: ")
-        os.system("sudo docker exec -it gitea su git bash -c"               + \
-                  "\"gitea admin user create --admin"                       + \
-                  "--username " + user                                      + \
-                  "--email + fake@a.a "                                     + \
-                  "--password" + passwd                                     + \
-                  "--must-change-password=false\"")
+
+        os.system("sudo docker exec -it gitea su git bash -c"              + \
+                  " \"gitea admin user create --admin"                     + \
+                  " --username " + user                                    + \
+                  " --email fake@a.a"                                      + \
+                  " --password " + passwd                                  + \
+                  " --must-change-password=false\"")
+
+    # If the user does exist, query for a token to confirm login
     else:
         print("---FOUND " + configurationUser + " USER")
         splitHost = host.split("//")
@@ -93,41 +108,29 @@ def main():
         while True:
             passwd = getpass.getpass(prompt="Password: ")
 
-            url = splitHost[0] + user + ":" + passwd + "@" + splitHost[1] + api
+            s.auth = (configurationUser, passwd)
+            response = s.get(url=host+api)
 
-            response = s.post(url=host+api, headers=headers, data=data, verify=False)
+            # If a 200 was not received, something other than authentication happened
+            if response.status_code == 200:
+                break
 
-                if response.status_code != 401:
-                    break
+    print("---CREATING TOKEN")
 
-    exit()
+    api = "/users/" + configurationUser + "/tokens"
+    data = '{"name": "configurationToken"}'
+    print(data)
 
-    print("---CHECKING FOR TOKEN")
+    response = s.post(url=host+api, data=data)
+    checkStatus(response)
 
-    tokenID = getIDFromName(s, url, headers, "configurationToken")
+    sessionToken = json.loads(response.text)["sha1"]
+    print(sessionToken)
 
-    if tokenID == None:
+    tokenID = getIDFromName(s=s, url=host+api, key="name", name="configurationToken")
 
-        print("---CREATING TOKEN")
-
-        api = "/users/" + configurationUser + "/tokens"
-
-        data = '{"name": "configurationToken"}'
-#        response = s.post(url=host+api, headers=headers, data=data, verify=False)
-        response = s.post(url=host+api, headers=headers, data=data, verify=False, auth=('config', 'config'))
-        checkStatus(response)
-
-        sessionToken = json.loads(response.text)["sha1"]
-        print(sessionToken)
-
-        tokenID = getIDFromName(s, url, headers, "configurationToken")
-
-    # New headers with the token
-    authHeaders = {
-        "Accept": "application/json",
-        "Authorization": "token " + sessionToken,
-        "Content-Type": "application/json"
-    }
+    token = 'Token ' + sessionToken
+    s.headers.update({'Authorization': 'Token {sessionToken}'})
 
     print("---CREATING 333TRS ORGANIZATION")
 
@@ -137,26 +140,31 @@ def main():
             '}'
     print(data)
 
-    response = s.post(url=host+api, headers=authHeaders, verify=False, data=data)
-    checkStatus(response)
+    orgID = getIDFromName(s=s, url=host+api, key="username", name="333TRS")
+    if orgID == None:
+        response = s.post(url=host+api, data=data)
+        checkStatus(response)
 
     print("---CREATING ROUS REPOSITORY ")
 
-    api = "/repos/migrate"
-#    data = '{ "auth_token": "token ' + sessionToken + '", ' + \
-    data = '{ "clone_addr": "' + configurationRepositoryPath + '", ' + \
-           '"repo_name": "rous", ' + \
-           '"repo_owner": "333TRS" }'
-    print(data)
+    api = "/repos/" + organizationName + "/" + configurationRepositoryName
 
-    response = s.post(url=host+api, headers=authHeaders, verify=False, data=data)
-    checkStatus(response)
+    repoID = getIDFromName(s=s, url=host+api, key="name", name=configurationRepositoryName)
+    if repoID == None:
+        api = "/repos/migrate"
+        data = '{ "clone_addr": "' + configurationRepositoryPath + '", ' + \
+               '"repo_name": "rous", '                                   + \
+               '"repo_owner": "333TRS" }'
+        print(data)
+
+        response = s.post(url=host+api, data=data)
+        checkStatus(response)
 
     print("---REVOKING TOKEN")
 
     api = "/users/" + configurationUser + "/tokens/" + str(tokenID)
 
-    response = s.delete(url=host+api, headers=headers, verify=False, auth=('config', 'config'))
+    response = s.delete(url=host+api)
     checkStatus(response)
 
 if __name__ == "__main__":
