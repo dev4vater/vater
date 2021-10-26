@@ -42,7 +42,7 @@ def getIDFromName(s, url, key, name):
                 print("Found ID: " + str(item["id"]))
                 return item["id"]
     elif isinstance(reply, dict):
-        if reply[key] == name:
+        if reply.get(key) == name:
             print("Found ID: " + str(reply["id"]))
             return reply["id"]
 
@@ -94,10 +94,12 @@ def main():
 
         os.system("sudo docker exec -it gitea su git bash -c"              + \
                   " \"gitea admin user create --admin"                     + \
-                  " --username " + user                                    + \
-                  " --email fake@a.a"                                      + \
+                  " --username " + configurationUser                       + \
+                  " --email fake@a.com"                                    + \
                   " --password " + passwd                                  + \
                   " --must-change-password=false\"")
+
+        s.auth = (configurationUser, passwd)
 
     # If the user does exist, query for a token to confirm login
     else:
