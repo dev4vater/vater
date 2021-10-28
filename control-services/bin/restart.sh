@@ -1,31 +1,79 @@
 #!/bin/bash
 
-# Ensure folders are prepared for first time deployments
-mkdir --parents ../data
-mkdir --parents ../temp
-chmod -R +x ../temp
+restartPrep(){
+    cd ..
 
-# Grab the initial db configuration from the guacamole image to use in the guacamole_db container
-sudo docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --postgres > ../temp/initdb.sql
+    # Remove temp
+    sudo rm -rf temp
 
-# Ensure the system is clean
-sudo docker-compose down
-sudo docker system prune -f
+    # Ensure folders are prepared for first time deployments
+    mkdir --parents ../data
+    mkdir --parents ../temp
+    sudo chmod -R +x ../temp
 
-# Rebuild images and start the containers detached from tty
-sudo docker-compose up -d --build --remove-orphans
+    # Ensure the system is clean
+    sudo docker system prune -f
+}
 
-# Preempt some known race conditions between databases and their apps
-sleep 10
-rm -r ../temp
+restartSemaphore(){
+    # Stop the image and force rebuilds
+    sudo docker-compose stop semaphore semaphore_db
+    sudo docker system prune -f
 
-# Configure the management semaphore project
+    # Rebuild images and start the containers detached from tty
+    sudo docker-compose up -d --build --remove-orphans semaphore semaphore_db
+    pwd
+    # Configure the management semaphore project
+    python3 bin/setupSemaphore.py
+}
 
-python3 ./setupSemaphore.py
+restartGitea(){
+    # Stop the image and force rebuilds
+    sudo docker-compose stop gitea gitea_db
+    sudo docker system prune -f
 
-# Configure gitea with mirrored ROUS repo
+    # Rebuild images and start the containers detached from tty
+    sudo docker-compose up -d --build --remove-orphans gitea gitea_db
 
-sudo cp -r ../../../rous/ ../data/gitea/git/rous/
+    # Configure gitea with mirrored ROUS repo
 
-wait-for-it localhost:3000
-python3 ./setupGitea.py
+    sudo cp -r ../../../rous/ ../data/gitea/git/rous/
+
+    wait-for-it localhost:3000
+    python3 bin/setupGitea.py
+}
+
+restartGuacamole(){
+    # Stop the image and force rebuilds
+    sudo docker-compose stop guacamole guacd guac_db
+    sudo docker system prune -f
+
+    # Grab the initial db configuration from the guacamole image to use in the guacamole_db container
+    sudo sh -c  "docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --postgres > ../temp/initdb.sql"
+
+    # Rebuild images and start the containers detached from tty
+    sudo docker-compose up -d --build --remove-orphans guacamole guacd guac_db
+}
+
+restartPrep
+
+case "$1" in
+    semaphore) restartSemaphore
+               exit
+               ;;
+    guacamole) restartGuacamole
+               exit
+               ;;
+        gitea) restartGitea
+               exit
+               ;;
+          all) restartSemaphore
+               restartGuacamole
+               restartGitea
+               exit
+               ;;
+            *) echo "Restarts a specific service and runs the setup scripts [serviceName] or all"
+               echo "./restart [serviceName] or all"
+               exit
+               ;;
+esac
