@@ -155,6 +155,7 @@ def main():
     if repoID == None:
         api = "/repos/migrate"
         data = '{ "clone_addr": "' + configurationRepositoryPath + '", ' + \
+               '"private": false, '                                      + \
                '"repo_name": "rous", '                                   + \
                '"repo_owner": "333TRS" }'
         print(data)
