@@ -3,6 +3,7 @@ import requests
 import json
 import time
 import getpass
+import pprint
 
 # Checks the status code from the html request and exits
 #   the program if the operation was not successful
@@ -16,6 +17,7 @@ def checkStatus(response):
     else:
         print("Operation returned non success status: " + str(response.status_code))
         print("Error contents, if they exist: " + str(response.text))
+        pprint.pprint(vars(response))
     exit()
 
 # Most items are given a name when created, but
@@ -90,7 +92,7 @@ def main():
     host = "http://localhost:4000/api"
 
     # The URL for the git repo holding the playbooks
-    playbookRepositoryUrl = "http://192.168.100.1:3000/uwardlaw/playbook-repo.git"
+    playbookRepositoryUrl = "http://192.168.100.1:3000/333TRS/rous.git"
 
     # The relative path from the playbook repository to the inventory file
     #  This will usually just be the name of the inventory file if the
@@ -297,6 +299,7 @@ def main():
     #       inventoryID, environmentID):
 
     # Task template for create class
+
     createTaskTemplate(
         s=s, host=host, headers=headers,
         templateName="Create Class", playbookName="createClassInSemaphore.yml",
