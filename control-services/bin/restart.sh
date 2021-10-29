@@ -7,9 +7,9 @@ restartPrep(){
     sudo rm -rf temp
 
     # Ensure folders are prepared for first time deployments
-    mkdir --parents ../data
-    mkdir --parents ../temp
-    sudo chmod -R +x ../temp
+    mkdir --parents data
+    mkdir --parents temp
+    sudo chmod -R +x temp
 
     # Ensure the system is clean
     sudo docker system prune -f
