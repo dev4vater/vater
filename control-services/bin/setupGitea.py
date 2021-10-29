@@ -17,7 +17,7 @@ def checkStatus(response):
         return
     else:
         print("Operation returned non success status: " + str(response.status_code))
-        print("Error message, if they exist: " + str(response.content))
+        pprint.pprint(vars(response))
     exit()
 
 # Most items are given a name when created, but
@@ -117,6 +117,17 @@ def main():
             if response.status_code == 200:
                 break
 
+    api = "/users/" + configurationUser + "/tokens"
+
+    tokenID = getIDFromName(s=s, url=host+api, key="name", name="configurationToken")
+
+    if tokenID != None:
+        print("---REVOKING OLD TOKEN")
+
+        api = "/users/" + configurationUser + "/tokens/" + str(tokenID)
+        response = s.delete(url=host+api)
+        checkStatus(response)
+
     print("---CREATING TOKEN")
 
     api = "/users/" + configurationUser + "/tokens"
@@ -133,6 +144,7 @@ def main():
 
     token = 'Token ' + sessionToken
     s.headers.update({'Authorization': 'Token {sessionToken}'})
+
 
     print("---CREATING 333TRS ORGANIZATION")
 
@@ -162,6 +174,35 @@ def main():
 
         response = s.post(url=host+api, data=data)
         checkStatus(response)
+
+
+    ### TESTING - TRY TO CHANGE DEFAULT BRANCH NAME
+
+    api = "/repos/" + organizationName + "/" + configurationRepositoryName
+
+    data = '{"default_branch": "master"}'
+    print(data)
+
+    response = s.patch(url=host+api, data=data)
+    pprint.pprint(vars(response))
+    checkStatus(response)
+
+    ### TESTING - REMOVE ME BEFORE COMMIT ###
+
+    print("ROUS RESPONSE")
+    api = "/repos/" + organizationName + "/rous"
+    response = s.get(url=host+api)
+    response = json.loads(response.text)
+    pprint.pprint(response)
+
+    print("TEST2 RESPONSE")
+    api = "/repos/" + organizationName + "/test2"
+    response = s.get(url=host+api)
+    response = json.loads(response.text)
+    pprint.pprint(response)
+
+    ### END TESTING ###
+
 
     print("---REVOKING TOKEN")
 
