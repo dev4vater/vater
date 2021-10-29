@@ -40,7 +40,7 @@ def getIDFromName(s, url, headers, name):
 
 def createTaskTemplate(
     s, host, headers,
-    templateName, playbookName,
+    templateName, playbookPath,
     projectID, repositoryID, repositoryKeyID,
     inventoryID, environmentID):
 
@@ -66,7 +66,7 @@ def createTaskTemplate(
            '"repository_id": ' + str(repositoryID) + ', ' +    \
            '"environment_id": ' + str(environmentID) + ', ' +  \
            '"alias": "' + templateName + '", ' +               \
-           '"playbook": "' + playbookName + '", ' +            \
+           '"playbook": "' + playbookPath + '", ' +            \
            '"arguments": "[]", ' +                             \
            '"override_args": false}'
 
@@ -97,7 +97,11 @@ def main():
     # The relative path from the playbook repository to the inventory file
     #  This will usually just be the name of the inventory file if the
     #  if the inventory file sits in the root directory
-    inventoryFilePath = "vm.vmware.yml"
+    inventoryFilePath = "ansible/vm.vmware.yml"
+
+    # The relative path from the playbook repository to the directory
+    #  that holds all of the playbooks
+    playbooksDirPath = "ansible/"
 
     ### TOP LEVEL VARIABLES ###
     headers = {
@@ -251,30 +255,6 @@ def main():
         # Get the ID of the new playbook repository
         repositoryID = getIDFromName(s=s, url=host+api, headers=headers, name="Playbooks")
 
-    ######## THIS IS FOR TESTING, PLEASE REMOVE
-    # Check to see if the playbook repo exists before creating it
-    print("---CHECKING FOR TEST2 REPOSITORY")
-    api = "/project/"+str(managementProjectID)+"/repositories"
-
-    testRepositoryID = getIDFromName(s=s, url=host+api, headers=headers, name="Test2")
-
-    if testRepositoryID == None:
-
-        # Create the playbook repo
-        print("---CREATING TEST2 REPOSITORY")
-        data = '{"name": "Test2", ' +                                 \
-               '"project_id": ' + str(managementProjectID) + ', ' +   \
-               '"git_url": "http://192.168.100.1:3000/333TRS/test2.git", ' +  \
-               '"ssh_key_id": ' + str(repositoryKeyID) + '}'
-
-        response = s.post(url=host+api, headers=headers, data=data)
-        checkStatus(response)
-
-        # Get the ID of the new playbook repository
-        testRepositoryID = getIDFromName(s=s, url=host+api, headers=headers, name="Playbooks")
-
-    ######## END TESTING
-
     # Check to see if the vCenter inventory exists before creating it
     print("---CHECKING FOR VCENTER INVENTORY")
     api = "/project/"+str(managementProjectID)+"/inventory"
@@ -318,7 +298,7 @@ def main():
 
     # def createTaskTemplate(
     #       s, host, headers,
-    #       templateName, playbookName,
+    #       templateName, playbookPath,
     #       projectID, repositoryID, repositoryKeyID,
     #       inventoryID, environmentID):
 
@@ -326,25 +306,15 @@ def main():
 
     createTaskTemplate(
         s=s, host=host, headers=headers,
-        templateName="Create Class", playbookName="createClassInSemaphore.yml",
+        templateName="Create Class", playbookPath=playbooksDirPath + "createClassInSemaphore.yml",
         projectID=managementProjectID, repositoryID=repositoryID, repositoryKeyID=repositoryKeyID,
         inventoryID=inventoryID, environmentID=environmentID)
 
     createTaskTemplate(
         s=s, host=host, headers=headers,
-        templateName="Get VM Info", playbookName="get.vm.info.yml",
+        templateName="Get VM Info", playbookPath=playbooksDirPath + "get.vm.info.yml",
         projectID=managementProjectID, repositoryID=repositoryID, repositoryKeyID=repositoryKeyID,
         inventoryID=inventoryID, environmentID=environmentID)
-
-    ####### REMOVE ME LATER THIS IS FOR TESTING
-    #This one is a test
-    createTaskTemplate(
-        s=s, host=host, headers=headers,
-        templateName="Get VM Info Test", playbookName="get.vm.info.yml",
-        projectID=managementProjectID, repositoryID=testRepositoryID, repositoryKeyID=repositoryKeyID,
-        inventoryID=inventoryID, environmentID=environmentID)
-    ###### END TESTING
-
 
     # Not currently cleaning token because the Create Class project needs
     # the token to call the api to create other projects

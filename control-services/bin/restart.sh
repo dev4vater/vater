@@ -36,11 +36,13 @@ restartGitea(){
     # Rebuild images and start the containers detached from tty
     sudo docker-compose up -d --build --remove-orphans gitea gitea_db
 
-    # Configure gitea with mirrored ROUS repo
+    sudo rm -rf data/gitea/git/rous
+
+    # Copy repo over for gitea to import
     sudo cp -r ../../rous/ data/gitea/git/rous/
 
     # Change the branch to what is expected by Semaphore
-    sudo git --git-dir branch data/gitea/git/rous main master
+    sudo git --git-dir data/gitea/git/rous/.git branch -m main master
 
     wait-for-it localhost:3000
     sleep 5
