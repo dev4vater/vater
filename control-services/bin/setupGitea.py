@@ -178,28 +178,28 @@ def main():
 
     ### TESTING - TRY TO CHANGE DEFAULT BRANCH NAME
 
-    api = "/repos/" + organizationName + "/" + configurationRepositoryName
+#    api = "/repos/" + organizationName + "/" + configurationRepositoryName
 
-    data = '{"default_branch": "master"}'
-    print(data)
+#    data = '{"default_branch": "master"}'
+#    print(data)
 
-    response = s.patch(url=host+api, data=data)
-    pprint.pprint(vars(response))
-    checkStatus(response)
+#    response = s.patch(url=host+api, data=data)
+#    pprint.pprint(vars(response))
+#    checkStatus(response)
 
     ### TESTING - REMOVE ME BEFORE COMMIT ###
 
-    print("ROUS RESPONSE")
-    api = "/repos/" + organizationName + "/rous"
-    response = s.get(url=host+api)
-    response = json.loads(response.text)
-    pprint.pprint(response)
+#    print("ROUS RESPONSE")
+#    api = "/repos/" + organizationName + "/rous"
+#    response = s.get(url=host+api)
+#    response = json.loads(response.text)
+#    pprint.pprint(response)
 
-    print("TEST2 RESPONSE")
-    api = "/repos/" + organizationName + "/test2"
-    response = s.get(url=host+api)
-    response = json.loads(response.text)
-    pprint.pprint(response)
+#    print("TEST2 RESPONSE")
+#    api = "/repos/" + organizationName + "/test2"
+#    response = s.get(url=host+api)
+#    response = json.loads(response.text)
+#    pprint.pprint(response)
 
     ### END TESTING ###
 
