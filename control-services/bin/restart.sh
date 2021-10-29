@@ -22,8 +22,9 @@ restartSemaphore(){
 
     # Rebuild images and start the containers detached from tty
     sudo docker-compose up -d --build --remove-orphans semaphore semaphore_db
-    pwd
+
     # Configure the management semaphore project
+    sleep 5
     python3 bin/setupSemaphore.py
 }
 
@@ -36,10 +37,13 @@ restartGitea(){
     sudo docker-compose up -d --build --remove-orphans gitea gitea_db
 
     # Configure gitea with mirrored ROUS repo
+    sudo cp -r ../../rous/ data/gitea/git/rous/
 
-    sudo cp -r ../../../rous/ ../data/gitea/git/rous/
+    # Change the branch to what is expected by Semaphore
+    sudo git --git-dir branch data/gitea/git/rous main master
 
     wait-for-it localhost:3000
+    sleep 5
     python3 bin/setupGitea.py
 }
 
