@@ -1,12 +1,6 @@
 # Environment 
 ![Range Diagram](diagram/range.svg)
 
-## CWONext
-![cwonext](diagram/cwonext.svg)
-
-## Old OCO Network Map
-![Old OCO Network Map](diagram/Old_OCO_practice.svg)
-
 ## Instructor Experience
 ![Instructor Experience Diagram](diagram/instructorExperience.svg)
 
