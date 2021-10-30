@@ -8,7 +8,7 @@
 
 # https://docs.github.com/en/developers/overview/managing-deploy-keys#deploy-keys
 # Generate an SSH key with prompt and print out the public key
-SETUP_REPO="shoe-rack"
+SETUP_REPO="vater"
 CONFIG_REPO="rous"
 ORG_OR_USER="uwardlaw"
 SSH_PATH="/home/control/.ssh"
