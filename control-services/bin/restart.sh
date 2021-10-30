@@ -36,6 +36,9 @@ restartGitea(){
     # Rebuild images and start the containers detached from tty
     sudo docker-compose up -d --build --remove-orphans gitea gitea_db
 
+    # Pull from remote to local, assuming local does not have uncommitted changes
+    sudo git --git-dir ../../rous/.git pull
+
     sudo rm -rf data/gitea/git/rous
 
     # Copy repo over for gitea to import
