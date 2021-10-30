@@ -154,4 +154,4 @@ echo
 echo "Confirm $CONFIG_REPO is up to date"
 git --git-dir /home/control/$CONFIG_REPO/.git pull
 
-./restart.sh
+./restart.sh all
