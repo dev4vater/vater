@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Variables
+CONFIG_REPO_NAME="rous"
+
 restartPrep(){
     cd ..
 
@@ -37,15 +40,15 @@ restartGitea(){
     sudo docker-compose up -d --build --remove-orphans gitea gitea_db
 
     # Pull from remote to local, assuming local does not have uncommitted changes
-    sudo git --git-dir ../../rous/.git pull
+    git --git-dir /home/control/$CONFIG_REPO_NAME/.git pull
 
-    sudo rm -rf data/gitea/git/rous
+    sudo rm -rf data/gitea/git/$CONFIG_REPO_NAME
 
     # Copy repo over for gitea to import
-    sudo cp -r ../../rous/ data/gitea/git/rous/
+    sudo cp -r /home/control/$CONFIG_REPO_NAME/ data/gitea/git/$CONFIG_REPO_NAME/
 
     # Change the branch to what is expected by Semaphore
-    sudo git --git-dir data/gitea/git/rous/.git branch -m main master
+    sudo git --git-dir data/gitea/git/$CONFIG_REPO_NAME/.git branch -m main master
 
     wait-for-it localhost:3000
     sleep 5
