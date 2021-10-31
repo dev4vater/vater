@@ -34,7 +34,7 @@ def getIDFromName(s, url, key, name):
 
     reply = json.loads(response.text)
 
-    #pprint.pprint(dict)
+    #pprint.pprint(reply)
 
     if isinstance(reply, list):
         for item in reply:
@@ -159,20 +159,26 @@ def main():
         response = s.post(url=host+api, data=data)
         checkStatus(response)
 
-    print("---CREATING ROUS REPOSITORY ")
-
     api = "/repos/" + organizationName + "/" + configurationRepositoryName
 
     repoID = getIDFromName(s=s, url=host+api, key="name", name=configurationRepositoryName)
     if repoID == None:
+        print("---CREATING ROUS REPOSITORY ")
         api = "/repos/migrate"
         data = '{ "clone_addr": "' + configurationRepositoryPath + '", ' + \
                '"private": false, '                                      + \
+    	       '"mirror": true, '					                     + \
+               '"mirror_interval": "0h0m0s", '				             + \
                '"repo_name": "rous", '                                   + \
                '"repo_owner": "333TRS" }'
         print(data)
 
         response = s.post(url=host+api, data=data)
+        checkStatus(response)
+    else:
+        print("---SYNCING ROUS REPOSITORY")
+        api = "/repos/333TRS/rous/mirror-sync"
+        response = s.post(url=host+api)
         checkStatus(response)
 
     print("---REVOKING TOKEN")
