@@ -4,6 +4,7 @@ import json
 import time
 import getpass
 import pprint
+import subprocess
 
 # Checks the status code from the html request and exits
 #   the program if the operation was not successful
@@ -86,13 +87,21 @@ def createTaskTemplate(
     return templateID
 
 def main():
+
+    # Get the local machine IP assigned to the first adapter,
+    #  this is usually the primary IP but may need to be changed
+
+    ps = subprocess.Popen(('hostname', '-I'), stdout=subprocess.PIPE)
+    output = subprocess.check_output(('cut', '-d', ' ', '-f1'), stdin=ps.stdout)
+    controlIP = (output.decode("utf-8").strip())
+
     ### CONFIGURATION ITEMS ###
 
     # The semaphore host URL
     host = "http://localhost:4000/api"
 
     # The URL for the git repo holding the playbooks
-    playbookRepositoryUrl = "http://192.168.100.1:3000/333TRS/rous.git"
+    playbookRepositoryUrl = "http://" + controlIP + ":3000/333TRS/rous.git"
 
     # The relative path from the playbook repository to the inventory file
     #  This will usually just be the name of the inventory file if the
