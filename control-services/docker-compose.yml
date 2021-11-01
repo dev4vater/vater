@@ -57,6 +57,8 @@ services:
        - ./data/gitea_db:/var/lib/mysql
      networks:
        - gitea_network
+     ports:
+       - "3305:3306"
      restart: always
 
   guacamole:
