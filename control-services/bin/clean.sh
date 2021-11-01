@@ -1,17 +1,30 @@
 #!/bin/bash
 
-cd ..
-sudo rm -rf temp
+sudo rm -rf ../temp
+
+semaphore(){
+    sudo docker-compose stop semaphore semaphore_db
+    sudo docker system prune -a -f
+    sudo rm -rf ../data/semaphore*
+
+}
+
+gitea(){
+    sudo docker-compose stop gitea gitea_db
+    sudo docker system prune -a -f
+    sudo rm -rf ../data/gitea*
+
+}
 
 case "$1" in
-    semaphore) sudo docker-compose stop semaphore semaphore_db
-               sudo docker system prune -a -f
-               sudo rm -rf data/semaphore*
+    semaphore) semaphore
                exit
                ;;
-        gitea) sudo docker-compose stop gitea gitea_db
-               sudo docker system prune -a -f
-               sudo rm -rf data/gitea*
+        gitea) gitea
+               exit
+               ;;
+          all) semaphore
+               gitea
                exit
                ;;
             *) echo "Cleans the data and artificats associated with a service [containerName]"
