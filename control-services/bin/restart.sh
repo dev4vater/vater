@@ -27,7 +27,8 @@ restartSemaphore(){
     sudo docker-compose up -d --build --remove-orphans semaphore semaphore_db
 
     # Configure the management semaphore project
-    sleep 5
+    wait-for-it localhost:4000
+    wait-for-it localhost:3306
     python3 bin/setupSemaphore.py
 }
 
@@ -51,7 +52,7 @@ restartGitea(){
     sudo git --git-dir data/gitea/git/$CONFIG_REPO_NAME/.git branch -m main master
 
     wait-for-it localhost:3000
-    sleep 5
+    wait-for-it localhost:3305
     python3 bin/setupGitea.py
 }
 
