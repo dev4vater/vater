@@ -125,7 +125,8 @@ def main():
     repositoryID = None
     repositoryKeyID = None
     inventoryKeyID = None
-    inventoryID = None
+    vcenterInventoryID = None
+    localhostInventoryID = None
     environmentID = None
 
 
@@ -268,9 +269,9 @@ def main():
     print("---CHECKING FOR VCENTER INVENTORY")
     api = "/project/"+str(managementProjectID)+"/inventory"
 
-    inventoryID = getIDFromName(s=s, url=host+api, headers=headers, name="vCenter")
+    vcenterInventoryID = getIDFromName(s=s, url=host+api, headers=headers, name="vCenter")
 
-    if inventoryID == None:
+    if vcenterInventoryID == None:
 
         # Create the vCenter inventory
         print("---CREATING VCENTER INVENTORY")
@@ -284,15 +285,15 @@ def main():
         checkStatus(response)
 
         # Get the ID of the new vCenter inventory
-        inventoryID = getIDFromName(s=s, url=host+api, headers=headers, name="vCenter")
+        vcenterInventoryID = getIDFromName(s=s, url=host+api, headers=headers, name="vCenter")
 
     # Check to see if the localhost inventory exists before creating it
     print("---CHECKING FOR LOCALHOST INVENTORY")
     api = "/project/"+str(managementProjectID)+"/inventory"
 
-    inventoryID = getIDFromName(s=s, url=host+api, headers=headers, name="localhost")
+    localhostInventoryID = getIDFromName(s=s, url=host+api, headers=headers, name="localhost")
 
-    if inventoryID == None:
+    if localhostInventoryID == None:
 
         staticInventory = "[LOCALHOST]\\n" + controlIP
 
@@ -308,7 +309,7 @@ def main():
         checkStatus(response)
 
         # Get the ID of the new vCenter inventory
-        inventoryID = getIDFromName(s=s, url=host+api, headers=headers, name="vCenter")
+        localhostInventoryID = getIDFromName(s=s, url=host+api, headers=headers, name="vCenter")
 
     # Check to see if the blank environment exists before creating it
     print("---CHECKING FOR ENVIRONMENT")
@@ -341,13 +342,13 @@ def main():
         s=s, host=host, headers=headers,
         templateName="Create Class", playbookPath=playbooksDirPath + "createClassInSemaphore.yml",
         projectID=managementProjectID, repositoryID=repositoryID, repositoryKeyID=repositoryKeyID,
-        inventoryID=inventoryID, environmentID=environmentID)
+        inventoryID=localhostInventoryID, environmentID=environmentID)
 
     createTaskTemplate(
         s=s, host=host, headers=headers,
         templateName="Get VM Info", playbookPath=playbooksDirPath + "get.vm.info.yml",
         projectID=managementProjectID, repositoryID=repositoryID, repositoryKeyID=repositoryKeyID,
-        inventoryID=inventoryID, environmentID=environmentID)
+        inventoryID=vcenterInventoryID, environmentID=environmentID)
 
     # Not currently cleaning token because the Create Class project needs
     # the token to call the api to create other projects
