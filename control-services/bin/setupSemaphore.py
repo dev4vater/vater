@@ -286,6 +286,30 @@ def main():
         # Get the ID of the new vCenter inventory
         inventoryID = getIDFromName(s=s, url=host+api, headers=headers, name="vCenter")
 
+    # Check to see if the localhost inventory exists before creating it
+    print("---CHECKING FOR LOCALHOST INVENTORY")
+    api = "/project/"+str(managementProjectID)+"/inventory"
+
+    inventoryID = getIDFromName(s=s, url=host+api, headers=headers, name="localhost")
+
+    if inventoryID == None:
+
+        staticInventory = "[LOCALHOST]\\n" + controlIP
+
+        # Create the localhost inventory
+        print("---CREATING LOCALHOST INVENTORY")
+        data = '{"name": "localhost", '                            + \
+               '"project_id": ' + str(managementProjectID) + ', '  + \
+               '"inventory": "' + staticInventory  + '", '         + \
+               '"key_id": ' + str(repositoryKeyID) + ', '          + \
+               '"ssh_key_id": ' + str(inventoryKeyID) + ', '       + \
+               '"type": "static"}'
+        response = s.post(url=host+api, headers=headers, data=data)
+        checkStatus(response)
+
+        # Get the ID of the new vCenter inventory
+        inventoryID = getIDFromName(s=s, url=host+api, headers=headers, name="vCenter")
+
     # Check to see if the blank environment exists before creating it
     print("---CHECKING FOR ENVIRONMENT")
     api = "/project/"+str(managementProjectID)+"/environment"
