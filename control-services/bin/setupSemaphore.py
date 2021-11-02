@@ -119,7 +119,7 @@ def main():
     }
     s = requests.Session()
     sessionToken = ""
-    cleanSessionToken = False
+    updatedSessionToken = False
 
     managementProjectID = None
     repositoryID = None
@@ -186,7 +186,7 @@ def main():
         generatedToken = json.loads(response.text)["id"]
         print("Generated: " + generatedToken)
         sessionToken = generatedToken
-        cleanSessionToken = True
+        updatedSessionToken = True
 
     # Check to see if there is a project called Management
     #   and if there is, exit the program
@@ -309,7 +309,7 @@ def main():
         checkStatus(response)
 
         # Get the ID of the new vCenter inventory
-        localhostInventoryID = getIDFromName(s=s, url=host+api, headers=headers, name="vCenter")
+        localhostInventoryID = getIDFromName(s=s, url=host+api, headers=headers, name="localhost")
 
     # Check to see if the blank environment exists before creating it
     print("---CHECKING FOR ENVIRONMENT")
@@ -317,15 +317,23 @@ def main():
 
     environmentID = getIDFromName(s=s, url=host+api, headers=headers, name="Env")
 
+    env = '"{\\"api_key\\": \\"' + sessionToken + '\\",\\"controlIP\\": \\"192.168.100.1\\"}"'
+
     if environmentID == None:
         print("---CREATING ENVIRONMENT")
         data = '{"name": "Env", ' +                                  \
                '"project_id": ' + str(managementProjectID) + ', ' +  \
-               '"json": "{\\"api_key\\": \\"' + str(sessionToken) + '\\"}"}'
+               '"json": ' + env + '}'
         response = s.post(url=host+api, headers=headers, data=data)
         checkStatus(response)
 
         environmentID = getIDFromName(s=s, url=host+api, headers=headers, name="Env")
+
+    if updatedSessionToken == True:
+        api = "/project/" + str(managementProjectID) + "/environment/" + str(environmentID)
+        print("---UPDATING TOKEN IN ENVIRONMENT")
+        data = '{"json": ' + env + '}'
+        response = s.put(url=host+api, headers=headers, data=data)
 
     # Create any task templates needed in the project
     # Parameters for convenience:
