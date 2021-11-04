@@ -320,8 +320,9 @@ def main():
     env = '"{\\"api_key\\": \\"' + sessionToken + '\\",'                       + \
           '\\"controlIP\\": \\"192.168.100.1\\",'                              + \
           '\\"playbookRepositoryURL\\": \\"' + playbookRepositoryUrl + '\\",'  + \
-          '\\"inventoryFilePath\\": \\"ansible/vm.vmware.yml\\",'              + \
+          '\\"inventoryFilePath\\": \\"ansible/vm.vmware.yml\\"'               + \
           '}"'
+    print(env)
 
     if environmentID == None:
         print("---CREATING ENVIRONMENT")
