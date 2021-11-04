@@ -317,7 +317,8 @@ def main():
 
     environmentID = getIDFromName(s=s, url=host+api, headers=headers, name="Env")
 
-    env = '"{\\"api_key\\": \\"' + sessionToken + '\\",\\"controlIP\\": \\"192.168.100.1\\"}"'
+    env = '"{\\"api_key\\": \\"' + sessionToken + '\\",\\"controlIP\\": \\"192.168.100.1\\",' + \
+            '\\"playbookRepositoryURL\\": \\"' + playbookRepositoryUrl + '\\"}"'
 
     if environmentID == None:
         print("---CREATING ENVIRONMENT")
