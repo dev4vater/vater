@@ -4,6 +4,11 @@
 ## Instructor Experience
 ![Instructor Experience Diagram](diagram/instructorExperience.svg)
 
+# Design
+
+## Teraform
+![Range Diagram](diagram/terraformDesign.svg)
+
 ## Day 0 Deployment
 - **Manually** provision `Control` VM
 - **Manually** git clone `https://github.com/uwardlaw/vater` into `~`
