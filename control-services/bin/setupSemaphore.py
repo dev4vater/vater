@@ -103,10 +103,16 @@ def main():
     # The URL for the git repo holding the playbooks
     playbookRepositoryUrl = "http://" + controlIP + ":3000/333TRS/rous.git"
 
+    # Root folder for ansible configuration files in rous
+    ansiblePathInRepository = "ansible/"
+
+    # Root folder for terraform configuration files in rous
+    terraformPathInRepository = "terraform/"
+
     # The relative path from the playbook repository to the inventory file
     #  This will usually just be the name of the inventory file if the
     #  if the inventory file sits in the root directory
-    inventoryFilePath = "ansible/vm.vmware.yml"
+    inventoryFilePath = ansiblePathInRepository + "vm.vmware.yml"
 
     # The relative path from the playbook repository to the directory
     #  that holds all of the playbooks
@@ -317,10 +323,11 @@ def main():
 
     environmentID = getIDFromName(s=s, url=host+api, headers=headers, name="Env")
 
-    env = '"{\\"api_key\\": \\"' + sessionToken + '\\",'                       + \
-          '\\"controlIP\\": \\"192.168.100.1\\",'                              + \
-          '\\"playbookRepositoryURL\\": \\"' + playbookRepositoryUrl + '\\",'  + \
-          '\\"inventoryFilePath\\": \\"ansible/vm.vmware.yml\\"'               + \
+    env = '"{\\"api_key\\": \\"' + sessionToken + '\\",'                              + \
+          '\\"controlIP\\": \\"192.168.100.1\\",'                                     + \
+          '\\"playbookRepositoryURL\\": \\"' + playbookRepositoryUrl + '\\",'         + \
+          '\\"ansiblePathInRepository\\": \\"' + ansiblePathInRepository + '\\",'     + \
+          '\\"terraformPathInRepository\\": \\"' + terraformPathInRepository + '\\"'  + \
           '}"'
     print(env)
 
