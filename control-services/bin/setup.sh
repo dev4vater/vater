@@ -14,6 +14,7 @@ ORG_OR_USER="uwardlaw"
 SSH_PATH="/home/control/.ssh"
 SETUP_SSH_KEY_PATH="$SSH_PATH/$SETUP_REPO"
 CONFIG_SSH_KEY_PATH="$SSH_PATH/$CONFIG_REPO"
+SEMAPHORE_SSH_KEY_PATH="$SSH_PATH/semaphore"
 
 sudo apt-get update -y
 sudo apt-get upgrade -y
@@ -51,6 +52,20 @@ sudo apt-get install -y wait-for-it
 
 # Clean up
 sudo apt autoremove -y
+
+# Key creation for the Semaphore container
+#   used to execute commands like Terraform
+
+echo "Checking for key at $SEMAPHORE_SSH_KEY_PATH"
+if test -f "$SEMAPHORE_SSH_KEY_PATH"; then
+    echo
+    echo "Key exists"
+else
+    echo
+    echo "Key does not exist"
+    ssh-keygen -b 2048 -t rsa -f $SEMAPHORE_SSH_KEY_PATH -q -N ""
+    cat $SEMAPHORE_SSH_KEY_PATH.pub >> authorized_keys
+fi
 
 # Key creation for key deployment and git setup
 eval `ssh-agent -s`
