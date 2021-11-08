@@ -15,6 +15,7 @@ SSH_PATH="/home/control/.ssh"
 SETUP_SSH_KEY_PATH="$SSH_PATH/$SETUP_REPO"
 CONFIG_SSH_KEY_PATH="$SSH_PATH/$CONFIG_REPO"
 SEMAPHORE_SSH_KEY_PATH="$SSH_PATH/semaphore"
+SSH_AUTH_KEYS_PATH="$SSH_PATH/authorized_keys"
 
 sudo apt-get update -y
 sudo apt-get upgrade -y
@@ -64,7 +65,7 @@ else
     echo
     echo "Key does not exist"
     ssh-keygen -b 2048 -t rsa -f $SEMAPHORE_SSH_KEY_PATH -q -N ""
-    cat $SEMAPHORE_SSH_KEY_PATH.pub >> authorized_keys
+    cat $SEMAPHORE_SSH_KEY_PATH.pub >> $SSH_AUTH_KEYS_PATH
 fi
 
 # Key creation for key deployment and git setup
