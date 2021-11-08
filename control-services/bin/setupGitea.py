@@ -5,6 +5,7 @@ import time
 import getpass
 import os
 import pprint
+import sys
 
 # Checks the status code from the html request and exits
 #   the program if the operation was not successful
@@ -48,6 +49,38 @@ def getIDFromName(s, url, key, name):
 
     print("ID not found")
     return None
+
+def syncRous(s, host, configRepoName):
+    print("---SYNCING ROUS REPOSITORY")
+
+    controlRousDirPath="/home/control/" + configRepoName + "/"
+    controlRousGitDirPath="/home/control/" + configRepoName + "/.git"
+    giteaRousDirPath="../data/gitea/git/" + configRepoName + "/"
+    giteaRousGitDirPath="../data/gitea/git/" + configRepoName + "/.git"
+
+    # Pull from remote to local, assuming local does not have uncommitted changes
+    # git --git-dir /home/control/$CONFIG_REPO_NAME/.git pull
+    stream = os.popen("git --git-dir " + controlRousGitDirPath + " pull")
+    print(stream.read().strip())
+
+    # sudo rm -rf data/gitea/git/$CONFIG_REPO_NAME
+    stream = os.popen("sudo rm -rf " + giteaRousDirPath)
+    print(stream.read().strip())
+
+    # Copy repo over for gitea to import
+    # sudo cp -r /home/control/$CONFIG_REPO_NAME/ data/gitea/git/$CONFIG_REPO_NAME/
+    stream = os.popen("sudo cp -r " + controlRousDirPath + " " + giteaRousDirPath)
+    print(stream.read().strip())
+
+    # Change the branch to what is expected by Semaphore
+    # sudo git --git-dir data/gitea/git/$CONFIG_REPO_NAME/.git branch -m main master
+    stream = os.popen("sudo git --git-dir " + giteaRousGitDirPath + " branch -m main master")
+    print(stream.read().strip())
+
+    url = host + "/repos/333TRS/rous/mirror-sync"
+    response = s.post(url=url)
+    checkStatus(response)
+
 
 def main():
     ### CONFIGURATION ITEMS ###
@@ -145,6 +178,13 @@ def main():
     token = 'Token ' + sessionToken
     s.headers.update({'Authorization': 'Token {sessionToken}'})
 
+    # If this is script was called with the argument sync, we will do that and exit
+    if sys.argv[1] == "sync":
+        syncRous(s=s, host=host,                                          \
+                 configRepoName=configurationRepositoryName)
+        exit()
+
+    # Otherwise continue on and setupGitea
 
     print("---CREATING 333TRS ORGANIZATION")
 
@@ -176,10 +216,8 @@ def main():
         response = s.post(url=host+api, data=data)
         checkStatus(response)
     else:
-        print("---SYNCING ROUS REPOSITORY")
-        api = "/repos/333TRS/rous/mirror-sync"
-        response = s.post(url=host+api)
-        checkStatus(response)
+        syncRous(s=s, host=host,                                          \
+                 configRepoName=configurationRepositoryName)
 
     print("---REVOKING TOKEN")
 
