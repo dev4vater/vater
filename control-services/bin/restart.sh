@@ -40,17 +40,6 @@ restartGitea(){
     # Rebuild images and start the containers detached from tty
     sudo docker-compose up -d --build --remove-orphans gitea gitea_db
 
-    # Pull from remote to local, assuming local does not have uncommitted changes
-    git --git-dir /home/control/$CONFIG_REPO_NAME/.git pull
-
-    sudo rm -rf data/gitea/git/$CONFIG_REPO_NAME
-
-    # Copy repo over for gitea to import
-    sudo cp -r /home/control/$CONFIG_REPO_NAME/ data/gitea/git/$CONFIG_REPO_NAME/
-
-    # Change the branch to what is expected by Semaphore
-    sudo git --git-dir data/gitea/git/$CONFIG_REPO_NAME/.git branch -m main master
-
     wait-for-it localhost:3000
     wait-for-it localhost:3305
     python3 bin/setupGitea.py
