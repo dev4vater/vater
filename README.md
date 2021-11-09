@@ -6,7 +6,7 @@
 
 # Design
 
-## Teraform
+## Terraform
 ![Range Diagram](diagram/terraformDesign.svg)
 
 ## Day 0 Deployment
