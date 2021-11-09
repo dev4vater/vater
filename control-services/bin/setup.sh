@@ -70,7 +70,8 @@ else
 fi
 
 # Create authorized keys with only the Semaphore key
-cat $SEMAPHORE_SSH_KEY_PATH.pub > $SSH_AUTH_KEYS_PATH
+sudo cat $SEMAPHORE_SSH_KEY_PATH.pub > $SSH_AUTH_KEYS_PATH
+sudo chmod 600 $SSH_AUTH_KEYS_PATH
 
 # Key creation for key deployment and git setup
 eval `ssh-agent -s`
