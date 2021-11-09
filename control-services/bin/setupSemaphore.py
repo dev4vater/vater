@@ -106,8 +106,8 @@ def main():
     # Root folder for ansible configuration files in rous
     ansiblePathInRepository = "ansible/"
 
-    # Root folder for terraform configuration files in rous
-    terraformPathInRepository = "terraform/"
+    # Root folder for terraform configuration files in rous on control
+    terraformPathInRepositoryOnControl = "/home/control/rous/terraform/"
 
     # The relative path from the playbook repository to the inventory file
     #  This will usually just be the name of the inventory file if the
@@ -327,7 +327,7 @@ def main():
           '\\"controlIP\\": \\"192.168.100.1\\",'                                     + \
           '\\"playbookRepositoryURL\\": \\"' + playbookRepositoryUrl + '\\",'         + \
           '\\"ansiblePathInRepository\\": \\"' + ansiblePathInRepository + '\\",'     + \
-          '\\"terraformPathInRepository\\": \\"' + terraformPathInRepository + '\\"'  + \
+          '\\"terraformPathInRepositoryOnControl\\": \\"' + terraformPathInRepositoryOnControl + '\\"'  + \
           '}"'
     print(env)
 
