@@ -26,6 +26,8 @@ restartSemaphore(){
     # Rebuild images and start the containers detached from tty
     sudo docker-compose up -d --build --remove-orphans semaphore semaphore_db
 
+    sudo cp /home/control/.ssh/semaphore /home/control/vater/control-services/data/semaphore/
+
     # Configure the management semaphore project
     wait-for-it localhost:4000
     wait-for-it localhost:3306
