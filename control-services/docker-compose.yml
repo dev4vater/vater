@@ -111,16 +111,17 @@ services:
     build: ./images/semaphore/
     container_name: semaphore
     environment:  
-      SEMAPHORE_DB_USER: semaphore
-      SEMAPHORE_DB_PASS: semaphore
-      SEMAPHORE_DB_HOST: semaphore_db
-      SEMAPHORE_DB_PORT: 3306
-      SEMAPHORE_DB: semaphore
-      SEMAPHORE_PLAYBOOK_PATH: /data/semaphore/
-      SEMAPHORE_ADMIN_PASSWORD: cangetin
-      SEMAPHORE_ADMIN_NAME: admin
-      SEMAPHORE_ADMIN_EMAIL: admin@localhost
-      SEMAPHORE_ADMIN: admin
+      - SEMAPHORE_DB_USER=semaphore
+      - SEMAPHORE_DB_PASS=semaphore
+      - SEMAPHORE_DB_HOST=semaphore_db
+      - SEMAPHORE_DB_PORT=3306
+      - SEMAPHORE_DB=semaphore
+      - SEMAPHORE_PLAYBOOK_PATH=/data/semaphore/
+      - SEMAPHORE_ADMIN_PASSWORD=cangetin
+      - SEMAPHORE_ADMIN_NAME=admin
+      - SEMAPHORE_ADMIN_EMAIL=admin@localhost
+      - SEMAPHORE_ADMIN=admin
+      - ANSIBLE_HOST_KEY_CHECKING=False
     volumes:
       - ./data/semaphore:/data
     networks:
