@@ -1,13 +1,3 @@
-# Environment 
-![Range Diagram](diagram/range.svg)
-
-## Instructor Experience
-![Instructor Experience Diagram](diagram/instructorExperience.svg)
-
-# Design
-
-## Terraform
-![Range Diagram](diagram/terraformDesign.svg)
 
 ## Day 0 Deployment
 - **Manually** provision `Control` VM
