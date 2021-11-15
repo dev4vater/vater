@@ -50,6 +50,11 @@ def getIDFromName(s, url, key, name):
     print("ID not found")
     return None
 
+def printNonEmptyStream(stream):
+    out = stream.read().strip()
+    if out != '':
+        print(out)
+
 def syncRous(s, host, configRepoName):
     print("---SYNCING ROUS REPOSITORY")
 
@@ -61,21 +66,25 @@ def syncRous(s, host, configRepoName):
     # Pull from remote to local, assuming local does not have uncommitted changes
     # git --git-dir /home/control/$CONFIG_REPO_NAME/.git pull
     stream = os.popen("git --git-dir " + controlRousGitDirPath + " pull")
-    print(stream.read().strip())
+    printNonEmptyStream(stream)
+
+    # Display a diff of old repo and new repo
+    stream = os.popen("sudo git diff --diff-filter=r --name-status --compact-summary --color --no-index " + giteaRousDirPath + " " + controlRousGitDirPath)
+    printNonEmptyStream(stream)
 
     # sudo rm -rf data/gitea/git/$CONFIG_REPO_NAME
     stream = os.popen("sudo rm -rf " + giteaRousDirPath)
-    print(stream.read().strip())
+    printNonEmptyStream(stream)
 
     # Copy repo over for gitea to import
     # sudo cp -r /home/control/$CONFIG_REPO_NAME/ data/gitea/git/$CONFIG_REPO_NAME/
     stream = os.popen("sudo cp -r " + controlRousDirPath + " " + giteaRousDirPath)
-    print(stream.read().strip())
+    printNonEmptyStream(stream)
 
     # Change the branch to what is expected by Semaphore
     # sudo git --git-dir data/gitea/git/$CONFIG_REPO_NAME/.git branch -m main master
     stream = os.popen("sudo git --git-dir " + giteaRousGitDirPath + " branch -m main master")
-    print(stream.read().strip())
+    printNonEmptyStream(stream)
 
     url = host + "/repos/333TRS/rous/mirror-sync"
     response = s.post(url=url)
