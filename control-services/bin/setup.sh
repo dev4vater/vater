@@ -8,6 +8,8 @@
 
 # https://docs.github.com/en/developers/overview/managing-deploy-keys#deploy-keys
 # Generate an SSH key with prompt and print out the public key
+set -e
+
 SETUP_REPO="vater"
 CONFIG_REPO="rous"
 ORG_OR_USER="uwardlaw"
@@ -15,6 +17,7 @@ SSH_PATH="/home/control/.ssh"
 SETUP_SSH_KEY_PATH="$SSH_PATH/$SETUP_REPO"
 CONFIG_SSH_KEY_PATH="$SSH_PATH/$CONFIG_REPO"
 SEMAPHORE_SSH_KEY_PATH="$SSH_PATH/semaphore"
+SSH_AUTH_KEYS_PATH="/home/control/.ssh/authorized_keys"
 
 sudo apt-get update -y
 sudo apt-get upgrade -y
