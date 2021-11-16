@@ -324,7 +324,7 @@ def main():
     environmentID = getIDFromName(s=s, url=host+api, headers=headers, name="Env")
 
     env = '"{\\"api_key\\": \\"' + sessionToken + '\\",'                              + \
-          '\\"controlIP\\": \\"192.168.100.1\\",'                                     + \
+          '\\"controlIP\\": \\"' + controlIP + '\\",'                                 + \
           '\\"playbookRepositoryURL\\": \\"' + playbookRepositoryUrl + '\\",'         + \
           '\\"ansiblePathInRepository\\": \\"' + ansiblePathInRepository + '\\",'     + \
           '\\"terraformPathInRepositoryOnControl\\": \\"' + terraformPathInRepositoryOnControl + '\\"'  + \
