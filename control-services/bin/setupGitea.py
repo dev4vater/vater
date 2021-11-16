@@ -55,8 +55,8 @@ def printNonEmptyStream(stream):
     if out != '':
         print(out)
 
-def syncRous(s, host, configRepoName):
-    print("---SYNCING ROUS REPOSITORY")
+def updateAndCopyRous(configRepoName):
+    print("---UPDATE AND COPY ROUS REPOSITORY INTO GITEA DATA")
 
     controlRousDirPath="/home/control/" + configRepoName + "/"
     controlRousGitDirPath="/home/control/" + configRepoName + "/.git"
@@ -86,6 +86,12 @@ def syncRous(s, host, configRepoName):
     stream = os.popen("sudo git --git-dir " + giteaRousGitDirPath + " branch -m main master")
     printNonEmptyStream(stream)
 
+
+def syncRous(s, host, configRepoName):
+    # For a full sync, recopy the repository
+    updateAndCopyRous(configRepoName)
+
+    print("---SYNCING ROUS REPOSITORY")
     url = host + "/repos/333TRS/rous/mirror-sync"
     response = s.post(url=url)
     checkStatus(response)
@@ -187,11 +193,13 @@ def main():
     token = 'Token ' + sessionToken
     s.headers.update({'Authorization': 'Token {sessionToken}'})
 
-    # If this is script was called with the argument sync, we will do that and exit
-    if sys.argv[1] == "sync":
-        syncRous(s=s, host=host,                                          \
-                 configRepoName=configurationRepositoryName)
-        exit()
+    # If this script was called with the argument sync, we will do that and exit
+
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "sync":
+            syncRous(s=s, host=host,                                          \
+                    configRepoName=configurationRepositoryName)
+            exit()
 
     # Otherwise continue on and setupGitea
 
@@ -212,7 +220,11 @@ def main():
 
     repoID = getIDFromName(s=s, url=host+api, key="name", name=configurationRepositoryName)
     if repoID == None:
-        print("---CREATING ROUS REPOSITORY ")
+        # If the repo isn't created, we need to ensure it's available
+        #  for copying
+        updateAndCopyRous(configRepoName=configurationRepositoryName)
+
+        print("---CREATING ROUS IN GITEA REPOSITORY ")
         api = "/repos/migrate"
         data = '{ "clone_addr": "' + configurationRepositoryPath + '", ' + \
                '"private": false, '                                      + \
