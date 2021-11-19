@@ -366,13 +366,13 @@ def main():
 
     createTaskTemplate(
         s=s, host=host, headers=headers,
-        templateName="Build ISOs", playbookPath=playbooksDirPath + "buildIsos.yml",
+        templateName="Build ISOs", playbookPath=playbooksDirPath + "packerPlays/buildIsos.yml",
         projectID=managementProjectID, repositoryID=repositoryID, repositoryKeyID=repositoryKeyID,
         inventoryID=localhostInventoryID, environmentID=environmentID)
 
     createTaskTemplate(
         s=s, host=host, headers=headers,
-        templateName="Build VMs", playbookPath=playbooksDirPath + "buildVMs.yml",
+        templateName="Build VMs", playbookPath=playbooksDirPath + "packerPlays/buildVMs.yml",
         projectID=managementProjectID, repositoryID=repositoryID, repositoryKeyID=repositoryKeyID,
         inventoryID=localhostInventoryID, environmentID=environmentID)
 
