@@ -360,7 +360,7 @@ def main():
 
     createTaskTemplate(
         s=s, host=host, headers=headers,
-        templateName="Create Class", playbookPath=playbooksDirPath + "createClassInSemaphore.yml",
+        templateName="Create Class", playbookPath=playbooksDirPath + "createClass.yml",
         projectID=managementProjectID, repositoryID=repositoryID, repositoryKeyID=repositoryKeyID,
         inventoryID=localhostInventoryID, environmentID=environmentID)
 
