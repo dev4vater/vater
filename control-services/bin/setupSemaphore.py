@@ -366,6 +366,18 @@ def main():
 
     createTaskTemplate(
         s=s, host=host, headers=headers,
+        templateName="Build ISOs", playbookPath=playbooksDirPath + "buildIso.yml",
+        projectID=managementProjectID, repositoryID=repositoryID, repositoryKeyID=repositoryKeyID,
+        inventoryID=localhostInventoryID, environmentID=environmentID)
+
+    createTaskTemplate(
+        s=s, host=host, headers=headers,
+        templateName="Build VMs", playbookPath=playbooksDirPath + "buildVMs.yml",
+        projectID=managementProjectID, repositoryID=repositoryID, repositoryKeyID=repositoryKeyID,
+        inventoryID=localhostInventoryID, environmentID=environmentID)
+
+    createTaskTemplate(
+        s=s, host=host, headers=headers,
         templateName="Get VM Info", playbookPath=playbooksDirPath + "get.vm.info.yml",
         projectID=managementProjectID, repositoryID=repositoryID, repositoryKeyID=repositoryKeyID,
         inventoryID=vcenterInventoryID, environmentID=environmentID)
