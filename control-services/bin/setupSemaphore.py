@@ -366,7 +366,7 @@ def main():
 
     createTaskTemplate(
         s=s, host=host, headers=headers,
-        templateName="Build ISOs", playbookPath=playbooksDirPath + "buildIso.yml",
+        templateName="Build ISOs", playbookPath=playbooksDirPath + "buildIsos.yml",
         projectID=managementProjectID, repositoryID=repositoryID, repositoryKeyID=repositoryKeyID,
         inventoryID=localhostInventoryID, environmentID=environmentID)
 
