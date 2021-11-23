@@ -1,1 +1,134 @@
-<mxfile host="app.diagrams.net" modified="2021-11-23T19:23:22.743Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36" version="15.6.8" etag="rNTiqfRv3wfnzTMpT0eu" type="github"><diagram id="YXfpOPQG43Z3w0_7rGdu">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2021-11-23T21:30:05.624Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36" etag="ixzCvuakozccuYpvlbNX" version="15.6.8" type="github">
+  <diagram id="YXfpOPQG43Z3w0_7rGdu" name="Page-1">
+    <mxGraphModel dx="2552" dy="2013" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-1" value="&lt;font face=&quot;Courier New&quot;&gt;config.ini&lt;/font&gt;" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.template;fillColor=#9C0000;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-600" y="160" width="55.5" height="64.5" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-2" value="&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;~/vater/control-services/&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;├── bin/&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-family: &amp;#34;courier new&amp;#34;&quot;&gt;│&amp;nbsp; &amp;nbsp;├── dev.sh&lt;/span&gt;&lt;span style=&quot;font-family: &amp;#34;courier new&amp;#34;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-family: &amp;#34;courier new&amp;#34;&quot;&gt;│&amp;nbsp; &amp;nbsp;├── launch.ps1&lt;/span&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;│&amp;nbsp; &amp;nbsp;└── setup.sh&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;├── cli/&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;│&amp;nbsp; &amp;nbsp;├── api.py&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;│&amp;nbsp; &amp;nbsp;├── gitea.py&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;│&amp;nbsp; &amp;nbsp;├── semaphore.py&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;│&amp;nbsp; &amp;nbsp;└── vater.py&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-family: &amp;#34;courier new&amp;#34;&quot;&gt;├── config.ini&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;├── data/&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;│&amp;nbsp; &amp;nbsp;├── gitea&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;│&amp;nbsp; &amp;nbsp;├── gitea_db&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;│&amp;nbsp; &amp;nbsp;├── guacd&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;│&amp;nbsp; &amp;nbsp;├── guac_db&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;│&amp;nbsp; &amp;nbsp;├── semaphore&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;│&amp;nbsp; &amp;nbsp;└── semaphore_db&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;├── docker-compose.yml&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;├── builder/&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;│&amp;nbsp; &amp;nbsp;├── api.py&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;├── images/&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;│&amp;nbsp; &amp;nbsp;└── semaphore&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;├── README.md&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font face=&quot;Courier New&quot;&gt;└── temp/&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="-840" y="10" width="200" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-3" value="Vater" style="shape=image;html=1;verticalAlign=top;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;imageAspect=0;aspect=fixed;image=https://cdn4.iconfinder.com/data/icons/scripting-and-programming-languages/512/Python_logo-128.png;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="-600" y="-230" width="58" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontFamily=Courier New;" edge="1" parent="1" source="ZsvXM1KYcc3sOgcgSLbN-7" target="ZsvXM1KYcc3sOgcgSLbN-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-7" value="Download the repo and run&lt;br&gt;launch.ps1" style="ellipse;whiteSpace=wrap;html=1;fontFamily=Courier New;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-425" y="-60" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontFamily=Courier New;" edge="1" parent="1" source="ZsvXM1KYcc3sOgcgSLbN-8" target="ZsvXM1KYcc3sOgcgSLbN-38">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-8" value="Install Chocolatey" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Courier New;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-317.5" y="280" width="90" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontFamily=Courier New;" edge="1" parent="1" source="ZsvXM1KYcc3sOgcgSLbN-9" target="ZsvXM1KYcc3sOgcgSLbN-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-9" value="&lt;br&gt;Hypervisor" style="shape=manualInput;whiteSpace=wrap;html=1;fontFamily=Courier New;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-413.75" y="50" width="97.5" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-12" value="vCenter" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fontFamily=Courier New;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZsvXM1KYcc3sOgcgSLbN-11" target="ZsvXM1KYcc3sOgcgSLbN-17">
+          <mxGeometry x="0.1202" relative="1" as="geometry">
+            <mxPoint x="-440" y="270" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontFamily=Courier New;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZsvXM1KYcc3sOgcgSLbN-11" target="ZsvXM1KYcc3sOgcgSLbN-8">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-270" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-15" value="Virtualbox" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;" vertex="1" connectable="0" parent="ZsvXM1KYcc3sOgcgSLbN-13">
+          <mxGeometry x="0.1108" relative="1" as="geometry">
+            <mxPoint y="5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-11" value="Hypervisor" style="rhombus;whiteSpace=wrap;html=1;fontFamily=Courier New;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-412.5" y="150" width="95" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontFamily=Courier New;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZsvXM1KYcc3sOgcgSLbN-17" target="ZsvXM1KYcc3sOgcgSLbN-18">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-300" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-17" value="&lt;br&gt;Server IP" style="shape=manualInput;whiteSpace=wrap;html=1;fontFamily=Courier New;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-490" y="280" width="97.5" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontFamily=Courier New;" edge="1" parent="1" source="ZsvXM1KYcc3sOgcgSLbN-18" target="ZsvXM1KYcc3sOgcgSLbN-19">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-441" y="450" />
+              <mxPoint x="-366" y="450" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-18" value="&lt;br&gt;Credentials" style="shape=manualInput;whiteSpace=wrap;html=1;fontFamily=Courier New;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-490" y="370" width="97.5" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontFamily=Courier New;" edge="1" parent="1" source="ZsvXM1KYcc3sOgcgSLbN-19" target="ZsvXM1KYcc3sOgcgSLbN-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-19" value="&lt;br&gt;Disk size" style="shape=manualInput;whiteSpace=wrap;html=1;fontFamily=Courier New;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-415" y="480" width="97.5" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontFamily=Courier New;" edge="1" parent="1" source="ZsvXM1KYcc3sOgcgSLbN-21" target="ZsvXM1KYcc3sOgcgSLbN-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-21" value="&lt;br&gt;Memory" style="shape=manualInput;whiteSpace=wrap;html=1;fontFamily=Courier New;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-415" y="570" width="97.5" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontFamily=Courier New;" edge="1" parent="1" source="ZsvXM1KYcc3sOgcgSLbN-22" target="ZsvXM1KYcc3sOgcgSLbN-42">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-22" value="&lt;br&gt;CPU Cores" style="shape=manualInput;whiteSpace=wrap;html=1;fontFamily=Courier New;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-415" y="660" width="97.5" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-35" value="&lt;span&gt;~/vater/control-serivces/bin$ ./setup.sh&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Courier New;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-290" y="50" width="310" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-37" value="Install&lt;br&gt;- Docker&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Courier New;align=left;" vertex="1" parent="1">
+          <mxGeometry x="100" y="25" width="120" height="335" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontFamily=Courier New;" edge="1" parent="1" source="ZsvXM1KYcc3sOgcgSLbN-38" target="ZsvXM1KYcc3sOgcgSLbN-19">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-272" y="450" />
+              <mxPoint x="-366" y="450" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-38" value="Install Virtualbox" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Courier New;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-317.5" y="350" width="90" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontFamily=Courier New;" edge="1" parent="1" source="ZsvXM1KYcc3sOgcgSLbN-42" target="ZsvXM1KYcc3sOgcgSLbN-53">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-42" value="Install Control VM" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Courier New;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-180" y="665" width="90" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontFamily=Courier New;" edge="1" parent="1" source="ZsvXM1KYcc3sOgcgSLbN-49" target="ZsvXM1KYcc3sOgcgSLbN-51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-49" value="Enable SSH" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Courier New;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-180" y="320" width="90" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontFamily=Courier New;" edge="1" parent="1" source="ZsvXM1KYcc3sOgcgSLbN-51" target="ZsvXM1KYcc3sOgcgSLbN-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-51" value="SCP the repo to Control" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Courier New;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-180" y="215" width="90" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontFamily=Courier New;" edge="1" parent="1" source="ZsvXM1KYcc3sOgcgSLbN-53" target="ZsvXM1KYcc3sOgcgSLbN-49">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZsvXM1KYcc3sOgcgSLbN-53" value="Edit config.ini" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Courier New;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-180" y="410" width="90" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
