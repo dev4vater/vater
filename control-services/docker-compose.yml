@@ -1,6 +1,6 @@
 # image
 # container name
-# environment  
+# environment
 # volumes
 # network
 # port
@@ -44,7 +44,7 @@ services:
     depends_on:
        - gitea_db
     restart: always
- 
+
   gitea_db:
      image: mysql:8
      container_name: gitea_db
@@ -110,7 +110,7 @@ services:
     image: semaphore
     build: ./images/semaphore/
     container_name: semaphore
-    environment:  
+    environment:
       - SEMAPHORE_DB_USER=semaphore
       - SEMAPHORE_DB_PASS=semaphore
       - SEMAPHORE_DB_HOST=semaphore_db
