@@ -56,6 +56,10 @@ class Config():
 
         ### Services
 
+        cfg["service_list"] = []
+        for service in __configs['services'][0]:
+            cfg["service_list"].append(service)
+
         # Gitea
 
         # config_password, config_user, org_or_user, port
@@ -100,8 +104,6 @@ class Config():
 
         self.cfg = cfg
 
+
     def __str__(self):
         return json.dumps(self.cfg, indent=4)
-        
-c = Config('../config.json')
-print(c)
