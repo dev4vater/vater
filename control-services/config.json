@@ -1,0 +1,43 @@
+{ 
+  "dev" : { "enable" : true },
+  "host" : { 
+      "hostname" : "control",
+      "project_path" : "/home/control/"
+    },
+  "repos" : [ { 
+        "content_repo" : { 
+            "ansible_dir" : "ansible",
+            "name" : "rous",
+            "org_or_user" : "uwardlaw",
+            "terraform_dir" : "terraform"
+          },
+        "vater_repo" : { 
+            "rel_data_dir" : "control-services/data/",
+            "name" : "vater",
+            "org_or_user" : "uwardlaw"
+          }
+      } ],
+  "services" : [ { 
+        "gitea" : { 
+            "config_password" : "config",
+            "config_user" : "config",
+            "org_or_user" : "333TRS",
+            "port" : "3000"
+          },
+        "gitea_db" : { 
+            "db_password" : "gitea",
+            "db_user" : "gitea",
+            "port" : "3305"
+          },
+        "semaphore" : { 
+            "password" : "cangetin",
+            "port" : "4000",
+            "user" : "admin"
+          },
+        "semaphore_db" : { 
+            "db_password" : "semaphore",
+            "db_user" : "semaphore",
+            "port" : "3306"
+          }
+      } ]
+}
