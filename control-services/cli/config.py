@@ -91,6 +91,10 @@ class Config():
         cfg['gitea']['api']['mirror_sync_url'] =                                            \
             cfg['gitea']['api_url'] + 'repos/' + cfg['gitea']['org_or_user'] + '/' +        \
             cfg['content_repo']['name'] + '/mirror-sync'
+
+        cfg['gitea']['api']['tokens'] =                                                     \
+            '/users/' + cfg['gitea']['config_user'] + '/tokens'
+
             
         # Gitea Database
 
@@ -112,5 +116,6 @@ class Config():
     def __str__(self):
         return json.dumps(self.cfg, indent=4)
 
-c = Config('../config.json')
-print(c)
+# Print for testing
+# c = Config('../config.json')
+# print(c)
