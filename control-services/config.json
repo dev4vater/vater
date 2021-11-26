@@ -21,6 +21,7 @@
         "gitea" : { 
             "config_password" : "config",
             "config_user" : "config",
+            "config_email" : "config@example.com",
             "org_or_user" : "333TRS",
             "port" : "3000"
           },
