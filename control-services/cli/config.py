@@ -62,7 +62,7 @@ class Config():
 
         # Gitea
 
-        # config_password, config_user, org_or_user, port
+        # config_password, config_user, config_email, org_or_user, port
         cfg['gitea'] = __configs['services'][0]['gitea']
 
 
@@ -87,6 +87,11 @@ class Config():
             cfg['gitea']['url'] + cfg['gitea']['org_or_user'] + '/' +                       \
             cfg['content_repo']['name']
 
+        cfg['gitea']['api'] = {}
+        cfg['gitea']['api']['mirror_sync_url'] =                                            \
+            cfg['gitea']['api_url'] + 'repos/' + cfg['gitea']['org_or_user'] + '/' +        \
+            cfg['content_repo']['name'] + '/mirror-sync'
+            
         # Gitea Database
 
         # db_password, db_user, port
@@ -106,3 +111,6 @@ class Config():
 
     def __str__(self):
         return json.dumps(self.cfg, indent=4)
+
+c = Config('../config.json')
+print(c)
