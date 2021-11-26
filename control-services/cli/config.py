@@ -72,18 +72,18 @@ class Config():
         cfg['gitea']['api_url'] =                                                           \
             cfg['gitea']['url'] + 'api/v1/'
 
-        cfg['gitea']['gitea_content_repo_path'] =                                           \
+        cfg['gitea']['content_repo_path'] =                                                 \
             cfg['host']['project_path'] + cfg['vater_repo']['name'] + '/' +                 \
             cfg['vater_repo']['rel_data_dir'] + 'gitea/git/' +                              \
             cfg['content_repo']['name']
 
-        cfg['gitea']['gitea_content_repo_git_dir_path'] =                                   \
-            cfg['gitea']['gitea_content_repo_path'] + '/.git/'
+        cfg['gitea']['content_repo_git_dir_path'] =                                         \
+            cfg['gitea']['content_repo_path'] + '/.git/'
 
-        cfg['gitea']['gitea_container_content_repo'] =                                      \
+        cfg['gitea']['container_content_repo'] =                                            \
             '/data/git/' + cfg['content_repo']['name']
 
-        cfg['gitea']['gitea_config_repo_url'] =                                             \
+        cfg['gitea']['config_repo_url'] =                                                   \
             cfg['gitea']['url'] + cfg['gitea']['org_or_user'] + '/' +                       \
             cfg['content_repo']['name']
 
@@ -103,7 +103,6 @@ class Config():
         cfg['semaphore_db'] = __configs['services'][0]['semaphore_db']
 
         self.cfg = cfg
-
 
     def __str__(self):
         return json.dumps(self.cfg, indent=4)
