@@ -1,7 +1,6 @@
 import json
 import pprint
 import subprocess
-from collections import OrderedDict
 
 class Config():
     def __init__(self, jsonConfigFile):
@@ -36,6 +35,12 @@ class Config():
         cfg['host']['terraform_path'] =                                                     \
             cfg['host']['content_dir_path'] + cfg['content_repo']['terraform_dir'] + '/'
 
+        # Docker variables
+        cfg['docker'] = {}
+        cfg['docker']['compose_file_path'] =                                                \
+            cfg['host']['project_path'] + cfg['vater_repo']['name'] + '/' +                 \
+            'docker-compose.yml'            
+
         ### Development variables
 
         # enable
@@ -58,15 +63,8 @@ class Config():
 
         cfg["service_list"] = []
 
-        # Only take the first word seperated by a '_' in the service names,
-        #   and remove duplicatess. This way 'serviceA' and 'serviceA_db'
-        #   only populate 'service_list' with 'serviceA'
         for service in __configs['services'][0]:
-            cfg["service_list"].append(
-                (service.split('_'))[0]
-            )
-
-        cfg["service_list"] = list(OrderedDict.fromkeys(cfg["service_list"]))
+            cfg["service_list"].append(service)
 
         # Gitea
         # config_password, config_user, config_email, org_or_user, port
@@ -79,10 +77,16 @@ class Config():
         cfg['gitea']['api_url'] =                                                           \
             cfg['gitea']['url'] + 'api/v1/'
 
-        cfg['gitea']['content_repo_path'] =                                                 \
+        cfg['gitea']['data_dir'] =                                                          \
             cfg['host']['project_path'] + cfg['vater_repo']['name'] + '/' +                 \
-            cfg['vater_repo']['rel_data_dir'] + 'gitea/git/' +                              \
-            cfg['content_repo']['name']
+            cfg['vater_repo']['rel_data_dir'] + 'gitea/'                                    \
+
+        cfg['gitea']['all_data_dirs'] =                                                     \
+            cfg['host']['project_path'] + cfg['vater_repo']['name'] + '/' +                 \
+            cfg['vater_repo']['rel_data_dir'] + 'gitea*'                                    \
+            
+        cfg['gitea']['content_repo_path'] =                                                 \
+            cfg['gitea']['data_dir'] + 'git/' + cfg['content_repo']['name']
 
         cfg['gitea']['content_repo_git_dir_path'] =                                         \
             cfg['gitea']['content_repo_path'] + '/.git/'
