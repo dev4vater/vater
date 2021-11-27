@@ -1,6 +1,9 @@
 from api import Api
 from subprocess import check_output
+from pathlib import Path
+import glob
 import json
+import copy
 
 class Gitea():
     def __init__(self, configs):
@@ -41,7 +44,7 @@ class Gitea():
 
         return True
 
-    def restart(self):
+    def restartContainer(self):
         out = check_output(
             [
                 'sudo', 'docker-compose', 'stop', 
@@ -52,7 +55,7 @@ class Gitea():
         out += check_output(
             [
                 'sudo', 'docker', 'system', 
-                'prune'
+                'prune', '-f'
             ],
             universal_newlines=True
         )
@@ -65,10 +68,44 @@ class Gitea():
             universal_newlines=True
         )
 
-        self.setup()
-
         return out
 
+    def access(self):
+        out = check_output(
+            [
+                'sudo', 'docker', 'exec', '-it', 
+                'gitea', '/bin/bash' 
+            ],
+            universal_newlines=True
+        )
+        return out        
+
+    def clean(self):
+        out = check_output(
+            [
+                'sudo', 'docker-compose', 'stop', 
+                'gitea', 'gitea_db' 
+            ],
+            universal_newlines=True
+        )
+
+        out += check_output(
+            [
+                'sudo', 'docker', 'system', 
+                'prune', '-a', '-f' 
+            ],
+            universal_newlines=True
+        )
+
+        data_dirs = glob.glob(self.cfg['gitea']['data_dir'][:-1]+'*')
+        cmd = ['sudo', 'rm', '-rf'] + data_dirs    
+        out += check_output(
+            cmd,
+            universal_newlines=True
+        )
+
+        return out        
+        
 
     def setup(self):
         # Create organization
@@ -118,10 +155,10 @@ class Gitea():
        
         dockerCmd = (
             'gitea admin user create --admin'
-            '--username ' + config_user + 
-            '--email ' + self.cfg['gitea']['config_email'] +
-            '--password ' + config_password + 
-            '--must-change-password=false'
+            ' --username ' + self.cfg['gitea']['config_user'] + 
+            ' --email ' + self.cfg['gitea']['config_email'] +
+            ' --password ' + config_password + 
+            ' --must-change-password=false'
         )
                     
         out = check_output(
@@ -140,21 +177,25 @@ class Gitea():
         out = check_output(
             [
                 'git', '--git-dir',
-                self.cfg['gitea']['content_repo_git_dir_path'], 'pull'
+                self.cfg['host']['content_git_dir_path'], 'pull'
             ],
             universal_newlines=True
         )
 
-        # Display a diff of old repo and new repo
-        out += check_output(
-            [
-                'sudo', 'git', 'diff', '--diff-filter=r', '--name-status',
-                '--compact-summary', '--color', '--no-index',
-                self.cfg['gitea']['content_repo_path'],
-                self.cfg['host']['content_dir_path']
-            ],
-            universal_newlines=True
-        )
+        # Check to see if an old repo exists in gitea
+        p = Path(self.cfg['gitea']['content_repo_path'])
+        if p.exists():
+
+            # Display a diff of old repo and new repo
+            out += check_output(
+                [
+                    'sudo', 'git', 'diff', '--diff-filter=r', '--name-status',
+                    '--compact-summary', '--color', '--no-index',
+                    self.cfg['gitea']['content_repo_path'],
+                    self.cfg['host']['content_dir_path']
+                ],
+                universal_newlines=True
+            )
         
         # sudo rm -rf data/gitea/git/$CONFIG_REPO_NAME
         out += check_output(
@@ -197,7 +238,7 @@ class Gitea():
 
         if orgID == None:
             self.api.post(
-                url = self.cfg['gitea']['api']['tokens'],
+                url = self.cfg['gitea']['api']['orgs'],
                 data = (
                     '{'
                     '"username": "333TRS"'
