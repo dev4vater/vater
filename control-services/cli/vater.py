@@ -23,37 +23,71 @@ def main():
     elif p.args.command == 'access':
         access(c, p.args)
 
-
 def init(config, args):
-    pass
+    return
 
 def task(config, args):
-    pass
+    return
 
 def sync(config, args):
-    pass
+    g = loginGitea(config)
+    g.syncContentRepo()
 
 def stop(config, args):
-    if args.service == 'gitea' or args.service == 'gitea_db':
+    if args.service == 'all':
+        args.service = config.cfg['service_list']
 
-def restart(config, args):
-    if args.service == 'gitea' or args.service == 'gitea_db':
-        g = Gitea(config)
-
-        while True:
-            password = gp.getpass(prompt='Password: ')
-            if(g.login(config_password=password)):
-                break
-
-        g.restart()
-    if args.service == 'semaphore' or args.service == 'semaphore_db':
+    if args.service == 'gitea':
+        g = loginGitea(config)
+        
+    if service == 'semaphore':
         return
 
+def restart(config, args):
+    if args.service == 'all':
+        args.service = config.cfg['service_list']
+
+    services = []
+    services.append(args.service)
+
+    for service in services:
+        if service == 'gitea':
+            g = Gitea(config)
+            g.restartContainer()
+            loginGitea(g, config)
+            g.setup()
+        if service == 'semaphore':
+            return
+
 def clean(config, args):
-    if args.service == 'gitea' or args.service == 'gitea_db':
+    if args.service == 'all':
+        args.service = config.cfg['service_list']
+
+    services = []
+    services.append(args.service)
+    for service in services:
+        if args.service == 'gitea':
+            g = Gitea(config)
+            g.clean()
+        if service == 'semaphore':
+            return
 
 def access(config, args):
-    if args.service == 'gitea' or args.service == 'gitea_db':
-        
+    if args.service == 'gitea':
+        return
+    elif args.service == 'gitea_db':
+        print('Not implemented')
+        return
+    elif args.service == 'semaphore':
+        return
+    elif args.service == 'semaphore_db':
+        return
+
+def loginGitea(g, config):
+    while True:
+        password = gp.getpass(prompt='Password: ')
+        if(g.login(config_password=password)):
+            break
+
 if __name__ == "__main__":
     main()
