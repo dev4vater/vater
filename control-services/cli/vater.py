@@ -1,7 +1,7 @@
 from parser import Parser
 from config import Config
 from gitea import Gitea
-import getpass
+import getpass as gp
 
 def main():
     p = Parser()
@@ -9,9 +9,11 @@ def main():
     p.completeParser(c.cfg["service_list"])
 
     g = Gitea(c)
-    
-    while(not g.login(config_password=passwd)):
-        passwd = getpass.getpass(prompt="Password: ")
+
+    while True:
+        password = gp.getpass(prompt='Password: ')
+        if(g.login(config_password=password)):
+            break
 
     g.setup()    
         
