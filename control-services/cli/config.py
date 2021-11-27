@@ -1,6 +1,7 @@
 import json
 import pprint
 import subprocess
+from collections import OrderedDict
 
 class Config():
     def __init__(self, jsonConfigFile):
@@ -56,11 +57,18 @@ class Config():
         ### Services
 
         cfg["service_list"] = []
+
+        # Only take the first word seperated by a '_' in the service names,
+        #   and remove duplicatess. This way 'serviceA' and 'serviceA_db'
+        #   only populate 'service_list' with 'serviceA'
         for service in __configs['services'][0]:
-            cfg["service_list"].append(service)
+            cfg["service_list"].append(
+                (service.split('_'))[0]
+            )
+
+        cfg["service_list"] = list(OrderedDict.fromkeys(cfg["service_list"]))
 
         # Gitea
-
         # config_password, config_user, config_email, org_or_user, port
         cfg['gitea'] = __configs['services'][0]['gitea']
 
