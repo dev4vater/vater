@@ -1,4 +1,6 @@
 import argparse
+import copy
+from collections import OrderedDict
 
 class Parser():
     def __init__(self):
@@ -24,6 +26,14 @@ class Parser():
     # Complete the setup of the parser with values from
     #   the configuration file
     def completeParser(self, services):
+        container_choices = copy.deepcopy(services)
+        
+        unique_service_choices = []
+        for service in services:
+            s = service.split('_')[0]
+            unique_service_choices.append(s)
+
+        unique_service_choices = list(OrderedDict.fromkeys(unique_service_choices))
 
         # Subcommand help headers
         self.__subparsers = self.__parser.add_subparsers(
@@ -48,15 +58,13 @@ class Parser():
         )
 
         self.__parser_task.add_argument(
-            '-n', '--name',
+            'name',
             help = 'A class name formatted class#####',
-            required = True
         )
 
         self.__parser_task.add_argument(
-            '-s', '--size',
+            'size',
             help = 'The size of the class',
-            required = True
         )
 
         ### Sync subparser
@@ -76,9 +84,9 @@ class Parser():
         )
 
         self.__parser_stop.add_argument(
-            'service',
+            '-s', '--service',
             help = 'A service defined in the configuration file',
-            choices = services, 
+            choices = container_choices + ['all'], 
             default = 'all'
         )
         
@@ -92,9 +100,9 @@ class Parser():
         )
 
         self.__parser_restart.add_argument(
-            'service',
+            '-s', '--service',
             help = 'A service defined in the configuration file',
-            choices = services, 
+            choices = unique_service_choices + ['all'], 
             default = 'all'
         )
 
@@ -110,17 +118,23 @@ class Parser():
         )
 
         self.__parser_clean.add_argument(
-            'service',
+            '-s', '--service',
             help = 'A service defined in the configuration file',
-            choices = services, 
+            choices = container_choices + ['all'], 
             default = 'all'
         )
 
         # Access subparser
         self.__parser_access = self.__subparsers.add_parser(
             'access',
-            description =  'Provides a bash prompt into a service',
-            help =  'Provides a bash prompt into a service'
+            description =  'Provides a bash prompt into a container',
+            help =  'Provides a bash prompt into a container'
+        )
+
+        self.__parser_access.add_argument(
+            '-s', '--service',
+            help = 'A service defined in the configuration file',
+            choices = container_choices, 
         )
 
         # Help was disabled when the parser was instantiated, 
