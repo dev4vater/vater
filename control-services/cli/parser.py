@@ -27,7 +27,8 @@ class Parser():
 
         # Subcommand help headers
         self.__subparsers = self.__parser.add_subparsers(
-            help = 'Sub-command help'
+            help = 'Sub-command help',
+            dest = 'command'
         )
 
         ### Init subparser
@@ -36,7 +37,6 @@ class Parser():
             description =   'Must be run before other commands.'
                             ' Validates the configuration and'
                             ' sets up the specified services',
-
             help =  'Must be run before other commands'
         )
 
