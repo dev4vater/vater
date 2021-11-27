@@ -35,7 +35,6 @@ class Config():
         cfg['host']['terraform_path'] =                                                     \
             cfg['host']['content_dir_path'] + cfg['content_repo']['terraform_dir'] + '/'
 
-
         ### Development variables
 
         # enable
@@ -93,8 +92,18 @@ class Config():
             cfg['content_repo']['name'] + '/mirror-sync'
 
         cfg['gitea']['api']['tokens'] =                                                     \
-            '/users/' + cfg['gitea']['config_user'] + '/tokens'
+            cfg['gitea']['api_url'] +                                                       \
+            'users/' + cfg['gitea']['config_user'] + '/tokens'
 
+        cfg['gitea']['api']['orgs'] =                                                       \
+            cfg['gitea']['api_url'] + 'orgs'                                                
+
+        cfg['gitea']['api']['content_repo'] =                                               \
+            cfg['gitea']['api_url'] + 'repos/' + cfg['gitea']['org_or_user'] + '/' +        \
+            cfg['content_repo']['name']
+
+        cfg['gitea']['api']['repos_migrate'] =                                              \
+            cfg['gitea']['api_url'] + 'repos/migrate'                                                
             
         # Gitea Database
 
@@ -117,5 +126,5 @@ class Config():
         return json.dumps(self.cfg, indent=4)
 
 # Print for testing
-# c = Config('../config.json')
-# print(c)
+#c = Config('../config.json')
+#print(c)
