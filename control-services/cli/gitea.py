@@ -41,6 +41,35 @@ class Gitea():
 
         return True
 
+    def restart(self):
+        out = check_output(
+            [
+                'sudo', 'docker-compose', 'stop', 
+                'gitea', 'gitea_db'
+            ],
+            universal_newlines=True
+        )
+        out += check_output(
+            [
+                'sudo', 'docker', 'system', 
+                'prune'
+            ],
+            universal_newlines=True
+        )
+        out += check_output(
+            [
+                'sudo', 'docker-compose', 'up', 
+                '-d', '--build', '--remove-orphans',
+                'gitea', 'gitea_db'
+            ],
+            universal_newlines=True
+        )
+
+        self.setup()
+
+        return out
+
+
     def setup(self):
         # Create organization
         self.__createOrg()
