@@ -11,28 +11,28 @@ class Api:
 
         self.s  = requests.Session()
         self.s.headers.update(headers)
-        
+
     def get(self, url, data=''):
         response = self.s.get(url=url, data=data)
-        __checkStatus(response)
+        self.__checkStatus(response)
         return response  
 
     def post(self, url, data=''):
-        response = self.s.get(url=url, data=data)
-        __checkStatus(response)
+        response = self.s.post(url=url, data=data)
+        self.__checkStatus(response)
         return response
 
     def put(self, url, data):
         response = self.s.put(url=url, data=data)
-        __checkStatus(response)
+        self.__checkStatus(response)
 
     def delete(self, url):
         response = self.s.delete(url=url)
-        __checkStatus(response)
+        self.__checkStatus(response)
 
     # Checks the status code from the html request and exits
     #   the program if the operation was not successful
-    def __checkStatus(response):
+    def __checkStatus(self, response):
         if response.status_code >= 200 and response.status_code <= 206:
             return
         elif response.status_code == 404:
@@ -49,8 +49,8 @@ class Api:
     #  need to specified by ID when used to create other items
     #  This function looks up an item by its name and returns
     #  the ID
-    def getIDFromName(url, key, name):
-        respons = self.s.get(url=url)
+    def getIDFromName(self, url, key, name):
+        response = self.s.get(url=url)
         # This is great if you need to view every piece of the response
         #   when debugging
         # print()
@@ -59,19 +59,19 @@ class Api:
 
         reply = json.loads(response.text)
 
-        pprint.pprint(reply)
+        # pprint.pprint(reply)
 
         if isinstance(reply, list):
             for item in reply:
                 if item[key] == name:
-                    print("Found ID: " + str(item["id"]))
+                    # print("Found ID: " + str(item["id"]))
                     return item["id"]
         elif isinstance(reply, dict):
             if reply.get(key) == name:
-                print("Found ID: " + str(reply["id"]))
+                #print("Found ID: " + str(reply["id"]))
                 return reply["id"]
 
-        print("ID not found")
+        #print("ID not found")
         return None
 
 
