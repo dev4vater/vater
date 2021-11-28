@@ -97,8 +97,9 @@ class Gitea():
             universal_newlines=True
         )
 
-        data_dirs = glob.glob(self.cfg['gitea']['data_dir'][:-1]+'*')
-        cmd = ['sudo', 'rm', '-rf'] + data_dirs    
+        cmd = ['sudo', 'rm', '-rf'] +                                           \
+            self.cfg['gitea']['related_data_dirs']
+
         out += check_output(
             cmd,
             universal_newlines=True

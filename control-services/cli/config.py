@@ -1,6 +1,7 @@
 import json
 import pprint
 import subprocess
+import glob 
 
 class Config():
     def __init__(self, jsonConfigFile):
@@ -80,10 +81,9 @@ class Config():
         cfg['gitea']['data_dir'] =                                                          \
             cfg['host']['project_path'] + cfg['vater_repo']['name'] + '/' +                 \
             cfg['vater_repo']['rel_data_dir'] + 'gitea/'                                    \
-
-        cfg['gitea']['all_data_dirs'] =                                                     \
-            cfg['host']['project_path'] + cfg['vater_repo']['name'] + '/' +                 \
-            cfg['vater_repo']['rel_data_dir'] + 'gitea*'                                    \
+        
+        cfg['gitea']['related_data_dirs'] =                                                 \
+            glob.glob(cfg['gitea']['data_dir'][:-1] + '*')
             
         cfg['gitea']['content_repo_path'] =                                                 \
             cfg['gitea']['data_dir'] + 'git/' + cfg['content_repo']['name']
