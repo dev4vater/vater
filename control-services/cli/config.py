@@ -122,10 +122,43 @@ class Config():
         # db_password, db_user, port
         cfg['gitea_db'] = __configs['services'][0]['gitea_db']
 
-        # Semaphore
+        ### Semaphore
 
         # password, port, user
         cfg['semaphore'] = __configs['services'][0]['semaphore']
+
+        cfg['semaphore']['url'] =                                                           \
+            'http://' + cfg['host']['ip'] + ':' + cfg['semaphore']['port'] + '/'
+
+        cfg['semaphore']['api_url'] =                                                       \
+            cfg['semaphore']['url'] + 'api/'
+
+        # Many of the APIs have IDs in the middle, so we insert a '#' once in the
+        #   URL to represent the project ID
+        cfg['semaphore']['api'] = {}
+        cfg['semaphore']['api']['login'] =                                                  \
+            cfg['semaphore']['api_url'] + 'auth/login'
+
+        cfg['semaphore']['api']['tokens'] =                                                 \
+            cfg['semaphore']['api_url'] + 'user/tokens'
+
+        cfg['semaphore']['api']['projects'] =                                               \
+            cfg['semaphore']['api_url'] + 'projects'
+
+        cfg['semaphore']['api']['project_keys'] =                                           \
+            cfg['semaphore']['api_url'] + 'project/#/keys'
+       
+        cfg['semaphore']['api']['project_repos'] =                                          \
+            cfg['semaphore']['api_url'] + 'project/#/repositories'
+
+        cfg['semaphore']['api']['project_inventory'] =                                      \
+            cfg['semaphore']['api_url'] + 'project/#/inventory'
+
+        cfg['semaphore']['api']['project_environment'] =                                    \
+            cfg['semaphore']['api_url'] + 'project/#/environment'
+
+        cfg['semaphore']['api']['project_template'] =                                       \
+            cfg['semaphore']['api_url'] + 'project/#/templates'
 
         # Semaphore Database
 
@@ -138,5 +171,5 @@ class Config():
         return json.dumps(self.cfg, indent=4)
 
 # Print for testing
-#c = Config('../config.json')
-#print(c)
+c = Config('../config.json')
+print(c)
