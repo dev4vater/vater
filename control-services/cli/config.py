@@ -4,7 +4,7 @@ import subprocess
 import glob 
 
 class Config():
-    def __init__(self, jsonConfigFile):
+    def __init__(self, jsonConfigFile, envPath):
         with open(jsonConfigFile) as f:
             __configs = json.load(f) 
 
@@ -35,12 +35,6 @@ class Config():
 
         cfg['host']['terraform_path'] =                                                     \
             cfg['host']['content_dir_path'] + cfg['content_repo']['terraform_dir'] + '/'
-
-        # Docker variables
-        cfg['docker'] = {}
-        cfg['docker']['compose_file_path'] =                                                \
-            cfg['host']['project_path'] + cfg['vater_repo']['name'] + '/' +                 \
-            'docker-compose.yml'            
 
         ### Development variables
 
@@ -165,11 +159,34 @@ class Config():
         # db_password, db_user, port
         cfg['semaphore_db'] = __configs['services'][0]['semaphore_db']
 
+        # Docker variables
+        cfg['docker'] = {}
+
+        cfg['docker']['compose_file_path'] =                                                \
+            cfg['host']['project_path'] + cfg['vater_repo']['name'] + '/' +                 \
+            'control-services/docker-compose.yml'            
+
+        cfg['docker']['env_path'] = envPath
+
+        cfg['docker']['env'] = []
+
+        cfg['docker']['env'].append(
+            'gitea_db_user=' + cfg['gitea_db']['user']
+        )
+
+        cfg['docker']['env'].append(
+            'gitea_db_password=' + cfg['gitea_db']['password']
+        )
+
+        with open(envPath, 'w') as f:
+            for var in cfg['docker']['env']:
+                f.writelines(var + '\n') 
+
         self.cfg = cfg
 
     def __str__(self):
         return json.dumps(self.cfg, indent=4)
 
 # Print for testing
-c = Config('../config.json')
-print(c)
+#c = Config('../config.json', '../.env')
+#print(c)
