@@ -29,8 +29,8 @@ services:
       - GITEA__database__DB_TYPE=mysql
       - GITEA__database__HOST=gitea_db:3306
       - GITEA__database__NAME=gitea
-      - GITEA__database__USER=gitea
-      - GITEA__database__PASSWD=gitea
+      - GITEA__database__USER=${gitea_db_user}
+      - GITEA__database__PASSWD=${gitea_db_password}
       - GITEA__security__INSTALL_LOCK=true
       - GITEA__security__IMPORT_LOCAL_PATHS=true
     volumes:
