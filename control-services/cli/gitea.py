@@ -10,17 +10,17 @@ class Gitea():
         self.api = Api()
         self.cfg = configs.cfg 
 
-    def login(self, config_password=None):
-        if config_password is None:
-            config_password=self.cfg['gitea']['config_password']
+    def login(self, password=None):
+        if password is None:
+            password=self.cfg['gitea']['password']
 
         self.api.s.auth = (
-            self.cfg['gitea']['config_user'],
-            config_password
+            self.cfg['gitea']['user'],
+            password
         )
 
         if not self.__configUserExists():
-            self.__createConfigUser(config_password=config_password)
+            self.__createConfigUser(password=password)
 
         # Confirm we can get a list of tokens, which requires auth
         r = self.api.s.get(url=self.cfg['gitea']['api']['tokens'])     
@@ -130,7 +130,7 @@ class Gitea():
         #   does not exist
         dockerCmd = (
             'gitea admin user list | grep ' +           
-            self.cfg['gitea']['config_user'] +                               
+            self.cfg['gitea']['user'] +                               
             ' | tr -s \' \' | cut -d \' \' -f 2'
         )        
 
@@ -145,20 +145,20 @@ class Gitea():
 
         userFound = out.strip()
 
-        if userFound != self.cfg['gitea']['config_user']:
+        if userFound != self.cfg['gitea']['user']:
             return False
         else:
             return True
 
-    def __createConfigUser(self, config_password=None):
-        if config_password is None:
-            config_password=self.cfg['gitea']['config_password']
+    def __createConfigUser(self, password=None):
+        if password is None:
+            password=self.cfg['gitea']['password']
        
         dockerCmd = (
             'gitea admin user create --admin'
-            ' --username ' + self.cfg['gitea']['config_user'] + 
-            ' --email ' + self.cfg['gitea']['config_email'] +
-            ' --password ' + config_password + 
+            ' --username ' + self.cfg['gitea']['user'] + 
+            ' --email ' + self.cfg['gitea']['email'] +
+            ' --password ' + password + 
             ' --must-change-password=false'
         )
                     

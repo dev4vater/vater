@@ -68,7 +68,7 @@ class Config():
             cfg["service_list"].append(service)
 
         # Gitea
-        # config_password, config_user, config_email, org_or_user, port
+        # password, user, email, org_or_user, port
         cfg['gitea'] = __configs['services'][0]['gitea']
 
 
@@ -105,7 +105,7 @@ class Config():
 
         cfg['gitea']['api']['tokens'] =                                                     \
             cfg['gitea']['api_url'] +                                                       \
-            'users/' + cfg['gitea']['config_user'] + '/tokens'
+            'users/' + cfg['gitea']['user'] + '/tokens'
 
         cfg['gitea']['api']['orgs'] =                                                       \
             cfg['gitea']['api_url'] + 'orgs'                                                
@@ -119,7 +119,7 @@ class Config():
             
         # Gitea Database
 
-        # db_password, db_user, port
+        # password, user, port
         cfg['gitea_db'] = __configs['services'][0]['gitea_db']
 
         ### Semaphore

@@ -86,7 +86,7 @@ def access(config, args):
 def loginGitea(g, config):
     while True:
         password = gp.getpass(prompt='Password: ')
-        if(g.login(config_password=password)):
+        if(g.login(password=password)):
             break
 
 if __name__ == "__main__":

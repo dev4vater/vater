@@ -19,15 +19,15 @@
       } ],
   "services" : [ { 
         "gitea" : { 
-            "config_password" : "config",
-            "config_user" : "config",
-            "config_email" : "config@example.com",
+            "password" : "config",
+            "user" : "config",
+            "email" : "config@example.com",
             "org_or_user" : "333TRS",
             "port" : "3000"
           },
         "gitea_db" : { 
-            "db_password" : "gitea",
-            "db_user" : "gitea",
+            "password" : "gitea",
+            "user" : "gitea",
             "port" : "3305"
           },
         "semaphore" : { 
@@ -36,8 +36,8 @@
             "user" : "admin"
           },
         "semaphore_db" : { 
-            "db_password" : "semaphore",
-            "db_user" : "semaphore",
+            "password" : "semaphore",
+            "user" : "semaphore",
             "port" : "3306"
           }
       } ]
