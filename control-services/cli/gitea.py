@@ -54,14 +54,11 @@ class Gitea():
         self.docker.compose_up(containers)
 
     def access(self):
-        out = check_output(
-            [
-                'sudo', 'docker', 'exec', '-it', 
-                'gitea', '/bin/bash' 
-            ],
-            universal_newlines=True
+        container = ['gitea']
+        
+        self.docker.access(
+            container, '/bin/bash'
         )
-        return out        
 
     def clean(self):
         containers = ['gitea', 'gitea_db']

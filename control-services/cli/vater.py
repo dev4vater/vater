@@ -75,6 +75,8 @@ def clean(config, args):
 
 def access(config, args):
     if args.service == 'gitea':
+        g = Gitea(config)
+        g.access()
         return
     elif args.service == 'gitea_db':
         print('Not implemented')

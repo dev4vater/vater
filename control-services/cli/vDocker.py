@@ -1,4 +1,5 @@
-from subprocess import check_output
+import threading
+import subprocess
 
 class VDocker():
     def __init__(self, configs):
@@ -17,14 +18,14 @@ class VDocker():
                 'up', '-d', '--build', '--remove-orphans'
             ] + containers
         
-        check_output(cmd, universal_newlines=True)
+        subprocess.check_output(cmd, universal_newlines=True)
 
     def compose_stop(self, containers):
         containers = self.__makeStrList(containers)
 
         cmd = self.composePreface + ['stop'] + containers
         
-        check_output(cmd, universal_newlines=True)
+        subprocess.check_output(cmd, universal_newlines=True)
 
     def system_prune(self):
 
@@ -33,7 +34,7 @@ class VDocker():
                 'prune', '-f'
             ]
         
-        check_output(cmd, universal_newlines=True)
+        subprocess.check_output(cmd, universal_newlines=True)
 
     def system_prune_all(self):
 
@@ -42,7 +43,7 @@ class VDocker():
                 'prune', '-a', '-f'
             ]
         
-        check_output(cmd, universal_newlines=True)
+        subprocess.check_output(cmd, universal_newlines=True)
 
     def dexec(self, container, dockerCmd):
         container = self.__makeStrList(container)
@@ -52,10 +53,29 @@ class VDocker():
                 'exec',
                 ] + container + dockerCmd 
         
-        out = check_output(cmd, universal_newlines=True)
+        out = subprocess.check_output(cmd, universal_newlines=True)
         return out
 
+    def access(self, container, shell):
+        container = self.__makeStrList(container)
+        shell = self.__makeStrList(shell)
+ 
+        cmd = self.dockerPreface + [
+            'exec', '-it'
+            ] + container + shell
+
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+        t = threading.Thread(target=self.__output_reader, args=(p,))
+        t.start()
+
+        t.join()
+ 
     def __makeStrList(self, s):
         if isinstance(s, str):
             s = list(s.split('~'))
         return s
+
+    def __output_reader(self, proc):
+        for line in iter(proc.stdout.readline, b''):
+            print('{0}'.format(line.decode('utf-8')), end='')
