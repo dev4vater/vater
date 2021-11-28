@@ -19,6 +19,14 @@ class Parser():
             default = '../config.json'
         )
 
+        # The path to the env file, used
+        #   when executing commands with docker-compose
+        self.__parser.add_argument(
+            '-e', '--envPath',
+            help =  'The json conifguration file',
+            default = '../.env'
+        )
+
         # Grab the configuration path without completely
         #   parsing argumnets
         self.args = self.__parser.parse_known_args()[0]
