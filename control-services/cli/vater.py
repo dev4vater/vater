@@ -1,11 +1,12 @@
 from parser import Parser
 from config import Config
 from gitea import Gitea
+from vDocker import VDocker
 import getpass as gp
 
 def main():
     p = Parser()
-    c = Config(p.args.configPath)
+    c = Config(p.args.configPath, p.args.envPath)
     p.completeParser(c.cfg["service_list"])
 
     if p.args.command == 'init':
