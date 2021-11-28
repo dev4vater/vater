@@ -1,4 +1,5 @@
 from api import Api
+from vDocker import VDocker
 from subprocess import check_output
 from pathlib import Path
 import glob
@@ -8,6 +9,7 @@ import copy
 class Gitea():
     def __init__(self, configs):
         self.api = Api()
+        self.docker = VDocker(configs)
         self.cfg = configs.cfg 
 
     def login(self, password=None):
@@ -26,7 +28,7 @@ class Gitea():
         r = self.api.s.get(url=self.cfg['gitea']['api']['tokens'])     
 
         if not r.status_code == 200:
-            return false
+            return False
 
         # If the token exists, we have no way of getting the hash
         #   so remove the token
@@ -45,30 +47,11 @@ class Gitea():
         return True
 
     def restartContainer(self):
-        out = check_output(
-            [
-                'sudo', 'docker-compose', 'stop', 
-                'gitea', 'gitea_db'
-            ],
-            universal_newlines=True
-        )
-        out += check_output(
-            [
-                'sudo', 'docker', 'system', 
-                'prune', '-f'
-            ],
-            universal_newlines=True
-        )
-        out += check_output(
-            [
-                'sudo', 'docker-compose', 'up', 
-                '-d', '--build', '--remove-orphans',
-                'gitea', 'gitea_db'
-            ],
-            universal_newlines=True
-        )
+        containers = ['gitea', 'gitea_db']
 
-        return out
+        self.docker.compose_stop(containers)
+        self.docker.system_prune()
+        self.docker.compose_up(containers)
 
     def access(self):
         out = check_output(
@@ -81,32 +64,16 @@ class Gitea():
         return out        
 
     def clean(self):
-        out = check_output(
-            [
-                'sudo', 'docker-compose', 'stop', 
-                'gitea', 'gitea_db' 
-            ],
-            universal_newlines=True
-        )
+        containers = ['gitea', 'gitea_db']
 
-        out += check_output(
-            [
-                'sudo', 'docker', 'system', 
-                'prune', '-a', '-f' 
-            ],
-            universal_newlines=True
-        )
-
-        cmd = ['sudo', 'rm', '-rf'] +                                           \
-            self.cfg['gitea']['related_data_dirs']
-
-        out += check_output(
-            cmd,
-            universal_newlines=True
-        )
-
-        return out        
+        self.docker.compose_stop(containers)
+        self.docker.system_prune_all()
         
+        check_output(
+            ['sudo', 'rm', '-rf'] +                                             \
+            self.cfg['gitea']['related_data_dirs'],
+            universal_newlines=True
+        )
 
     def setup(self):
         # Create organization
@@ -128,19 +95,10 @@ class Gitea():
         # Select the config user from a list of users currently
         #   available on Gitea. Returns nothing if the user
         #   does not exist
-        dockerCmd = (
+        out = self.__giteaExecAsGit(
             'gitea admin user list | grep ' +           
             self.cfg['gitea']['user'] +                               
             ' | tr -s \' \' | cut -d \' \' -f 2'
-        )        
-
-        out = check_output(
-            [
-                'sudo', 'docker', 'exec', '-it', 'gitea',
-                'su', 'git', 'bash', '-c',
-                '""' + dockerCmd + '""'
-            ],
-            universal_newlines=True
         )
 
         userFound = out.strip()
@@ -154,23 +112,13 @@ class Gitea():
         if password is None:
             password=self.cfg['gitea']['password']
        
-        dockerCmd = (
+        self.__giteaExecAsGit(
             'gitea admin user create --admin'
             ' --username ' + self.cfg['gitea']['user'] + 
             ' --email ' + self.cfg['gitea']['email'] +
             ' --password ' + password + 
             ' --must-change-password=false'
-        )
-                    
-        out = check_output(
-            [
-                'sudo', 'docker', 'exec', '-it', 'gitea',
-                'su', 'git', 'bash', '-c',
-                '""' + dockerCmd + '""'
-            ],
-            universal_newlines=True
-        )
-                    
+        )                    
    
     def __copyLatestContentRepo(self):
         # Pull from remote to local, assuming local does not have uncommitted changes
@@ -282,4 +230,12 @@ class Gitea():
         if tokenID != None:
             url = self.cfg['gitea']['api']['tokens'] + '/' + str(tokenID)
             self.api.delete(url=url)
+
+    # Execute a shell script inside the gitea container
+    def __giteaExecAsGit(self, dockerCmd):
+        out = self.docker.dexec(
+            ['gitea'], 
+            ['su', 'git', 'bash', '-c', 
+             '""' + dockerCmd + '""'])
+        return out        
 
