@@ -55,7 +55,6 @@ class Semaphore():
             self.wasTokenGenerated = True
             self.activeToken = json.loads(r.text)['id']
         
-        print(self.activeToken)
         return True
 
     def runTask(self):
@@ -104,7 +103,24 @@ class Semaphore():
         self.__copyPrivateKey()
 
     def __createProject(self):
-        return
+        id = self.api.getIDFromName(
+            url=self.cfg['semaphore']['api']['projects'],
+            key='name', name='Management'
+        )
+
+        if id == None:
+            r = self.api.post(
+                url = self.cfg['semaphore']['api']['projects'],
+                data = (
+                    '{'
+                        '"name": "Management", '
+                        '"alert": false'
+                    '}'
+                )
+            )
+            id = json.loads(r.text)['id']
+
+        self.managementProjectID = id
 
     def __createKey(self):
         return
