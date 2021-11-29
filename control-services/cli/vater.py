@@ -99,9 +99,10 @@ def access(config, args):
         return
     elif args.service == 'semaphore':
         s = Semaphore(config)
-        s.access()
+        s.access_semaphore()
     elif args.service == 'semaphore_db':
-        return
+        s = Semaphore(config)
+        s.access_semaphore_db()
 
 def loginGitea(g):
     while True:
