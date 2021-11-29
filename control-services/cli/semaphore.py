@@ -73,19 +73,53 @@ class Semaphore():
         return
 
     def setup(self):
-        # Create management project
-        self.__createProject(
-            'Management'
+        # Create the management project
+        name = 'Management'
+        self.managementProjectId = self.__createItemAndID(
+            name = name,
+            url=self.cfg['semaphore']['api']['projects'],
+            data = (
+                '{'
+                    '"name": "' + name + '", '
+                    '"alert": false'
+                '}'
+            )
         )
 
         # Update the URLs with the new project ID
         self.__updateApiUrlsManagementId()
         
         # Create Key of type None
-        self.__createNoneKey()
+        name = 'NoneKey'
+        self.noneKeyId = self.__createItemAndID(
+            name = name,
+            url=self.cfg['semaphore']['api']['project_keys'],
+            data = (
+                '{'
+                    '"name": "' + name + '", '
+                    '"type": "None", '
+                    '"project_id": "' + str(self.managementProjectId) + '", '
+                '}'
+            )
+        )
 
-        # Create Key of type None LP
-        self.__createLPKey()
+        name = 'NoneKeyLP'
+        self.noneKeyLPId = self.__createItemAndID(
+            name = name,
+            url=self.cfg['semaphore']['api']['project_keys'],
+            data = (
+                '{'
+                    '"name": "' + name + '", '
+                    '"type": "login_password", '
+                    '"login_password": '
+                        '{'
+                            '"login": "", '
+                            '"password": "none" '
+                        '}, '
+                    '"project_id": "' + str(self.managementProjectId) + '", '
+                '}'
+            )
+        )
 
         # Create content repo
         self.__createRepository()
@@ -107,33 +141,6 @@ class Semaphore():
 
         self.__copyPrivateKey()
 
-    def __createProject(self, name):
-        id = self.api.getIDFromName(
-            url=self.cfg['semaphore']['api']['projects'],
-            key='name', name=name
-        )
-
-        if id == None:
-            r = self.api.post(
-                url = self.cfg['semaphore']['api']['projects'],
-                data = (
-                    '{'
-                        '"name": "' + name + '", '
-                        '"alert": false'
-                    '}'
-                )
-            )
-            id = json.loads(r.text)['id']
-
-        print(id)
-        self.managementProjectId = id
-
-    def __createNoneKey(self):
-        return
-
-    def __createLPKey(self):
-        return
-
     def __createRepository(self):
         return
 
@@ -152,9 +159,28 @@ class Semaphore():
     def __copyPrivateKey(self):
         return
 
+    # Helper function that checks to see if there is an
+    #   item based on it's name and if there is not,
+    #   it creates the item from the provided data and
+    #   returns the ID
+    def __createItemAndID(self, url, name, data):
+        id = self.api.getIDFromName(
+            url=url,
+            key='name', name=name
+        )
+
+        if id == None:
+            r = self.api.post(url, data)
+            id = json.loads(r.text)['id']
+
+        # Turn on with debug option
+        print(name + ': ' + str(id))
+
+        return id
+
     def __updateApiUrlsManagementId(self):
         for key, url in self.cfg['semaphore']['api'].items():
-            url = url.replace(
+            self.cfg['semaphore']['api'][key] = url.replace(
                 '#', str(self.managementProjectId)
             )
 #
