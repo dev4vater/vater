@@ -74,13 +74,18 @@ class Semaphore():
 
     def setup(self):
         # Create management project
-        self.__createProject()
+        self.__createProject(
+            'Management'
+        )
+
+        # Update the URLs with the new project ID
+        self.__updateApiUrlsManagementId()
         
         # Create Key of type None
-        self.__createKey()
+        self.__createNoneKey()
 
         # Create Key of type None LP
-        self.__createKey()
+        self.__createLPKey()
 
         # Create content repo
         self.__createRepository()
@@ -102,10 +107,10 @@ class Semaphore():
 
         self.__copyPrivateKey()
 
-    def __createProject(self):
+    def __createProject(self, name):
         id = self.api.getIDFromName(
             url=self.cfg['semaphore']['api']['projects'],
-            key='name', name='Management'
+            key='name', name=name
         )
 
         if id == None:
@@ -113,18 +118,20 @@ class Semaphore():
                 url = self.cfg['semaphore']['api']['projects'],
                 data = (
                     '{'
-                        '"name": "Management", '
+                        '"name": "' + name + '", '
                         '"alert": false'
                     '}'
                 )
             )
             id = json.loads(r.text)['id']
 
+        print(id)
         self.managementProjectId = id
 
-        self.__updateApiUrlsManagementId()
+    def __createNoneKey(self):
+        return
 
-    def __createKey(self):
+    def __createLPKey(self):
         return
 
     def __createRepository(self):
