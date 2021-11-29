@@ -29,21 +29,32 @@ def init(config, args):
     return
 
 def task(config, args):
-    return
+    s = Semaphore(config)
+    loginSemaphore(s)
+    s.runTask(
+        args.name, args.classID, args.size
+    )
 
 def sync(config, args):
-    g = loginGitea()
+    g = Gitea(config)
+    loginGitea(g)
     g.syncContentRepo()
 
 def stop(config, args):
     if args.service == 'all':
         args.service = config.cfg['service_list']
 
-    if args.service == 'gitea':
-        g = loginGitea(config)
+    services = []
+    services.append(args.service)
+
+    for service in services:
+        if service == 'gitea':
+            g = Gitea(config)
+            g.stop()
         
-    if service == 'semaphore':
-        return
+        if service == 'semaphore':
+            s = Semaphore(config)
+            s.stop()
 
 def restart(config, args):
     if args.service == 'all':
@@ -60,7 +71,9 @@ def restart(config, args):
             g.setup()
         if service == 'semaphore':
             s = Semaphore(config)
+            s.restartContainer()
             loginSemaphore(s)
+            s.setup()
 
 def clean(config, args):
     if args.service == 'all':
@@ -68,23 +81,25 @@ def clean(config, args):
 
     services = []
     services.append(args.service)
+
     for service in services:
         if args.service == 'gitea':
             g = Gitea(config)
             g.clean()
         if service == 'semaphore':
-            return
+            s = Semaphore(config)
+            s.clean()
 
 def access(config, args):
     if args.service == 'gitea':
         g = Gitea(config)
         g.access()
-        return
     elif args.service == 'gitea_db':
         print('Not implemented')
         return
     elif args.service == 'semaphore':
-        return
+        s = Semaphore(config)
+        s.access()
     elif args.service == 'semaphore_db':
         return
 
