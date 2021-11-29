@@ -77,7 +77,7 @@ class Semaphore():
         name = 'Management'
         self.managementProjectId = self.__createItemAndID(
             name = name,
-            url=self.cfg['semaphore']['api']['projects'],
+            url = self.cfg['semaphore']['api']['projects'],
             data = (
                 '{'
                     '"name": "' + name + '", '
@@ -93,7 +93,7 @@ class Semaphore():
         name = 'NoneKey'
         self.noneKeyId = self.__createItemAndID(
             name = name,
-            url=self.cfg['semaphore']['api']['project_keys'],
+            url = self.cfg['semaphore']['api']['project_keys'],
             data = (
                 '{'
                     '"name": "' + name + '", '
@@ -106,7 +106,7 @@ class Semaphore():
         name = 'NoneKeyLP'
         self.noneKeyLPId = self.__createItemAndID(
             name = name,
-            url=self.cfg['semaphore']['api']['project_keys'],
+            url = self.cfg['semaphore']['api']['project_keys'],
             data = (
                 '{'
                     '"name": "' + name + '", '
@@ -125,25 +125,154 @@ class Semaphore():
         name = 'Playbooks'
         self.repositoryId = self.__createItemAndID(
             name = name,
-            url=self.cfg['semaphore']['api']['project_repos'],
+            url = self.cfg['semaphore']['api']['project_repos'],
             data = (
                 '{'
                     '"name": "' + name + '", '
                     '"project_id": "' + str(self.managementProjectId) + '", '
-                    '"git_url": "' + str(self.cfg['gitea']['config_repo_url']) + '", '
+                    '"git_url": "' + self.cfg['gitea']['config_repo_url'] + '", '
                     '"ssh_key_id": ' + str(self.noneKeyId) + ''
                 '}'
             )
         )
 
         # Create vCenter inventory
-        self.__createInventory()
+        name = 'vCenter'
+        self.vCenterInvId = self.__createItemAndID(
+            name = name,
+            url = self.cfg['semaphore']['api']['project_inventory'],
+            data = (
+                '{'
+                    '"name": "' + name + '", '
+                    '"project_id": "' + str(self.managementProjectId) + '", '
+                    '"inventory": "' + self.cfg['content_repo']['vCenter_inventory_path'] + '", '
+                    '"key_id": "' + str(self.noneKeyLPId) + '", '
+                    '"ssh_key_id": ' + str(self.noneKeyId) + ', '
+                    '"type": "file"'
+                '}'
+            )
+        )
 
         # Create localhost inventory
-        self.__createInventory()
+        name = 'localhost'
+        self.localhostInvId = self.__createItemAndID(
+            name = name,
+            url = self.cfg['semaphore']['api']['project_inventory'],
+            data = (
+                '{'
+                    '"name": "' + name + '", '
+                    '"project_id": "' + str(self.managementProjectId) + '", '
+                    '"inventory": "'  
+                        '"'
+                            '[LOCALHOST]\\n' + self.cfg['host']['ip'] + ''
+                        '", '
+                    '"key_id": "' + str(self.noneKeyLPId) + '", '
+                    '"ssh_key_id": ' + str(self.noneKeyId) + ', '
+                    '"type": "static"'
+                '}'
+            )
+        )
 
         # Create environment
-        self.__createEnvironment()
+        name = 'Env'
+        self.envId = self.__createItemAndID(
+            name = name,
+            url=self.cfg['semaphore']['api']['project_environment'],
+            data = (
+                '{'
+                    '"name": "' + name + '", '
+                    '"project_id": "' + str(self.managementProjectId) + '", '
+                    '"json": '  
+                        '"{'
+                            '\\"api_key\\": \\"' + self.activeToken + '\\",'
+                            '\\"controlIP\\": \\"' + self.cfg['host']['ip'] + '\\",'
+                            '\\"playbookRepositoryURL\\": \\"' + self.cfg['gitea']['config_repo_url'] + '\\",'
+                            '\\"ansiblePathInRepository\\": \\"' + self.cfg['content_repo']['ansible_dir'] + '\\",'
+                            '\\"terraformPathInRepositoryOnControl\\": \\"' + self.cfg['host']['terraform_path'] + '\\"'
+                        '}"'
+                '}'
+            )
+        )
+
+        name = 'Create Class'
+        self.__createItemAndID(
+            name = name,
+            key = 'alias',
+            url=self.cfg['semaphore']['api']['project_template'],
+            data = (
+                '{'
+                    '"ssh_key_id": ' + str(self.noneKeyId) +  ', '
+                    '"project_id": ' + str(self.managementProjectId) + ', '
+                    '"inventory_id": ' + str(self.localhostInvId) + ', '
+                    '"repository_id": ' + str(self.repositoryId) + ', '
+                    '"environment_id": ' + str(self.envId) + ', '
+                    '"alias": "' + name + '", '
+                    '"playbook": "' + self.cfg['content_repo']['playbooks']['createClass'] + '", '
+                    '"arguments": "[]", '
+                    '"override_args": false}'
+                '}'
+            )
+        )
+
+        name = 'Build ISOs'
+        self.__createItemAndID(
+            name = name,
+            key = 'alias',
+            url=self.cfg['semaphore']['api']['project_template'],
+            data = (
+                '{'
+                    '"ssh_key_id": ' + str(self.noneKeyId) +  ', '
+                    '"project_id": ' + str(self.managementProjectId) + ', '
+                    '"inventory_id": ' + str(self.localhostInvId) + ', '
+                    '"repository_id": ' + str(self.repositoryId) + ', '
+                    '"environment_id": ' + str(self.envId) + ', '
+                    '"alias": "' + name + '", '
+                    '"playbook": "' + self.cfg['content_repo']['playbooks']['buildISOs'] + '", '
+                    '"arguments": "[]", '
+                    '"override_args": false}'
+                '}'
+            )
+        )
+
+        name = 'Build VMs'
+        self.__createItemAndID(
+            name = name,
+            key = 'alias',
+            url=self.cfg['semaphore']['api']['project_template'],
+            data = (
+                '{'
+                    '"ssh_key_id": ' + str(self.noneKeyId) +  ', '
+                    '"project_id": ' + str(self.managementProjectId) + ', '
+                    '"inventory_id": ' + str(self.localhostInvId) + ', '
+                    '"repository_id": ' + str(self.repositoryId) + ', '
+                    '"environment_id": ' + str(self.envId) + ', '
+                    '"alias": "' + name + '", '
+                    '"playbook": "' + self.cfg['content_repo']['playbooks']['buildVMs'] + '", '
+                    '"arguments": "[]", '
+                    '"override_args": false}'
+                '}'
+            )
+        )
+
+        name = 'Get VM Info'
+        self.__createItemAndID(
+            name = name,
+            key = 'alias',
+            url=self.cfg['semaphore']['api']['project_template'],
+            data = (
+                '{'
+                    '"ssh_key_id": ' + str(self.noneKeyId) +  ', '
+                    '"project_id": ' + str(self.managementProjectId) + ', '
+                    '"inventory_id": ' + str(self.vCenterInvId) + ', '
+                    '"repository_id": ' + str(self.repositoryId) + ', '
+                    '"environment_id": ' + str(self.envId) + ', '
+                    '"alias": "' + name + '", '
+                    '"playbook": "' + self.cfg['content_repo']['playbooks']['getVmInfo'] + '", '
+                    '"arguments": "[]", '
+                    '"override_args": false}'
+                '}'
+            )
+        )
 
         if self.wasTokenGenerated:
             self.updateEnvironment()
@@ -152,15 +281,6 @@ class Semaphore():
         #   it's moved in setup.sh
 
         self.__copyPrivateKey()
-
-    def __createInventory(self):
-        return
-
-    def __createEnvironment(self):
-        return
-
-    def __updateEnvironment(self):
-        return
 
     def __createTaskTemplate(self):
         return
@@ -172,10 +292,10 @@ class Semaphore():
     #   item based on it's name and if there is not,
     #   it creates the item from the provided data and
     #   returns the ID
-    def __createItemAndID(self, url, name, data):
+    def __createItemAndID(self, url, name, data, key='name'):
         id = self.api.getIDFromName(
             url=url,
-            key='name', name=name
+            key=key, name=name
         )
 
         if id == None:
