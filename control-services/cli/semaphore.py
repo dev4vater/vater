@@ -122,7 +122,19 @@ class Semaphore():
         )
 
         # Create content repo
-        self.__createRepository()
+        name = 'Playbooks'
+        self.repositoryId = self.__createItemAndID(
+            name = name,
+            url=self.cfg['semaphore']['api']['project_repos'],
+            data = (
+                '{'
+                    '"name": "' + name + '", '
+                    '"project_id": "' + str(self.managementProjectId) + '", '
+                    '"git_url": "' + str(self.cfg['gitea']['config_repo_url']) + '", '
+                    '"ssh_key_id": ' + str(self.noneKeyId) + ''
+                '}'
+            )
+        )
 
         # Create vCenter inventory
         self.__createInventory()
@@ -140,9 +152,6 @@ class Semaphore():
         #   it's moved in setup.sh
 
         self.__copyPrivateKey()
-
-    def __createRepository(self):
-        return
 
     def __createInventory(self):
         return
@@ -174,7 +183,7 @@ class Semaphore():
             id = json.loads(r.text)['id']
 
         # Turn on with debug option
-        print(name + ': ' + str(id))
+        print(name + ' ID: ' + str(id))
 
         return id
 
