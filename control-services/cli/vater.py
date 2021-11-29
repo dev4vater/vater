@@ -1,6 +1,7 @@
 from parser import Parser
 from config import Config
 from gitea import Gitea
+from semaphore import Semaphore
 from vDocker import VDocker
 import getpass as gp
 
@@ -31,7 +32,7 @@ def task(config, args):
     return
 
 def sync(config, args):
-    g = loginGitea(config)
+    g = loginGitea()
     g.syncContentRepo()
 
 def stop(config, args):
@@ -55,10 +56,11 @@ def restart(config, args):
         if service == 'gitea':
             g = Gitea(config)
             g.restartContainer()
-            loginGitea(g, config)
+            loginGitea(g)
             g.setup()
         if service == 'semaphore':
-            return
+            s = Semaphore(config)
+            loginSemaphore(s)
 
 def clean(config, args):
     if args.service == 'all':
@@ -86,10 +88,16 @@ def access(config, args):
     elif args.service == 'semaphore_db':
         return
 
-def loginGitea(g, config):
+def loginGitea(g):
     while True:
         password = gp.getpass(prompt='Password: ')
         if(g.login(password=password)):
+            break
+
+def loginSemaphore(s):
+    while True:
+        password = gp.getpass(prompt='Password: ')
+        if(s.login(password=password)):
             break
 
 if __name__ == "__main__":
