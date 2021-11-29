@@ -9,6 +9,7 @@ class Semaphore():
     def __init__(self, configs):
         self.api = Api()
         self.cfg = configs.cfg 
+        self.wasTokenGenerated = False
 
     def login(self, password=None):
         if password is None:
@@ -51,10 +52,80 @@ class Semaphore():
             r = self.api.post(
                     url=self.cfg['semaphore']['api']['tokens'],
                 )
+            self.wasTokenGenerated = True
             self.activeToken = json.loads(r.text)['id']
         
         print(self.activeToken)
         return True
+
+    def runTask(self):
+        return
+
+    def restartContainer(self):
+        return
+
+    def access(self):
+        return
+
+    def clean(self):
+        return
+
+    def stop(self):
+        return
+
+    def setup(self):
+        # Create management project
+        self.__createProject()
+        
+        # Create Key of type None
+        self.__createKey()
+
+        # Create Key of type None LP
+        self.__createKey()
+
+        # Create content repo
+        self.__createRepository()
+
+        # Create vCenter inventory
+        self.__createInventory()
+
+        # Create localhost inventory
+        self.__createInventory()
+
+        # Create environment
+        self.__createEnvironment()
+
+        if self.wasTokenGenerated:
+            self.updateEnvironment()
+        
+        # I don't see where the key semaphore is used, but
+        #   it's moved in setup.sh
+
+        self.__copyPrivateKey()
+
+    def __createProject(self):
+        return
+
+    def __createKey(self):
+        return
+
+    def __createRepository(self):
+        return
+
+    def __createInventory(self):
+        return
+
+    def __createEnvironment(self):
+        return
+
+    def __updateEnvironment(self):
+        return
+
+    def __createTaskTemplate(self):
+        return
+
+    def __copyPrivateKey(self):
+        return
 #
 #    def restartContainer(self):
 #        out = check_output(
