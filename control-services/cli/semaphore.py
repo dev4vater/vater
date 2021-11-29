@@ -120,7 +120,9 @@ class Semaphore():
             )
             id = json.loads(r.text)['id']
 
-        self.managementProjectID = id
+        self.managementProjectId = id
+
+        self.__updateApiUrlsManagementId()
 
     def __createKey(self):
         return
@@ -142,6 +144,12 @@ class Semaphore():
 
     def __copyPrivateKey(self):
         return
+
+    def __updateApiUrlsManagementId(self):
+        for key, url in self.cfg['semaphore']['api'].items():
+            url = url.replace(
+                '#', str(self.managementProjectId)
+            )
 #
 #    def restartContainer(self):
 #        out = check_output(
