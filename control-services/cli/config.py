@@ -178,6 +178,11 @@ class Config():
             'gitea_db_password=' + cfg['gitea_db']['password']
         )
 
+        cfg['docker']['env'].append(
+            'semaphore_admin_password=' + cfg['semaphore']['password']
+        )
+        
+
         with open(envPath, 'w') as f:
             for var in cfg['docker']['env']:
                 f.writelines(var + '\n') 
