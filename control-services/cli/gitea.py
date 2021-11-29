@@ -193,7 +193,7 @@ class Gitea():
             )
         
     def __createContentRepo(self):
-        # Check to see if the repo exists before trying to create it            universal_newlines=True
+        # Check to see if the repo exists before trying to create it
         repoID = self.api.getIDFromName(
             url=self.cfg['gitea']['api']['content_repo'],
             key='name', name=self.cfg['content_repo']['name']
