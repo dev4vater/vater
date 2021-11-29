@@ -17,6 +17,21 @@ class Config():
 
         # name, org_or_user, terraform_dir, ansible_dir
         cfg['content_repo'] = __configs['repos'][0]['content_repo']
+        cfg['content_repo']['vCenter_inventory_path'] =                                     \
+            cfg['content_repo']['ansible_dir'] + '/vm.vmware.yml' 
+
+        cfg['content_repo']['playbooks'] = {}
+        cfg['content_repo']['playbooks']['createClass'] =                                   \
+            cfg['content_repo']['ansible_dir'] + '/createClass.yml' 
+
+        cfg['content_repo']['playbooks']['buildISOs'] =                                     \
+            cfg['content_repo']['ansible_dir'] + '/builders/buildISOs.yml' 
+
+        cfg['content_repo']['playbooks']['buildVMs'] =                                      \
+            cfg['content_repo']['ansible_dir'] + '/builders/buildVMs.yml' 
+
+        cfg['content_repo']['playbooks']['getVmInfo'] =                                     \
+            cfg['content_repo']['ansible_dir'] + '/get.vm.info.yml' 
 
         ### Host variables
  
