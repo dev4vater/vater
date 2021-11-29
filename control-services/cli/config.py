@@ -142,6 +142,13 @@ class Config():
         cfg['semaphore']['api_url'] =                                                       \
             cfg['semaphore']['url'] + 'api/'
 
+        cfg['semaphore']['data_dir'] =                                                      \
+            cfg['host']['project_path'] + cfg['vater_repo']['name'] + '/' +                 \
+            cfg['vater_repo']['rel_data_dir'] + 'semaphore/'
+        
+        cfg['semaphore']['related_data_dirs'] =                                             \
+            glob.glob(cfg['semaphore']['data_dir'][:-1] + '*')
+
         # Many of the APIs have IDs in the middle, so we insert a '#' once in the
         #   URL to represent the project ID
         cfg['semaphore']['api'] = {}
@@ -168,6 +175,9 @@ class Config():
 
         cfg['semaphore']['api']['project_template'] =                                       \
             cfg['semaphore']['api_url'] + 'project/#/templates'
+
+        cfg['semaphore']['private_key'] =                                                   \
+            cfg['dev']['ssh_path'] + 'semaphore'
 
         # Semaphore Database
 
