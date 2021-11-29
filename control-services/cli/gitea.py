@@ -72,6 +72,9 @@ class Gitea():
             universal_newlines=True
         )
 
+    def stop(self):
+        return
+
     def setup(self):
         # Create organization
         self.__createOrg()
