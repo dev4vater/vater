@@ -67,6 +67,11 @@ class Parser():
 
         self.__parser_task.add_argument(
             'name',
+            help = 'The name of the task to execute',
+        )
+
+        self.__parser_task.add_argument(
+            'classID',
             help = 'A class name formatted class#####',
         )
 
