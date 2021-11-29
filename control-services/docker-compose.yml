@@ -117,7 +117,7 @@ services:
       - SEMAPHORE_DB_PORT=3306
       - SEMAPHORE_DB=semaphore
       - SEMAPHORE_PLAYBOOK_PATH=/data/semaphore/
-      - SEMAPHORE_ADMIN_PASSWORD=cangetin
+      - SEMAPHORE_ADMIN_PASSWORD=${semaphore_admin_password}
       - SEMAPHORE_ADMIN_NAME=admin
       - SEMAPHORE_ADMIN_EMAIL=admin@localhost
       - SEMAPHORE_ADMIN=admin
