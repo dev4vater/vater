@@ -1,6 +1,7 @@
 import requests
 import json
 import pprint
+import sys
 
 class Api:
     def __init__(self):
