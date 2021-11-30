@@ -25,7 +25,7 @@ class Gitea():
             self.__createConfigUser(password=password)
 
         # Confirm we can get a list of tokens, which requires auth
-        r = self.api.s.get(url=self.cfg['gitea']['api']['tokens'])     
+        r = self.api.s.get(url=self.cfg['gitea']['api']['tokens'])
 
         if not r.status_code == 200:
             return False
@@ -55,7 +55,7 @@ class Gitea():
 
     def access(self):
         container = ['gitea']
-        
+
         self.docker.access(
             container, '/bin/bash'
         )
@@ -65,7 +65,7 @@ class Gitea():
 
         self.docker.compose_stop(containers)
         self.docker.system_prune_all()
-        
+
         check_output(
             ['sudo', 'rm', '-rf'] +                                             \
             self.cfg['gitea']['related_data_dirs'],
@@ -96,8 +96,8 @@ class Gitea():
         #   available on Gitea. Returns nothing if the user
         #   does not exist
         out = self.__giteaExecAsGit(
-            'gitea admin user list | grep ' +           
-            self.cfg['gitea']['user'] +                               
+            'gitea admin user list | grep ' +
+            self.cfg['gitea']['user'] +
             ' | tr -s \' \' | cut -d \' \' -f 2'
         )
 
