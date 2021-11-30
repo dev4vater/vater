@@ -1,14 +1,14 @@
 import json
 import pprint
 import subprocess
-import glob 
+import glob
 
 class Config():
     def __init__(self, jsonConfigFile, envPath):
         with open(jsonConfigFile) as f:
-            __configs = json.load(f) 
+            __configs = json.load(f)
 
-        cfg = {}        
+        cfg = {}
 
         ### Repos
 
