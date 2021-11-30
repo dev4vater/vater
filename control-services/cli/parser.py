@@ -1,6 +1,7 @@
 import argparse
 import copy
 from collections import OrderedDict
+import os
 
 class Parser():
     def __init__(self):
@@ -13,10 +14,13 @@ class Parser():
 
         # The path to the configuration file, used
         #   to setup the rest of the parser
+
+        homedir = os.path.expanduser('~')
+
         self.__parser.add_argument(
             '-c', '--configPath',
             help =  'The json conifguration file',
-            default = '../config.json'
+            default = homedir + '/vater/control-services/config.json'
         )
 
         # The path to the env file, used
@@ -24,7 +28,7 @@ class Parser():
         self.__parser.add_argument(
             '-e', '--envPath',
             help =  'The json conifguration file',
-            default = '../.env'
+            default = homedir + '/vater/control-services/.env'
         )
 
         # Grab the configuration path without completely
