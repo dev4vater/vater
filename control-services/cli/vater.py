@@ -51,17 +51,18 @@ def stop(config, args):
         if service == 'gitea':
             g = Gitea(config)
             g.stop()
-        
+
         if service == 'semaphore':
             s = Semaphore(config)
             s.stop()
 
 def restart(config, args):
-    if args.service == 'all':
-        args.service = config.cfg['service_list']
-
     services = []
-    services.append(args.service)
+
+    if args.service == 'all':
+        services.extend(config.cfg['service_list'])
+    else:
+        services.append(args.service)
 
     for service in services:
         if service == 'gitea':
@@ -76,14 +77,15 @@ def restart(config, args):
             s.setup()
 
 def clean(config, args):
-    if args.service == 'all':
-        args.service = config.cfg['service_list']
-
     services = []
-    services.append(args.service)
+
+    if args.service == 'all':
+        services.extend(config.cfg['service_list'])
+    else:
+        services.append(args.service)
 
     for service in services:
-        if args.service == 'gitea':
+        if service == 'gitea':
             g = Gitea(config)
             g.clean()
         if service == 'semaphore':
