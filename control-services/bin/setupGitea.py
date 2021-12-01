@@ -69,7 +69,9 @@ def updateAndCopyRous(configRepoName):
     printNonEmptyStream(stream)
 
     # Display a diff of old repo and new repo
-    stream = os.popen("sudo git diff --diff-filter=r --name-status --compact-summary --color --no-index " + giteaRousDirPath + " " + controlRousGitDirPath)
+#    stream = os.popen("sudo git diff --diff-filter=r --name-status --compact-summary --color --no-index " + giteaRousDirPath + " " + controlRousGitDirPath)
+#    stream = os.popen("sudo git --git-dir " + controlRousGitDirPath + " diff --compact-summary --color --no-index " + giteaRousDirPath + " " + controlRousGitDirPath)
+    stream = os.popen("sudo git  diff --stat --color --no-index " + controlRousDirPath + " " + giteaRousDirPath)
     printNonEmptyStream(stream)
 
     # sudo rm -rf data/gitea/git/$CONFIG_REPO_NAME
@@ -78,8 +80,12 @@ def updateAndCopyRous(configRepoName):
 
     # Copy repo over for gitea to import
     # sudo cp -r /home/control/$CONFIG_REPO_NAME/ data/gitea/git/$CONFIG_REPO_NAME/
-    stream = os.popen("sudo cp -r " + controlRousDirPath + " " + giteaRousDirPath)
+#    stream = os.popen("sudo cp -r " + controlRousDirPath + " " + giteaRousDirPath)
+#    printNonEmptyStream(stream)
+
+    stream = os.popen("git clone " + controlRousDirPath + " " + giteaRousDirPath)
     printNonEmptyStream(stream)
+
 
     # Change the branch to what is expected by Semaphore
     # sudo git --git-dir data/gitea/git/$CONFIG_REPO_NAME/.git branch -m main master
