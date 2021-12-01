@@ -5,7 +5,7 @@ import sys
 
 class Api:
     def __init__(self):
-        
+
         headers = {
             "Content-Type": "application/json",
             "Accept": "application/json"
@@ -17,7 +17,7 @@ class Api:
     def get(self, url, data=''):
         response = self.s.get(url=url, data=data)
         self.__checkStatus(response)
-        return response  
+        return response
 
     def post(self, url, data=''):
         response = self.s.post(url=url, data=data)
@@ -40,6 +40,7 @@ class Api:
         elif response.status_code == 404:
             print("Response 404, URI not found")
         elif response.status_code == 400:
+            pprint.pprint(vars(response))
             print("Response 400, Bad request")
         else:
             print("Operation returned non success status: " + str(response.status_code))
