@@ -33,9 +33,9 @@ class Semaphore():
                     '{'
                         '"auth": "' + self.cfg['semaphore']['user'] + '", '
                         '"password": "' + self.cfg['semaphore']['password'] + '"'
-                    '}'    
-                )   
-            )     
+                    '}'
+                )
+            )
 
         if r.status_code == 401:
             return False
@@ -57,7 +57,7 @@ class Semaphore():
                 )
             self.wasTokenGenerated = True
             self.activeToken = json.loads(r.text)['id']
-        
+
         return True
 
     def runTask(self):
@@ -81,12 +81,12 @@ class Semaphore():
         container = ['semaphore_db']
 
         self.docker.access(
-            container, 
+            container,
                 [
-                    'mysql', 
-                    '-u' + self.cfg['semaphore_db']['user'], 
-                    '-p' + self.cfg['semaphore_db']['password'] 
-                ] 
+                    'mysql',
+                    '-u' + self.cfg['semaphore_db']['user'],
+                    '-p' + self.cfg['semaphore_db']['password']
+                ]
         )
 
     def clean(self):
@@ -120,7 +120,7 @@ class Semaphore():
 
         # Update the URLs with the new project ID
         self.__updateApiUrlsManagementId()
-        
+
         # Create Key of type None
         name = 'NoneKey'
         self.noneKeyId = self.__createItemAndID(
@@ -194,7 +194,7 @@ class Semaphore():
                 '{'
                     '"name": "' + name + '", '
                     '"project_id": ' + str(self.managementProjectId) + ', '
-                    '"inventory": '  
+                    '"inventory": '
                         '"'
                             '[LOCALHOST]\\n' + self.cfg['host']['ip'] + ''
                         '", '
@@ -210,7 +210,7 @@ class Semaphore():
                 '\\"api_key\\": \\"' + self.activeToken + '\\",'
                 '\\"controlIP\\": \\"' + self.cfg['host']['ip'] + '\\",'
                 '\\"playbookRepositoryURL\\": \\"' + self.cfg['gitea']['config_repo_url'] + '\\",'
-                '\\"ansiblePathInRepository\\": \\"' + self.cfg['content_repo']['ansible_dir'] + '\\",'
+                '\\"ansiblePathInRepository\\": \\"' + self.cfg['content_repo']['playbook_dir'] + '\\",'
                 '\\"terraformPathInRepositoryOnControl\\": \\"' + self.cfg['host']['terraform_path'] + '\\"'
             '}"'
         )
@@ -224,23 +224,31 @@ class Semaphore():
                 '{'
                     '"name": "' + name + '", '
                     '"project_id": ' + str(self.managementProjectId) + ', '
-                    '"json": ' + self.env + ''  
+                    '"json": ' + self.env + ''
                 '}'
             )
         )
 
-        if self.wasTokenGenerated:
-            self.api.post(
-                url=self.cfg['semaphore']['api']['project_environment'] + (
-                        '/' + str(self.envId)
-                    ),
-                data = (
-                    '{'
-                    '"json": ' + self.env + ''
-                    '}'
-                ) 
-            )           
-        
+#        print(self.envId)
+#
+#        print('Checking envId one more time')
+#        print(self.api.getIDFromName(url=self.cfg['semaphore']['api']['project_environment'],key='name', name='Env'))
+#
+#        if self.wasTokenGenerated:
+#            self.api.put(
+#                url=self.cfg['semaphore']['api']['project_environment'] + (
+#                        '/' + str(self.envId)
+#                    ),
+#                data = (
+#                    '{'
+#                    '"name": "' + name + '", '
+#                    '"project_id": ' + str(self.managementProjectId) + ', '
+#                    '"environment_id": ' + str(self.envId) + ', '
+#                    '"json": ' + self.env + ''
+#                    '}'
+#                )
+#            )
+#
         name = 'Create Class'
         self.__createItemAndID(
             name = name,
