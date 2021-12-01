@@ -185,7 +185,7 @@ class Semaphore():
             )
         )
 
-        with open('/data/semaphore', 'r') as file:
+        with open(self.cfg.['semaphore']['private_key'], 'r') as file:
             semaphoreSSHKey = file.read().replace('\n','\\n')
         semaphoreSSHKey = semaphoreSSHKey + '\\n'
 
