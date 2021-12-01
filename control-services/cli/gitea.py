@@ -10,7 +10,7 @@ class Gitea():
     def __init__(self, configs):
         self.api = Api()
         self.docker = VDocker(configs)
-        self.cfg = configs.cfg 
+        self.cfg = configs.cfg
 
     def login(self, password=None):
         if password is None:
@@ -199,7 +199,7 @@ class Gitea():
                     '}'
                 )
             )
-        
+
     def __createContentRepo(self):
         # Check to see if the repo exists before trying to create it
         repoID = self.api.getIDFromName(
@@ -213,12 +213,12 @@ class Gitea():
             self.api.post(
                 url = self.cfg['gitea']['api']['repos_migrate'],
                 data = (
-                    '{' 
-                    '"clone_addr": "' + self.cfg['gitea']['container_content_repo'] + '", ' 
-                    '"private": false, '                                      
-                    '"mirror": true, '                                        
-                    '"mirror_interval": "0h0m0s", '                           
-                    '"repo_name": "' + self.cfg['content_repo']['name']  + '", '                                   
+                    '{'
+                    '"clone_addr": "' + self.cfg['gitea']['container_content_repo'] + '", '
+                    '"private": false, '
+                    '"mirror": true, '
+                    '"mirror_interval": "0h0m0s", '
+                    '"repo_name": "' + self.cfg['content_repo']['name']  + '", '
                     '"repo_owner": "' + self.cfg['gitea']['org_or_user'] + '"'
                     '}'
                 )
@@ -239,8 +239,8 @@ class Gitea():
     # Execute a shell script inside the gitea container
     def __giteaExecAsGit(self, dockerCmd):
         out = self.docker.dexec(
-            ['gitea'], 
-            ['su', 'git', 'bash', '-c', 
+            ['gitea'],
+            ['su', 'git', 'bash', '-c',
              '""' + dockerCmd + '""'])
-        return out        
+        return out
 
