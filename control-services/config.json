@@ -9,7 +9,8 @@
             "playbook_dir" : "tasks",
             "name" : "rous",
             "org_or_user" : "uwardlaw",
-            "terraform_dir" : "terraform"
+            "terraform_dir" : "terraform",
+            "vm_dir": "vms"
           },
         "vater_repo" : { 
             "rel_data_dir" : "control-services/data/",

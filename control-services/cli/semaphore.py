@@ -11,7 +11,7 @@ class Semaphore():
     def __init__(self, configs):
         self.api = Api()
         self.cfg = configs.cfg
-        self.docker = VDocker(configs) 
+        self.docker = VDocker(configs)
         self.wasTokenGenerated = False
 
     def login(self, password=None):
@@ -211,6 +211,7 @@ class Semaphore():
                 '\\"controlIP\\": \\"' + self.cfg['host']['ip'] + '\\",'
                 '\\"playbookRepositoryURL\\": \\"' + self.cfg['gitea']['config_repo_url'] + '\\",'
                 '\\"ansiblePathInRepository\\": \\"' + self.cfg['content_repo']['playbook_dir'] + '\\",'
+                '\\"vmPathInRepository\\": \\"' + self.cfg['content_repo']['vm_dir'] + '\\",'
                 '\\"terraformPathInRepositoryOnControl\\": \\"' + self.cfg['host']['terraform_path'] + '\\"'
             '}"'
         )

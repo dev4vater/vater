@@ -15,7 +15,7 @@ class Config():
         # name, org_or_user, rel_data_dir
         cfg['vater_repo'] = __configs['repos'][0]['vater_repo']
 
-        # name, org_or_user, terraform_dir, playbook_dir
+        # name, org_or_user, terraform_dir, playbook_dir, vm_dir
         cfg['content_repo'] = __configs['repos'][0]['content_repo']
         cfg['content_repo']['vCenter_inventory_path'] =                                     \
             cfg['content_repo']['playbook_dir'] + '/vm.vmware.yml'
