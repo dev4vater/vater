@@ -15,26 +15,26 @@ class Config():
         # name, org_or_user, rel_data_dir
         cfg['vater_repo'] = __configs['repos'][0]['vater_repo']
 
-        # name, org_or_user, terraform_dir, ansible_dir
+        # name, org_or_user, terraform_dir, playbook_dir
         cfg['content_repo'] = __configs['repos'][0]['content_repo']
         cfg['content_repo']['vCenter_inventory_path'] =                                     \
-            cfg['content_repo']['ansible_dir'] + '/vm.vmware.yml' 
+            cfg['content_repo']['playbook_dir'] + '/vm.vmware.yml'
 
         cfg['content_repo']['playbooks'] = {}
         cfg['content_repo']['playbooks']['createClass'] =                                   \
-            cfg['content_repo']['ansible_dir'] + '/createClass.yml' 
+            cfg['content_repo']['playbook_dir'] + '/createClass.yml'
 
         cfg['content_repo']['playbooks']['buildISOs'] =                                     \
-            cfg['content_repo']['ansible_dir'] + '/builders/buildISOs.yml' 
+            cfg['content_repo']['playbook_dir'] + '/buildISOs.yml'
 
         cfg['content_repo']['playbooks']['buildVMs'] =                                      \
-            cfg['content_repo']['ansible_dir'] + '/builders/buildVMs.yml' 
+            cfg['content_repo']['playbook_dir'] + '/buildVMs.yml'
 
         cfg['content_repo']['playbooks']['getVmInfo'] =                                     \
-            cfg['content_repo']['ansible_dir'] + '/get.vm.info.yml' 
+            cfg['content_repo']['playbook_dir'] + '/get.vm.info.yml'
 
         ### Host variables
- 
+
         # hostname, project_path
         cfg['host'] = __configs['host']
 
@@ -43,7 +43,7 @@ class Config():
         cfg['host']['ip'] = (output.decode('utf-8').strip())
 
         cfg['host']['content_dir_path'] =                                                   \
-            cfg['host']['project_path'] + cfg['content_repo']['name'] + '/'                 
+            cfg['host']['project_path'] + cfg['content_repo']['name'] + '/'
 
         cfg['host']['content_git_dir_path'] =                                               \
             cfg['host']['content_dir_path'] + '.git/'
