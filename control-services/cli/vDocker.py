@@ -23,6 +23,10 @@ class VDocker():
     def compose_stop(self, containers):
         containers = self.__makeStrList(containers)
 
+        cmd = self.composePreface + [
+                'stop'
+            ] + containers
+
         subprocess.check_output(cmd, universal_newlines=True)
 
     def system_prune(self):
