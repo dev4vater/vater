@@ -88,7 +88,7 @@ class Gitea():
     def syncContentRepo(self):
         self.__copyLatestContentRepo()
         self.api.post(
-            apiPath=self.cfg['gitea']['api']['mirror_sync_url']
+            url=self.cfg['gitea']['api']['mirror_sync_url']
         )
 
     def __configUserExists(self):
@@ -111,15 +111,15 @@ class Gitea():
     def __createConfigUser(self, password=None):
         if password is None:
             password=self.cfg['gitea']['password']
-       
+
         self.__giteaExecAsGit(
             'gitea admin user create --admin'
-            ' --username ' + self.cfg['gitea']['user'] + 
+            ' --username ' + self.cfg['gitea']['user'] +
             ' --email ' + self.cfg['gitea']['email'] +
-            ' --password ' + password + 
+            ' --password ' + password +
             ' --must-change-password=false'
-        )                    
-   
+        )
+
     def __copyLatestContentRepo(self):
         # Pull from remote to local, assuming local does not have uncommitted changes
         # git --git-dir /home/control/$CONFIG_REPO_NAME/.git pull
@@ -132,21 +132,21 @@ class Gitea():
         )
 
         # Check to see if an old repo exists in gitea
-        p = Path(self.cfg['gitea']['content_repo_path'])
-        if p.exists():
+#        p = Path(self.cfg['gitea']['content_repo_path'])
+#        if p.exists():
+#
+#            # Display a diff of old repo and new repo
+#            out += check_output(
+#                [
+#                    'sudo', 'git', 'diff', '--diff-filter=r', '--name-status',
+#                    '--compact-summary', '--color', '--no-index',
+#                    self.cfg['gitea']['content_repo_path'],
+#                    self.cfg['host']['content_dir_path']
+#                ],
+#                universal_newlines=True
+#            )
 
-            # Display a diff of old repo and new repo
-            out += check_output(
-                [
-                    'sudo', 'git', 'diff', '--diff-filter=r', '--name-status',
-                    '--compact-summary', '--color', '--no-index',
-                    self.cfg['gitea']['content_repo_path'],
-                    self.cfg['host']['content_dir_path']
-                ],
-                universal_newlines=True
-            )
-        
-        # sudo rm -rf data/gitea/git/$CONFIG_REPO_NAME
+#        # sudo rm -rf data/gitea/git/$CONFIG_REPO_NAME
         out += check_output(
             [
                 'sudo', 'rm', '-rf', self.cfg['gitea']['content_repo_path']
@@ -158,9 +158,14 @@ class Gitea():
         # sudo cp -r /home/control/$CONFIG_REPO_NAME/ data/gitea/git/$CONFIG_REPO_NAME/
         out += check_output(
             [
-                'sudo', 'cp', '-r', 
+                'sudo', 'git', '--git-dir',
+                self.cfg['host']['content_git_dir_path'],
+                'clone',
                 self.cfg['host']['content_dir_path'],
                 self.cfg['gitea']['content_repo_path']
+#                'sudo', 'cp', '-r', '-u',
+#                self.cfg['host']['content_dir_path'],
+#                self.cfg['gitea']['content_repo_path']
             ],
             universal_newlines=True
         )
@@ -171,7 +176,7 @@ class Gitea():
             [
                 'sudo', 'git', '--git-dir',
                 self.cfg['gitea']['content_repo_git_dir_path'],
-                'branch', '-m', 'main', 'master'
+                'branch', '-m', '-f', 'main', 'master'
             ],
             universal_newlines=True
         )
