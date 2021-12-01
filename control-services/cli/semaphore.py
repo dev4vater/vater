@@ -153,6 +153,31 @@ class Semaphore():
             )
         )
 
+        # Create semaphore key for using ansible on Control
+
+        with open(self.cfg['semaphore']['private_key'], 'r') as file:
+            semaphoreSSHKey = file.read().replace('\n','\\n')
+        semaphoreSSHKey = semaphoreSSHKey + '\\n'
+
+        name = 'control'
+        self.semaphoreKeyId = self.__createItemAndID(
+            name = name,
+            url = self.cfg['semaphore']['api']['project_keys'],
+            data = (
+                '{'
+                    '"name": "' + name + '", '
+                    '"type": "ssh", '
+                    '"ssh": '
+                        '{'
+                            '"login": "", '
+                            '"passphrase": "", '
+                            '"private_key": "' +  semaphoreSSHKey + '"'
+                        '}, '
+                    '"project_id": ' + str(self.managementProjectId) + ''
+                '}'
+            )
+        )
+
         # Create content repo
         name = 'Playbooks'
         self.repositoryId = self.__createItemAndID(
@@ -185,12 +210,27 @@ class Semaphore():
             )
         )
 
-        with open(self.cfg.['semaphore']['private_key'], 'r') as file:
-            semaphoreSSHKey = file.read().replace('\n','\\n')
-        semaphoreSSHKey = semaphoreSSHKey + '\\n'
+        # Create localhost inventory
+        name = 'localhost'
+        self.localhostInvId = self.__createItemAndID(
+            name = name,
+            url = self.cfg['semaphore']['api']['project_inventory'],
+            data = (
+                '{'
+                    '"name": "' + name + '", '
+                    '"project_id": ' + str(self.managementProjectId) + ', '
+                    '"inventory": '
+                        '"'
+                            '[LOCALHOST]\\n' + self.cfg['host']['ip'] + ''
+                        '", '
+                    '"key_id": ' + str(self.noneKeyLPId) + ', '
+                    '"ssh_key_id": ' + str(self.noneKeyLPId) + ', '
+                    '"type": "static"'
+                '}'
+            )
+        )
 
-
-        # Create control inventory
+        # Create localhost inventory
         name = 'control'
         self.controlInvId = self.__createItemAndID(
             name = name,
@@ -199,13 +239,13 @@ class Semaphore():
                 '{'
                     '"name": "' + name + '", '
                     '"project_id": ' + str(self.managementProjectId) + ', '
-                    '"ssh": '
-                        '{'
-                            '"login": "", '
-                            '"passphrase": "", '
-                            '"private_key": "' +  semaphoreSSHKey + '"'
-                        '}, '
-                    '"type": "ssh"'
+                    '"inventory": '
+                        '"'
+                            '[control]\\n' + self.cfg['host']['ip'] + ''
+                        '", '
+                    '"key_id": ' + str(self.noneKeyId) + ', '
+                    '"ssh_key_id": ' + str(self.semaphoreKeyId) + ', '
+                    '"type": "static"'
                 '}'
             )
         )
@@ -216,7 +256,7 @@ class Semaphore():
                 '\\"controlIP\\": \\"' + self.cfg['host']['ip'] + '\\",'
                 '\\"playbookRepositoryURL\\": \\"' + self.cfg['gitea']['config_repo_url'] + '\\",'
                 '\\"ansiblePathInRepository\\": \\"' + self.cfg['content_repo']['playbook_dir'] + '\\",'
-                '\\"vmPathInRepository\\": \\"' + self.cfg['content_repo']['vm_dir'] + '\\",'
+                '\\"vmPathInRepository\\": \\"' + self.cfg['host']['vms_path'] + '\\",'
                 '\\"terraformPathInRepositoryOnControl\\": \\"' + self.cfg['host']['terraform_path'] + '\\"'
             '}"'
         )
