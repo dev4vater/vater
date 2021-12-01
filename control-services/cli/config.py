@@ -15,7 +15,7 @@ class Config():
         # name, org_or_user, rel_data_dir
         cfg['vater_repo'] = __configs['repos'][0]['vater_repo']
 
-        # name, org_or_user, terraform_dir, playbook_dir, vm_dir
+        # name, org_or_user, terraform_dir, playbook_dir, vms_dir
         cfg['content_repo'] = __configs['repos'][0]['content_repo']
         cfg['content_repo']['vCenter_inventory_path'] =                                     \
             cfg['content_repo']['playbook_dir'] + '/vm.vmware.yml'
@@ -50,6 +50,9 @@ class Config():
 
         cfg['host']['terraform_path'] =                                                     \
             cfg['host']['content_dir_path'] + cfg['content_repo']['terraform_dir'] + '/'
+
+        cfg['host']['vms_path'] =                                                           \
+            cfg['host']['content_dir_path'] + cfg['content_repo']['vms_dir'] + '/'
 
         ### Development variables
 
@@ -218,5 +221,5 @@ class Config():
         return json.dumps(self.cfg, indent=4)
 
 # Print for testing
-#c = Config('../config.json', '../.env')
-#print(c)
+c = Config('../config.json', '../.env')
+print(c)

@@ -185,22 +185,27 @@ class Semaphore():
             )
         )
 
-        # Create localhost inventory
-        name = 'localhost'
-        self.localhostInvId = self.__createItemAndID(
+        with open('/data/semaphore', 'r') as file:
+            semaphoreSSHKey = file.read().replace('\n','\\n')
+        semaphoreSSHKey = semaphoreSSHKey + '\\n'
+
+
+        # Create control inventory
+        name = 'control'
+        self.controlInvId = self.__createItemAndID(
             name = name,
             url = self.cfg['semaphore']['api']['project_inventory'],
             data = (
                 '{'
                     '"name": "' + name + '", '
                     '"project_id": ' + str(self.managementProjectId) + ', '
-                    '"inventory": '
-                        '"'
-                            '[LOCALHOST]\\n' + self.cfg['host']['ip'] + ''
-                        '", '
-                    '"key_id": ' + str(self.noneKeyLPId) + ', '
-                    '"ssh_key_id": ' + str(self.noneKeyLPId) + ', '
-                    '"type": "static"'
+                    '"ssh": '
+                        '{'
+                            '"login": "", '
+                            '"passphrase": "", '
+                            '"private_key": "' +  semaphoreSSHKey + '"'
+                        '}, '
+                    '"type": "ssh"'
                 '}'
             )
         )
@@ -279,7 +284,7 @@ class Semaphore():
                 '{'
                     '"ssh_key_id": ' + str(self.noneKeyId) +  ', '
                     '"project_id": ' + str(self.managementProjectId) + ', '
-                    '"inventory_id": ' + str(self.localhostInvId) + ', '
+                    '"inventory_id": ' + str(self.controlInvId) + ', '
                     '"repository_id": ' + str(self.repositoryId) + ', '
                     '"environment_id": ' + str(self.envId) + ', '
                     '"alias": "' + name + '", '
@@ -299,7 +304,7 @@ class Semaphore():
                 '{'
                     '"ssh_key_id": ' + str(self.noneKeyId) +  ', '
                     '"project_id": ' + str(self.managementProjectId) + ', '
-                    '"inventory_id": ' + str(self.localhostInvId) + ', '
+                    '"inventory_id": ' + str(self.controlInvId) + ', '
                     '"repository_id": ' + str(self.repositoryId) + ', '
                     '"environment_id": ' + str(self.envId) + ', '
                     '"alias": "' + name + '", '

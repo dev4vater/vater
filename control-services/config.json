@@ -10,7 +10,7 @@
             "name" : "rous",
             "org_or_user" : "uwardlaw",
             "terraform_dir" : "terraform",
-            "vm_dir": "vms"
+            "vms_dir": "vms"
           },
         "vater_repo" : { 
             "rel_data_dir" : "control-services/data/",
