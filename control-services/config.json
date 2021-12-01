@@ -6,7 +6,7 @@
     },
   "repos" : [ { 
         "content_repo" : { 
-            "ansible_dir" : "ansible",
+            "playbook_dir" : "tasks",
             "name" : "rous",
             "org_or_user" : "uwardlaw",
             "terraform_dir" : "terraform"
