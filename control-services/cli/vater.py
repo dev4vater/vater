@@ -108,13 +108,13 @@ def access(config, args):
 
 def loginGitea(g):
     while True:
-        password = gp.getpass(prompt='Password: ')
+        password = gp.getpass(prompt='Gitea Password: ')
         if(g.login(password=password)):
             break
 
 def loginSemaphore(s):
     while True:
-        password = gp.getpass(prompt='Password: ')
+        password = gp.getpass(prompt='Semaphore Password: ')
         if(s.login(password=password)):
             break
 
