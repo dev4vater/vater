@@ -87,9 +87,9 @@ class Parser():
         ### Sync subparser
         self.__parser_sync = self.__subparsers.add_parser(
             'sync',
-            description =   'Syncs the upstrea content repository'
+            description =   'Syncs the upstream content repository'
                             ' with the Gitea content repository',
-            help =  'Syncs the upstrea content repository'
+            help =  'Syncs the upstream content repository'
                     ' with the Gitea content repository'
         )
 
