@@ -1,1 +1,8 @@
+# From ./vater/.gitignore
 control-services/data
+
+# From ./vater/control-services/.gitignore
+control-services/.env
+
+# From ./vater/control-services/cli/.gitignore
+/control-services/cli/__pycache__ 
