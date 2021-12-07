@@ -50,7 +50,6 @@ class Gitea():
         containers = ['gitea', 'gitea_db']
 
         self.docker.compose_stop(containers)
-        self.docker.system_prune()
         self.docker.compose_up(containers)
 
     def access(self):

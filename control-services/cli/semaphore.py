@@ -6,6 +6,7 @@ import glob
 import json
 import copy
 import pprint
+import time
 
 class Semaphore():
     def __init__(self, configs):
@@ -67,7 +68,6 @@ class Semaphore():
         containers = ['semaphore', 'semaphore_db']
 
         self.docker.compose_stop(containers)
-        self.docker.system_prune()
         self.docker.compose_up(containers)
 
     def access_semaphore(self):
@@ -384,6 +384,19 @@ class Semaphore():
                 self.cfg['semaphore']['data_dir']
             ]
         )
+
+
+    def __getAccessKey(self):
+        out = self.docker.dexec(
+            'semaphore',
+            [
+                '/bin/sh', '-c',
+                '""grep access_key /etc/semaphore/config.json""'
+            ]
+        )
+
+        key = out.split('"')[3]
+        print('Key: ' + key)
 
     # Helper function that checks to see if there is an
     #   item based on it's name and if there is not,
