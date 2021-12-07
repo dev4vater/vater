@@ -33,6 +33,8 @@ class Config():
         cfg['content_repo']['playbooks']['getVmInfo'] =                                     \
             cfg['content_repo']['playbook_dir'] + '/get.vm.info.yml'
 
+        cfg['content_repo']['git_ignore_rel_paths'] = [ ".gitignore"]
+
         ### Host variables
 
         # hostname, project_path
@@ -53,6 +55,18 @@ class Config():
 
         cfg['host']['vms_path'] =                                                           \
             cfg['host']['content_dir_path'] + cfg['content_repo']['vms_dir'] + '/'
+
+        # Go through every .gitignore file & create absolute paths
+        #expanded_paths = []
+        #for rel_path in cfg['content_repo']['git_ignore_rel_paths']:
+        #    abs_path = cfg['host']['content_dir_path'] + rel_path
+        #    with open(abs_path, 'r') as f:
+        #        start_of_path = abs_path.rsplit('/', 1)[0] + '/'
+        #        for line in f:
+        #            if line[0] != '#':
+        #                expanded_paths.append((start_of_path + line)[:-1])
+        #cfg['content_repo']['git_ignore_paths'] = expanded_paths
+        #print(expanded_paths)
 
         ### Development variables
 
@@ -221,5 +235,5 @@ class Config():
         return json.dumps(self.cfg, indent=4)
 
 # Print for testing
-c = Config('../config.json', '../.env')
-print(c)
+#c = Config('../config.json', '../.env')
+#print(c)

@@ -1,6 +1,6 @@
 from api import Api
 from vDocker import VDocker
-from subprocess import check_output
+from subprocess import run, check_output, PIPE, STDOUT
 from pathlib import Path
 import glob
 import json
@@ -131,21 +131,29 @@ class Gitea():
         )
 
         # Check to see if an old repo exists in gitea
-#        p = Path(self.cfg['gitea']['content_repo_path'])
-#        if p.exists():
-#
-#            # Display a diff of old repo and new repo
-#            out += check_output(
-#                [
-#                    'sudo', 'git', 'diff', '--diff-filter=r', '--name-status',
-#                    '--compact-summary', '--color', '--no-index',
-#                    self.cfg['gitea']['content_repo_path'],
-#                    self.cfg['host']['content_dir_path']
-#                ],
-#                universal_newlines=True
-#            )
+        #p = Path(self.cfg['gitea']['content_repo_path'])
+        #if p.exists():
 
-#        # sudo rm -rf data/gitea/git/$CONFIG_REPO_NAME
+            # Display a diff of old repo and new repo
+            # excludes = ['--exclude=' + path for path in self.cfg['content_repo']['git_ignore_paths']]
+    
+           #print(excludes)
+           #output = run(
+            #    [
+            #        'sudo', 'diff', '--color', 
+            #        '--recursive', '--brief'
+            #    ] + excludes +
+            #    [
+            #        self.cfg['gitea']['content_repo_path'],
+            #        self.cfg['host']['content_dir_path']
+            #    ],
+            #    stdout=PIPE, stderr=STDOUT, universal_newlines=True
+           # )
+        #out += output.stdout
+        #print(output.stdout)
+        #print(output.stderr)
+
+        # sudo rm -rf data/gitea/git/$CONFIG_REPO_NAME
         out += check_output(
             [
                 'sudo', 'rm', '-rf', self.cfg['gitea']['content_repo_path']
