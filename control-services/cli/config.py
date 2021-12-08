@@ -56,17 +56,24 @@ class Config():
         cfg['host']['vms_path'] =                                                           \
             cfg['host']['content_dir_path'] + cfg['content_repo']['vms_dir'] + '/'
 
-        # Go through every .gitignore file & create absolute paths
-        #expanded_paths = []
-        #for rel_path in cfg['content_repo']['git_ignore_rel_paths']:
-        #    abs_path = cfg['host']['content_dir_path'] + rel_path
-        #    with open(abs_path, 'r') as f:
-        #        start_of_path = abs_path.rsplit('/', 1)[0] + '/'
-        #        for line in f:
-        #            if line[0] != '#':
-        #                expanded_paths.append((start_of_path + line)[:-1])
-        #cfg['content_repo']['git_ignore_paths'] = expanded_paths
-        #print(expanded_paths)
+        # Go through every .gitignore file & create list of entries
+        entries = []
+        for rel_path in cfg['content_repo']['git_ignore_rel_paths']:
+            abs_path = cfg['host']['content_dir_path'] + rel_path
+            with open(abs_path, 'r') as f:
+                for line in f:
+                    if line[0] != '#' and line[0] != '\n':
+                        start_of_path = abs_path.rsplit('/', 1)[0] + '/'
+                        line = ((start_of_path + line)[:-1]).rstrip()
+                        if line[len(line)-1] == '/':
+                            entries.append(line[:-1])
+                            line += "**"
+                        if '*' in line:
+                            entries = entries + glob.glob(line, recursive=True)
+                            entries.append(line.replace("*", ""))
+                        else:    
+                            entries.append(line)
+        cfg['content_repo']['git_ignore_entries'] = entries
 
         ### Development variables
 

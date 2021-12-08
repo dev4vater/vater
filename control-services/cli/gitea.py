@@ -131,28 +131,36 @@ class Gitea():
         )
 
         # Check to see if an old repo exists in gitea
-        #p = Path(self.cfg['gitea']['content_repo_path'])
-        #if p.exists():
+        p = Path(self.cfg['gitea']['content_repo_path'])
+        if p.exists():
 
             # Display a diff of old repo and new repo
-            # excludes = ['--exclude=' + path for path in self.cfg['content_repo']['git_ignore_paths']]
-    
-           #print(excludes)
-           #output = run(
-            #    [
-            #        'sudo', 'diff', '--color', 
-            #        '--recursive', '--brief'
-            #    ] + excludes +
-            #    [
-            #        self.cfg['gitea']['content_repo_path'],
-            #        self.cfg['host']['content_dir_path']
-            #    ],
-            #    stdout=PIPE, stderr=STDOUT, universal_newlines=True
-           # )
-        #out += output.stdout
-        #print(output.stdout)
-        #print(output.stderr)
+            output = run(
+                [
+                    'sudo', 'diff', '--color', 
+                    '--recursive', '--brief',
+                    self.cfg['gitea']['content_repo_path'],
+                    self.cfg['host']['content_dir_path']
+                ],
+                stdout=PIPE, stderr=STDOUT, universal_newlines=True
+            )
 
+            # Filter .gitignore entries from diff results
+            diff_results = output.stdout.splitlines()
+            temp = []
+            for entry in self.cfg['content_repo']['git_ignore_entries']:
+                for result in diff_results:
+                    edited_result = result.replace(": ", "/")
+                    if entry not in edited_result:
+                         temp.append(result)
+                diff_results = temp
+                temp = []
+            
+            formatted_results = '\n'.join(result for result in diff_results)
+            out += formatted_results
+            print(output.stderr)
+            print(formatted_results)
+            
         # sudo rm -rf data/gitea/git/$CONFIG_REPO_NAME
         out += check_output(
             [
