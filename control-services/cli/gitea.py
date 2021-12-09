@@ -133,34 +133,25 @@ class Gitea():
         # Check to see if an old repo exists in gitea
         p = Path(self.cfg['gitea']['content_repo_path'])
         if p.exists():
-
             # Display a diff of old repo and new repo
+            git_rev_par_output = run (
+                [
+                    'git', '--git-dir=' + self.cfg['gitea']['content_repo_path']+ '/.git',
+                    'rev-parse', '--verify', 'HEAD'
+                ], 
+                stdout=PIPE
+            )   
+
             output = run(
                 [
-                    'sudo', 'diff', '--color', 
-                    '--recursive', '--brief',
-                    self.cfg['gitea']['content_repo_path'],
-                    self.cfg['host']['content_dir_path']
+                    'git', 'diff-tree', '--color', '--compact-summary',
+                    git_rev_par_output.stdout.rstrip(), 'HEAD'
                 ],
+                env={'GIT_ALTERNATE_OBJECT_DIRECTORIES': self.cfg['host']['content_git_dir_path'] + 'objects/'},
                 stdout=PIPE, stderr=STDOUT, universal_newlines=True
             )
+            print(output.stdout)
 
-            # Filter .gitignore entries from diff results
-            diff_results = output.stdout.splitlines()
-            temp = []
-            for entry in self.cfg['content_repo']['git_ignore_entries']:
-                for result in diff_results:
-                    edited_result = result.replace(": ", "/")
-                    if entry not in edited_result:
-                         temp.append(result)
-                diff_results = temp
-                temp = []
-            
-            formatted_results = '\n'.join(result for result in diff_results)
-            out += formatted_results
-            print(output.stderr)
-            print(formatted_results)
-            
         # sudo rm -rf data/gitea/git/$CONFIG_REPO_NAME
         out += check_output(
             [
