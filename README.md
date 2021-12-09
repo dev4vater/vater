@@ -7,8 +7,6 @@
 - **Manually** copy the public RSA key
 - **Manually** input public RSA key into `uwardlaw/rous` as a deploy key 
 - `setup.sh` will pull `uwardlaw/rous` locally
-- `setup.sh` will execute `pythohn3 setupGitea.py`
-- `setupGitea.py` will locally import `uwardlaw/rous` into `config/rous`
-
+- **Manually** run `vater restart`
 
 (Developed in Nano)
