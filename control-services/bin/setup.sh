@@ -178,5 +178,5 @@ echo
 echo "Confirm $CONFIG_REPO is up to date"
 git --git-dir /home/control/$CONFIG_REPO/.git pull
 
-cat "alias vater=\"python3 ~/vater/control-services/cli/vater.py\"" > ~/.bash_aliases
+echo "alias vater=\"python3 ~/vater/control-services/cli/vater.py\"" > ~/.bash_aliases
 source ~/.bashrc
