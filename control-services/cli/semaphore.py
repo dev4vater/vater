@@ -309,7 +309,7 @@ class Semaphore():
                     '"environment_id": ' + str(self.envId) + ', '
                     '"alias": "' + name + '", '
                     '"playbook": "' + self.cfg['content_repo']['playbooks']['createClass'] + '", '
-                    '"arguments": "[\\"-e\\", \\"class=##### classSize=#\\"]", '
+                    '"arguments": "[\\"-e\\", \\"class=##### classSize=##\\"]", '
                     '"override_args": false}'
                 '}'
             )
