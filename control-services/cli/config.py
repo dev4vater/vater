@@ -14,6 +14,7 @@ class Config():
 
         # name, org_or_user, rel_data_dir
         cfg['vater_repo'] = __configs['repos'][0]['vater_repo']
+        cfg['vater_repo']['rel_image_path'] = 'control-services/images/'
 
         # name, org_or_user, terraform_dir, playbook_dir, vms_dir
         cfg['content_repo'] = __configs['repos'][0]['content_repo']
@@ -44,6 +45,9 @@ class Config():
 
         cfg['host']['content_dir_path'] =                                                   \
             cfg['host']['project_path'] + cfg['content_repo']['name'] + '/'
+
+        cfg['host']['vater_dir_path'] =                                                     \
+            cfg['host']['project_path'] + cfg['vater_repo']['name'] + '/'
 
         cfg['host']['content_git_dir_path'] =                                               \
             cfg['host']['content_dir_path'] + '.git/'
@@ -134,6 +138,19 @@ class Config():
         # password, user, port
         cfg['gitea_db'] = __configs['services'][0]['gitea_db']
 
+        ### Jenkins
+        cfg['jenkins'] = __configs['services'][0]['jenkins']
+
+        cfg['jenkins']['image_dir_path'] =                                                      \
+            cfg['host']['vater_dir_path'] + cfg['vater_repo']['rel_image_path'] +     \
+            'jenkins'
+
+        cfg['jenkins']['casc'] = {}
+        cfg['jenkins']['casc']['location'] = {}
+        cfg['jenkins']['casc']['location']['url'] = {}
+        cfg['jenkins']['casc']['location']['url'] =                                         \
+            'http://' + cfg['host']['ip'] + '/' + cfg['jenkins']['port'] + '/'
+
         ### Semaphore
 
         # password, port, user
@@ -146,9 +163,9 @@ class Config():
             cfg['semaphore']['url'] + 'api/'
 
         cfg['semaphore']['data_dir'] =                                                      \
-            cfg['host']['project_path'] + cfg['vater_repo']['name'] + '/' +                 \
-            cfg['vater_repo']['rel_data_dir'] + 'semaphore/'
-        
+            cfg['host']['vater_dir_path'] + cfg['vater_repo']['rel_data_dir'] +             \
+            'semaphore/'
+
         cfg['semaphore']['related_data_dirs'] =                                             \
             glob.glob(cfg['semaphore']['data_dir'][:-1] + '*')
 
@@ -191,8 +208,7 @@ class Config():
         cfg['docker'] = {}
 
         cfg['docker']['compose_file_path'] =                                                \
-            cfg['host']['project_path'] + cfg['vater_repo']['name'] + '/' +                 \
-            'control-services/docker-compose.yml'            
+            cfg['host']['vater_dir_path'] + 'control-services/docker-compose.yml'            
 
         cfg['docker']['env_path'] = envPath
 
