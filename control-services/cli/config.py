@@ -141,9 +141,11 @@ class Config():
         ### Jenkins
         cfg['jenkins'] = __configs['services'][0]['jenkins']
 
-        cfg['jenkins']['image_dir_path'] =                                                      \
-            cfg['host']['vater_dir_path'] + cfg['vater_repo']['rel_image_path'] +     \
-            'jenkins'
+        cfg['jenkins']['image_dir_path'] =                                                  \
+            cfg['host']['vater_dir_path'] + cfg['vater_repo']['rel_image_path'] +           \
+            'jenkins/'
+
+        cfg['jenkins']['casc_file_path'] = cfg['jenkins']['image_dir_path'] + 'casc.yaml'   \
 
         cfg['jenkins']['casc'] = {}
         cfg['jenkins']['casc']['location'] = {}
