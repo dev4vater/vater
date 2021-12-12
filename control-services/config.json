@@ -40,6 +40,11 @@
             "password" : "semaphore",
             "user" : "semaphore",
             "port" : "3306"
+          },
+        "jenkins" : { 
+            "password" : "jenkins",
+            "user" : "jenkins",
+            "port" : "5000"
           }
       } ]
 }
