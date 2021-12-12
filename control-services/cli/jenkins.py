@@ -3,10 +3,15 @@ from vDocker import VDocker
 from pathlib import Path
 import json
 import copy
+import yaml
 
 class Jenkins():
     def __init__(self, configs):
         self.docker = VDocker(configs)
+        self.cfg = configs.cfg
+
+        with open(self.cfg['jenkins']['casc_file_path'], 'w') as cascFile:
+            yaml.dump(self.cfg['jenkins']['casc'], cascFile)
 
     def restart(self):
         container = ['jenkins']
