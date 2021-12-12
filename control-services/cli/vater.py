@@ -17,6 +17,8 @@ def main():
         task(c, p.args)
     elif p.args.command == 'sync':
         sync(c, p.args)
+    elif p.args.command == 'config':
+        config(c, p.args)
     elif p.args.command == 'stop':
         stop(c, p.args)
     elif p.args.command == 'restart':
@@ -40,6 +42,9 @@ def sync(config, args):
     g = Gitea(config)
     loginGitea(g)
     g.syncContentRepo()
+
+def config(config, args):
+    print(config)
 
 def stop(config, args):
     if args.service == 'all':

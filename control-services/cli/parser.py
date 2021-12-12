@@ -93,6 +93,13 @@ class Parser():
                     ' with the Gitea content repository'
         )
 
+        ### Config subparser
+        self.__parser_sync = self.__subparsers.add_parser(
+            'config',
+            description =   'Prints the current configuration',
+            help =  'Prints the current configuration'
+        )
+
         ### Stop subparser
         self.__parser_stop = self.__subparsers.add_parser(
             'stop',
