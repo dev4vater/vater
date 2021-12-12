@@ -148,9 +148,10 @@ class Config():
         cfg['jenkins']['casc_file_path'] = cfg['jenkins']['image_dir_path'] + 'casc.yaml'   \
 
         cfg['jenkins']['casc'] = {}
-        cfg['jenkins']['casc']['location'] = {}
-        cfg['jenkins']['casc']['location']['url'] = {}
-        cfg['jenkins']['casc']['location']['url'] =                                         \
+        cfg['jenkins']['casc']['unclassified'] = {}        
+        cfg['jenkins']['casc']['unclassified']['location'] = {}
+        cfg['jenkins']['casc']['unclassified']['location']['url'] = {}
+        cfg['jenkins']['casc']['unclassified']['location']['url'] =                                         \
             'http://' + cfg['host']['ip'] + '/' + cfg['jenkins']['port'] + '/'
 
         ### Semaphore
