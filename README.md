@@ -42,6 +42,7 @@
 
 ## Day 0 Deployment
 - **Manually** provision `Control` VM
+  - The user and hostname need to be `Control` or you need to edit the `config.json`
 - **Manually** git clone `https://github.com/uwardlaw/vater` into `~`
 - **Manually** run ` ~/vater/control-services/bin/setup.sh`
 - `setup.sh` will create a RSA key pair if one does not exist and print the public key to the terminal
