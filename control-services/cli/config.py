@@ -148,11 +148,41 @@ class Config():
         cfg['jenkins']['casc_file_path'] = cfg['jenkins']['image_dir_path'] + 'casc.yaml'   \
 
         cfg['jenkins']['casc'] = {}
+
+        cfg['jenkins']['casc']['jenkins'] = {}        
+        cfg['jenkins']['casc']['jenkins']['securityRealm'] = {}        
+        cfg['jenkins']['casc']['jenkins']['securityRealm']['local'] = {}        
+        cfg['jenkins']['casc']['jenkins']['securityRealm']['local']                         \
+            ['allowsSignup'] = 'false'
+        cfg['jenkins']['casc']['jenkins']['securityRealm']['local']                         \
+            ['users'] = [{}]
+        cfg['jenkins']['casc']['jenkins']['securityRealm']['local']                         \
+            ['users'][0]['id'] = '${JENKINS_ADMIN_ID}'
+
+        cfg['jenkins']['casc']['jenkins']['securityRealm']['local']                         \
+            ['users'][0]['password'] = '${JENKINS_ADMIN_PASSWORD}'
+
         cfg['jenkins']['casc']['unclassified'] = {}        
         cfg['jenkins']['casc']['unclassified']['location'] = {}
         cfg['jenkins']['casc']['unclassified']['location']['url'] = {}
-        cfg['jenkins']['casc']['unclassified']['location']['url'] =                                         \
+        cfg['jenkins']['casc']['unclassified']['location']['url'] =                         \
             'http://' + cfg['host']['ip'] + '/' + cfg['jenkins']['port'] + '/'
+
+        cfg['jenkins']['casc']['authorization'] = {}        
+        cfg['jenkins']['casc']['authorization']['globalMatrix'] = {}        
+        cfg['jenkins']['casc']['authorization']['globalMatrix']['permissions'] = [
+                '"Overall/Administer:admin"',
+                '"Overall/Read:authenticated"'
+            ]
+
+        cfg['jenkins']['casc']['security'] = {}        
+        cfg['jenkins']['casc']['security']['queueItemAuthenticator'] = {}        
+        cfg['jenkins']['casc']['security']['queueItemAuthenticator']['authenticators'] =    \
+            [{}]
+        cfg['jenkins']['casc']['security']['queueItemAuthenticator']['authenticators'][0]   \
+            ['global'] = {}
+        cfg['jenkins']['casc']['security']['queueItemAuthenticator']['authenticators'][0]   \
+            ['global']['strategy'] = 'triggeringUsersAuthorizationStrategy'
 
         ### Semaphore
 
@@ -227,6 +257,13 @@ class Config():
 
         cfg['docker']['env'].append(
             'semaphore_admin_password=' + cfg['semaphore']['password']
+        )
+
+        cfg['docker']['env'].append(
+            'jenkins_admin_id=' + cfg['jenkins']['user']
+        )
+        cfg['docker']['env'].append(
+            'jenkins_admin_password=' + cfg['jenkins']['password']
         )
         
 

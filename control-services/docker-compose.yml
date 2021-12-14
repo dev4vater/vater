@@ -151,5 +151,8 @@ services:
     image: jenkins
     build: ./images/jenkins/
     container_name: jenkins
+    environment:
+      - JENKINS_ADMIN_ID=${jenkins_admin_id}
+      - JENKINS_ADMIN_PASSWORD=${jenkins_admin_password}
     ports:
       - "5000:8080"
