@@ -17,6 +17,10 @@ class Jenkins():
         container = ['jenkins']
 
         self.docker.compose_stop(container)
+        
+        # Jenkins needs an rm because changes are
+        #   made via the Dockerfile, not an API
+        self.docker.compose_rm(container)
         self.docker.compose_up(container)
 
     def access(self):
