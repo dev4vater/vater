@@ -160,15 +160,6 @@ class Config():
         cfg['jenkins']['casc']['unclassified']['location']['url'] =                                         \
             'http://' + cfg['host']['ip'] + '/' + cfg['jenkins']['port'] + '/'
 
-        cfg['jenkins']['casc']['authorizationStrategy'] = {}
-        cfg['jenkins']['casc']['authorizationStrategy']['globalMatrix'] = {}
-        cfg['jenkins']['casc']['authorizationStrategy']['globalMatrix']['permissions'] = {}
-
-        cfg['jenkins']['casc']['authorizationStrategy']['globalMatrix']['permissions'] = [
-            "Overall/Administer:admin",
-            "Overall/Read:authenticated"
-        ]
-
         ### Semaphore
 
         # password, port, user
