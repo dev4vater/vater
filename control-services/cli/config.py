@@ -145,7 +145,11 @@ class Config():
             cfg['host']['vater_dir_path'] + cfg['vater_repo']['rel_image_path'] +           \
             'jenkins/'
 
+        cfg['jenkins']['data_dir_path'] =                                                   \
+            cfg['host']['vater_dir_path'] + 'control-services/data/jenkins/'
+
         cfg['jenkins']['casc_file_path'] = cfg['jenkins']['image_dir_path'] + 'casc.yaml'   \
+#        cfg['jenkins']['casc_file_path'] = cfg['jenkins']['data_dir_path'] + 'casc.yaml'   \
 
         cfg['jenkins']['casc'] = {}
 
@@ -178,8 +182,6 @@ class Config():
         cfg['jenkins']['casc']['unclassified']['location']['url'] = {}
         cfg['jenkins']['casc']['unclassified']['location']['url'] =                         \
             'http://' + cfg['host']['ip'] + '/' + cfg['jenkins']['port'] + '/'
-
-
 
         cfg['jenkins']['casc']['security'] = {}        
         cfg['jenkins']['casc']['security']['queueItemAuthenticator'] = {}        
@@ -268,10 +270,10 @@ class Config():
         cfg['docker']['env'].append(
             'jenkins_admin_id=' + cfg['jenkins']['user']
         )
+
         cfg['docker']['env'].append(
             'jenkins_admin_password=' + cfg['jenkins']['password']
         )
-        
 
         with open(envPath, 'w') as f:
             for var in cfg['docker']['env']:
