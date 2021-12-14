@@ -2,9 +2,15 @@ import json
 import pprint
 import subprocess
 import glob
+import os
 
 class Config():
     def __init__(self, jsonConfigFile, envPath):
+        
+        if os.getuid() == 0:     
+            print("Please do not run with sudo") 
+            exit()        
+
         with open(jsonConfigFile) as f:
             __configs = json.load(f)
 
@@ -97,10 +103,10 @@ class Config():
         cfg['gitea']['data_dir'] =                                                          \
             cfg['host']['project_path'] + cfg['vater_repo']['name'] + '/' +                 \
             cfg['vater_repo']['rel_data_dir'] + 'gitea/'                                    \
-        
+
         cfg['gitea']['related_data_dirs'] =                                                 \
             glob.glob(cfg['gitea']['data_dir'][:-1] + '*')
-            
+
         cfg['gitea']['content_repo_path'] =                                                 \
             cfg['gitea']['data_dir'] + 'git/' + cfg['content_repo']['name']
 
@@ -124,15 +130,15 @@ class Config():
             'users/' + cfg['gitea']['user'] + '/tokens'
 
         cfg['gitea']['api']['orgs'] =                                                       \
-            cfg['gitea']['api_url'] + 'orgs'                                                
+            cfg['gitea']['api_url'] + 'orgs'
 
         cfg['gitea']['api']['content_repo'] =                                               \
             cfg['gitea']['api_url'] + 'repos/' + cfg['gitea']['org_or_user'] + '/' +        \
             cfg['content_repo']['name']
 
         cfg['gitea']['api']['repos_migrate'] =                                              \
-            cfg['gitea']['api_url'] + 'repos/migrate'                                                
-            
+            cfg['gitea']['api_url'] + 'repos/migrate'
+
         # Gitea Database
 
         # password, user, port
@@ -273,7 +279,3 @@ class Config():
 
     def __str__(self):
         return json.dumps(self.cfg, indent=4)
-
-# Print for testing
-#c = Config('../config.json', '../.env')
-#print(c)
