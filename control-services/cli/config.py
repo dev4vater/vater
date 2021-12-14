@@ -162,18 +162,24 @@ class Config():
         cfg['jenkins']['casc']['jenkins']['securityRealm']['local']                         \
             ['users'][0]['password'] = '${JENKINS_ADMIN_PASSWORD}'
 
+        cfg['jenkins']['casc']['jenkins']['authorizationStrategy'] = {}        
+        cfg['jenkins']['casc']['jenkins']['authorizationStrategy']['globalMatrix'] = {}        
+        cfg['jenkins']['casc']['jenkins']['authorizationStrategy']['globalMatrix']          \
+            ['permissions'] = [
+                "Overall/Administer:admin",
+                "Overall/Read:authenticated"
+            ]
+
+        cfg['jenkins']['casc']['jenkins']['remotingSecurity'] = {}        
+        cfg['jenkins']['casc']['jenkins']['remotingSecurity']['enabled'] = 'true'        
+
         cfg['jenkins']['casc']['unclassified'] = {}        
         cfg['jenkins']['casc']['unclassified']['location'] = {}
         cfg['jenkins']['casc']['unclassified']['location']['url'] = {}
         cfg['jenkins']['casc']['unclassified']['location']['url'] =                         \
             'http://' + cfg['host']['ip'] + '/' + cfg['jenkins']['port'] + '/'
 
-        cfg['jenkins']['casc']['authorization'] = {}        
-        cfg['jenkins']['casc']['authorization']['globalMatrix'] = {}        
-        cfg['jenkins']['casc']['authorization']['globalMatrix']['permissions'] = [
-                '"Overall/Administer:admin"',
-                '"Overall/Read:authenticated"'
-            ]
+
 
         cfg['jenkins']['casc']['security'] = {}        
         cfg['jenkins']['casc']['security']['queueItemAuthenticator'] = {}        
