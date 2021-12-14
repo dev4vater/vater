@@ -149,7 +149,6 @@ class Config():
             cfg['host']['vater_dir_path'] + 'control-services/data/jenkins/'
 
         cfg['jenkins']['casc_file_path'] = cfg['jenkins']['image_dir_path'] + 'casc.yaml'   \
-#        cfg['jenkins']['casc_file_path'] = cfg['jenkins']['data_dir_path'] + 'casc.yaml'   \
 
         cfg['jenkins']['casc'] = {}
 
@@ -182,15 +181,6 @@ class Config():
         cfg['jenkins']['casc']['unclassified']['location']['url'] = {}
         cfg['jenkins']['casc']['unclassified']['location']['url'] =                         \
             'http://' + cfg['host']['ip'] + '/' + cfg['jenkins']['port'] + '/'
-
-        cfg['jenkins']['casc']['security'] = {}        
-        cfg['jenkins']['casc']['security']['queueItemAuthenticator'] = {}        
-        cfg['jenkins']['casc']['security']['queueItemAuthenticator']['authenticators'] =    \
-            [{}]
-        cfg['jenkins']['casc']['security']['queueItemAuthenticator']['authenticators'][0]   \
-            ['global'] = {}
-        cfg['jenkins']['casc']['security']['queueItemAuthenticator']['authenticators'][0]   \
-            ['global']['strategy'] = 'triggeringUsersAuthorizationStrategy'
 
         ### Semaphore
 
