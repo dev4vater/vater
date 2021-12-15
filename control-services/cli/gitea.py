@@ -122,15 +122,17 @@ class Gitea():
     def __copyLatestContentRepo(self):
         # Pull from remote to local, assuming local does not have uncommitted changes
         # git --git-dir /home/control/$CONFIG_REPO_NAME/.git pull
-        out = check_output(
-            [
-                'git', '--git-dir',
-                self.cfg['host']['content_git_dir_path'], 'pull'
-            ],
-            universal_newlines=True
-        )
+#        out = check_output(
+#            [
+#                'git', '--git-dir',
+#                self.cfg['host']['content_git_dir_path'], 'pull'
+#            ],
+#            universal_newlines=True
+#        )
 
         # Check to see if an old repo exists in gitea
+
+        out = ''
         p = Path(self.cfg['gitea']['content_repo_path'])
         if p.exists():
             # Display a diff of old repo and new repo
@@ -138,9 +140,9 @@ class Gitea():
                 [
                     'git', '--git-dir=' + self.cfg['gitea']['content_repo_path']+ '/.git',
                     'rev-parse', '--verify', 'HEAD'
-                ], 
+                ],
                 stdout=PIPE
-            )   
+            )
 
             output = run(
                 [
