@@ -3,6 +3,7 @@ import pprint
 import subprocess
 import glob
 import os
+import yaml
 
 class Config():
     def __init__(self, jsonConfigFile, envPath):
@@ -154,37 +155,10 @@ class Config():
         cfg['jenkins']['data_dir_path'] =                                                   \
             cfg['host']['vater_dir_path'] + 'control-services/data/jenkins/'
 
-        cfg['jenkins']['casc_file_path'] = cfg['jenkins']['image_dir_path'] + 'casc.yaml'   \
+        cfg['jenkins']['casc_file_path'] = cfg['jenkins']['image_dir_path'] + 'casc.yaml'
+        with open(cfg['jenkins']['image_dir_path'] + 'casc_template.yaml', 'r') as cascTemplate:
+            cfg['jenkins']['casc'] = yaml.load(cascTemplate, yaml.SafeLoader)
 
-        cfg['jenkins']['casc'] = {}
-
-        cfg['jenkins']['casc']['jenkins'] = {}        
-        cfg['jenkins']['casc']['jenkins']['securityRealm'] = {}        
-        cfg['jenkins']['casc']['jenkins']['securityRealm']['local'] = {}        
-        cfg['jenkins']['casc']['jenkins']['securityRealm']['local']                         \
-            ['allowsSignup'] = 'false'
-        cfg['jenkins']['casc']['jenkins']['securityRealm']['local']                         \
-            ['users'] = [{}]
-        cfg['jenkins']['casc']['jenkins']['securityRealm']['local']                         \
-            ['users'][0]['id'] = '${JENKINS_ADMIN_ID}'
-
-        cfg['jenkins']['casc']['jenkins']['securityRealm']['local']                         \
-            ['users'][0]['password'] = '${JENKINS_ADMIN_PASSWORD}'
-
-        cfg['jenkins']['casc']['jenkins']['authorizationStrategy'] = {}        
-        cfg['jenkins']['casc']['jenkins']['authorizationStrategy']['globalMatrix'] = {}        
-        cfg['jenkins']['casc']['jenkins']['authorizationStrategy']['globalMatrix']          \
-            ['permissions'] = [
-                "Overall/Administer:admin",
-                "Overall/Read:authenticated"
-            ]
-
-        cfg['jenkins']['casc']['jenkins']['remotingSecurity'] = {}        
-        cfg['jenkins']['casc']['jenkins']['remotingSecurity']['enabled'] = 'true'        
-
-        cfg['jenkins']['casc']['unclassified'] = {}        
-        cfg['jenkins']['casc']['unclassified']['location'] = {}
-        cfg['jenkins']['casc']['unclassified']['location']['url'] = {}
         cfg['jenkins']['casc']['unclassified']['location']['url'] =                         \
             'http://' + cfg['host']['ip'] + ':' + cfg['jenkins']['port'] + '/'
 

@@ -1,0 +1,17 @@
+jenkins:
+  authorizationStrategy:
+    globalMatrix:
+      permissions:
+      - Overall/Administer:admin
+      - Overall/Read:authenticated
+  remotingSecurity:
+    enabled: 'true'
+  securityRealm:
+    local:
+      allowsSignup: 'false'
+      users:
+      - id: ${JENKINS_ADMIN_ID}
+        password: ${JENKINS_ADMIN_PASSWORD}
+unclassified:
+  location:
+    url: ''
