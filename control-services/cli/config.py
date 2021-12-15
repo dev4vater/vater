@@ -186,7 +186,7 @@ class Config():
         cfg['jenkins']['casc']['unclassified']['location'] = {}
         cfg['jenkins']['casc']['unclassified']['location']['url'] = {}
         cfg['jenkins']['casc']['unclassified']['location']['url'] =                         \
-            'http://' + cfg['host']['ip'] + '/' + cfg['jenkins']['port'] + '/'
+            'http://' + cfg['host']['ip'] + ':' + cfg['jenkins']['port'] + '/'
 
         ### Semaphore
 
