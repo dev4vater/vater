@@ -92,7 +92,12 @@ class Parser():
             help =  'Syncs the upstream content repository'
                     ' with the Gitea content repository'
         )
-
+        self.__parser_sync.add_argument(
+            '-b', '--branch',
+            help = 'A github branch',
+            choices = container_choices + ['all'],
+            default = 'main'
+        )
         ### Config subparser
         self.__parser_sync = self.__subparsers.add_parser(
             'config',
