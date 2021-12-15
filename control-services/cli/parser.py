@@ -2,6 +2,7 @@ import argparse
 import copy
 from collections import OrderedDict
 import os
+import subprocess
 
 class Parser():
     def __init__(self):
@@ -92,17 +93,20 @@ class Parser():
             help =  'Syncs the upstream content repository'
                     ' with the Gitea content repository'
         )
-        self.__parser_sync.add_argument(
-            '-b', '--branch',
-            help = 'A github branch',
-            choices = container_choices + ['all'],
-            default = 'main'
-        )
-        ### Config subparser
+                ### Config subparser
         self.__parser_sync = self.__subparsers.add_parser(
             'config',
             description =   'Prints the current configuration',
             help =  'Prints the current configuration'
+        )
+        self.__parser_sync.add_argument(
+            '-b', '--branch',
+            help = 'Specify a github branch in rous to sync to gitea',
+            os.chdir("/home/control/rous"),
+            branches = subprocess.run(["git","branch","-r"]),
+            print("test: %d" % branches.returncode),       
+            choices = branches.returncode,
+            default = 'main'
         )
 
         ### Stop subparser
