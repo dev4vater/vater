@@ -3,6 +3,7 @@ import pprint
 import subprocess
 import glob
 import os
+import yaml
 
 class Config():
     def __init__(self, jsonConfigFile, envPath):
@@ -151,14 +152,15 @@ class Config():
             cfg['host']['vater_dir_path'] + cfg['vater_repo']['rel_image_path'] +           \
             'jenkins/'
 
-        cfg['jenkins']['casc_file_path'] = cfg['jenkins']['image_dir_path'] + 'casc.yaml'   \
+        cfg['jenkins']['data_dir_path'] =                                                   \
+            cfg['host']['vater_dir_path'] + 'control-services/data/jenkins/'
 
-        cfg['jenkins']['casc'] = {}
-        cfg['jenkins']['casc']['unclassified'] = {}
-        cfg['jenkins']['casc']['unclassified']['location'] = {}
-        cfg['jenkins']['casc']['unclassified']['location']['url'] = {}
-        cfg['jenkins']['casc']['unclassified']['location']['url'] =                                         \
-            'http://' + cfg['host']['ip'] + '/' + cfg['jenkins']['port'] + '/'
+        cfg['jenkins']['casc_file_path'] = cfg['jenkins']['image_dir_path'] + 'casc.yaml'
+        with open(cfg['jenkins']['image_dir_path'] + 'casc_template.yaml', 'r') as cascTemplate:
+            cfg['jenkins']['casc'] = yaml.load(cascTemplate, yaml.SafeLoader)
+
+        cfg['jenkins']['casc']['unclassified']['location']['url'] =                         \
+            'http://' + cfg['host']['ip'] + ':' + cfg['jenkins']['port'] + '/'
 
         ### Semaphore
 
@@ -234,7 +236,14 @@ class Config():
         cfg['docker']['env'].append(
             'semaphore_admin_password=' + cfg['semaphore']['password']
         )
-        
+
+        cfg['docker']['env'].append(
+            'jenkins_admin_id=' + cfg['jenkins']['user']
+        )
+
+        cfg['docker']['env'].append(
+            'jenkins_admin_password=' + cfg['jenkins']['password']
+        )
 
         with open(envPath, 'w') as f:
             for var in cfg['docker']['env']:

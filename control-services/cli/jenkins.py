@@ -13,6 +13,14 @@ class Jenkins():
         with open(self.cfg['jenkins']['casc_file_path'], 'w') as cascFile:
             yaml.dump(self.cfg['jenkins']['casc'], cascFile)
 
+        check_output(
+            [
+                'sudo', 'mv', self.cfg['jenkins']['casc_file_path'],
+                self.cfg['jenkins']['data_dir_path'] + 'casc.yaml'
+            ],
+            universal_newlines=True
+        )
+
     def restart(self):
         container = ['jenkins']
 
