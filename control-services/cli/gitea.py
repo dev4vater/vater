@@ -131,6 +131,8 @@ class Gitea():
         )
 
         # Check to see if an old repo exists in gitea
+
+        out = ''
         p = Path(self.cfg['gitea']['content_repo_path'])
         if p.exists():
             # Display a diff of old repo and new repo
@@ -138,9 +140,9 @@ class Gitea():
                 [
                     'git', '--git-dir=' + self.cfg['gitea']['content_repo_path']+ '/.git',
                     'rev-parse', '--verify', 'HEAD'
-                ], 
+                ],
                 stdout=PIPE
-            )   
+            )
 
             output = run(
                 [
