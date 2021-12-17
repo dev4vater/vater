@@ -84,8 +84,8 @@ class Gitea():
         # Revokes token
         self.__revokeConfigurationToken()
 
-    def syncContentRepo(self):
-        self.__copyLatestContentRepo()
+    def syncContentRepo(self, branch):
+        self.__copyLatestContentRepo(branch)
         self.api.post(
             url=self.cfg['gitea']['api']['mirror_sync_url']
         )
@@ -119,16 +119,18 @@ class Gitea():
             ' --must-change-password=false'
         )
 
-    def __copyLatestContentRepo(self):
+    def __copyLatestContentRepo(self, branch):
         # Pull from remote to local, assuming local does not have uncommitted changes
         # git --git-dir /home/control/$CONFIG_REPO_NAME/.git pull
-        out = check_output(
-            [
-                'git', '--git-dir',
-                self.cfg['host']['content_git_dir_path'], 'pull'
-            ],
-            universal_newlines=True
-        )
+        
+        #out = check_output(
+        #    [
+        #        'git', '--git-dir',
+        #        self.cfg['host']['content_git_dir_path'], 'pull',
+        #        'origin', branch
+        #    ],
+        #    universal_newlines=True
+        #)
 
         # Check to see if an old repo exists in gitea
         p = Path(self.cfg['gitea']['content_repo_path'])
@@ -166,7 +168,7 @@ class Gitea():
             [
                 'sudo', 'git', '--git-dir',
                 self.cfg['host']['content_git_dir_path'],
-                'clone',
+                'clone', '-b', branch, '--single-branch',
                 self.cfg['host']['content_dir_path'],
                 self.cfg['gitea']['content_repo_path']
 #                'sudo', 'cp', '-r', '-u',
@@ -182,7 +184,7 @@ class Gitea():
             [
                 'sudo', 'git', '--git-dir',
                 self.cfg['gitea']['content_repo_git_dir_path'],
-                'branch', '-m', '-f', 'main', 'master'
+                'branch', '-m', '-f', branch, 'master'
             ],
             universal_newlines=True
         )
