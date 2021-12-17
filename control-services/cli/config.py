@@ -2,9 +2,16 @@ import json
 import pprint
 import subprocess
 import glob
+import os
+import yaml
 
 class Config():
     def __init__(self, jsonConfigFile, envPath):
+
+        if os.getuid() == 0:
+            print("Please do not run with sudo")
+            exit()
+
         with open(jsonConfigFile) as f:
             __configs = json.load(f)
 
@@ -14,6 +21,7 @@ class Config():
 
         # name, org_or_user, rel_data_dir
         cfg['vater_repo'] = __configs['repos'][0]['vater_repo']
+
         cfg['vater_repo']['rel_image_path'] = 'control-services/images/'
 
         # name, org_or_user, terraform_dir, playbook_dir, vms_dir
@@ -65,7 +73,7 @@ class Config():
 
         if cfg['dev']['enable'] == True:
             cfg['dev']['ssh_path'] =                                                        \
-                cfg['host']['project_path'] + '.ssh/' 
+                cfg['host']['project_path'] + '.ssh/'
 
             cfg['dev']['ssh_auth_key_path'] =                                               \
                 cfg['dev']['ssh_path'] + 'authorized_keys'
@@ -97,10 +105,10 @@ class Config():
         cfg['gitea']['data_dir'] =                                                          \
             cfg['host']['project_path'] + cfg['vater_repo']['name'] + '/' +                 \
             cfg['vater_repo']['rel_data_dir'] + 'gitea/'                                    \
-        
+
         cfg['gitea']['related_data_dirs'] =                                                 \
             glob.glob(cfg['gitea']['data_dir'][:-1] + '*')
-            
+
         cfg['gitea']['content_repo_path'] =                                                 \
             cfg['gitea']['data_dir'] + 'git/' + cfg['content_repo']['name']
 
@@ -115,6 +123,7 @@ class Config():
             cfg['content_repo']['name']
 
         cfg['gitea']['api'] = {}
+
         cfg['gitea']['api']['mirror_sync_url'] =                                            \
             cfg['gitea']['api_url'] + 'repos/' + cfg['gitea']['org_or_user'] + '/' +        \
             cfg['content_repo']['name'] + '/mirror-sync'
@@ -124,15 +133,15 @@ class Config():
             'users/' + cfg['gitea']['user'] + '/tokens'
 
         cfg['gitea']['api']['orgs'] =                                                       \
-            cfg['gitea']['api_url'] + 'orgs'                                                
+            cfg['gitea']['api_url'] + 'orgs'
 
         cfg['gitea']['api']['content_repo'] =                                               \
             cfg['gitea']['api_url'] + 'repos/' + cfg['gitea']['org_or_user'] + '/' +        \
             cfg['content_repo']['name']
 
         cfg['gitea']['api']['repos_migrate'] =                                              \
-            cfg['gitea']['api_url'] + 'repos/migrate'                                                
-            
+            cfg['gitea']['api_url'] + 'repos/migrate'
+
         # Gitea Database
 
         # password, user, port
@@ -145,14 +154,16 @@ class Config():
             cfg['host']['vater_dir_path'] + cfg['vater_repo']['rel_image_path'] +           \
             'jenkins/'
 
-        cfg['jenkins']['casc_file_path'] = cfg['jenkins']['image_dir_path'] + 'casc.yaml'   \
+        cfg['jenkins']['data_dir_path'] =                                                   \
+            cfg['host']['vater_dir_path'] + 'control-services/data/jenkins/'
 
-        cfg['jenkins']['casc'] = {}
-        cfg['jenkins']['casc']['unclassified'] = {}        
-        cfg['jenkins']['casc']['unclassified']['location'] = {}
-        cfg['jenkins']['casc']['unclassified']['location']['url'] = {}
-        cfg['jenkins']['casc']['unclassified']['location']['url'] =                                         \
-            'http://' + cfg['host']['ip'] + '/' + cfg['jenkins']['port'] + '/'
+        cfg['jenkins']['casc_file_path'] = cfg['jenkins']['image_dir_path'] + 'casc.yaml'
+
+        with open(cfg['jenkins']['image_dir_path'] + 'casc_template.yaml', 'r') as cascTemplate:
+            cfg['jenkins']['casc'] = yaml.load(cascTemplate, yaml.SafeLoader)
+
+        cfg['jenkins']['casc']['unclassified']['location']['url'] =                         \
+            'http://' + cfg['host']['ip'] + ':' + cfg['jenkins']['port'] + '/'
 
         ### Semaphore
 
@@ -186,7 +197,7 @@ class Config():
 
         cfg['semaphore']['api']['project_keys'] =                                           \
             cfg['semaphore']['api_url'] + 'project/#/keys'
-       
+
         cfg['semaphore']['api']['project_repos'] =                                          \
             cfg['semaphore']['api_url'] + 'project/#/repositories'
 
@@ -211,7 +222,7 @@ class Config():
         cfg['docker'] = {}
 
         cfg['docker']['compose_file_path'] =                                                \
-            cfg['host']['vater_dir_path'] + 'control-services/docker-compose.yml'            
+            cfg['host']['vater_dir_path'] + 'control-services/docker-compose.yml'
 
         cfg['docker']['env_path'] = envPath
 
@@ -228,17 +239,34 @@ class Config():
         cfg['docker']['env'].append(
             'semaphore_admin_password=' + cfg['semaphore']['password']
         )
-        
+
+        cfg['docker']['env'].append(
+            'jenkins_admin_id=' + cfg['jenkins']['user']
+        )
+
+        cfg['docker']['env'].append(
+            'jenkins_admin_password=' + cfg['jenkins']['password']
+        )
 
         with open(envPath, 'w') as f:
             for var in cfg['docker']['env']:
-                f.writelines(var + '\n') 
+                f.writelines(var + '\n')
 
         self.cfg = cfg
+
+        self.setupDataFolders()
+
+    def setupDataFolders(self):
+        for service in self.cfg['service_list']:
+            dirPath = (
+                self.cfg['host']['vater_dir_path'] +
+                self.cfg['vater_repo']['rel_data_dir'] +
+                service
+            )
+
+            if not os.path.exists(dirPath):
+                os.makedirs(dirPath)
 
     def __str__(self):
         return json.dumps(self.cfg, indent=4)
 
-# Print for testing
-#c = Config('../config.json', '../.env')
-#print(c)

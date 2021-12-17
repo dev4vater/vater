@@ -29,6 +29,15 @@ class VDocker():
 
         subprocess.check_output(cmd, universal_newlines=True)
 
+    def compose_rm(self, containers):
+        containers = self.__makeStrList(containers)
+
+        cmd = self.composePreface + [
+                'rm', '-sf',
+            ] + containers
+
+        subprocess.check_output(cmd, universal_newlines=True)
+
     def system_prune(self):
 
         cmd = self.dockerPreface + [

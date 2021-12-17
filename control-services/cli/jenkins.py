@@ -13,10 +13,22 @@ class Jenkins():
         with open(self.cfg['jenkins']['casc_file_path'], 'w') as cascFile:
             yaml.dump(self.cfg['jenkins']['casc'], cascFile)
 
+        check_output(
+            [
+                'sudo', 'mv', self.cfg['jenkins']['casc_file_path'],
+                self.cfg['jenkins']['data_dir_path'] + 'casc.yaml'
+            ],
+            universal_newlines=True
+        )
+
     def restart(self):
         container = ['jenkins']
 
         self.docker.compose_stop(container)
+        
+        # Jenkins needs an rm because changes are
+        #   made via the Dockerfile, not an API
+        self.docker.compose_rm(container)
         self.docker.compose_up(container)
 
     def access(self):

@@ -3,6 +3,7 @@ import copy
 from collections import OrderedDict
 import os
 import subprocess
+import getpass
 
 class Parser():
     def __init__(self):
@@ -16,7 +17,7 @@ class Parser():
         # The path to the configuration file, used
         #   to setup the rest of the parser
 
-        self.homedir = os.path.expanduser('~')
+        homedir = "/home/" + getpass.getuser()
 
         self.__parser.add_argument(
             '-c', '--configPath',
