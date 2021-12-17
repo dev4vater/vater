@@ -17,7 +17,7 @@ class Parser():
         # The path to the configuration file, used
         #   to setup the rest of the parser
 
-        homedir = "/home/" + getpass.getuser()
+        self.homedir = "/home/" + getpass.getuser()
 
         self.__parser.add_argument(
             '-c', '--configPath',
