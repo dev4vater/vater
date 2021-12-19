@@ -41,7 +41,6 @@ def task(config, args):
 def sync(config, args):
     g = Gitea(config)
     loginGitea(g)
-    print(args)
     g.syncContentRepo(args.branch)
 
 def config(config, args):
