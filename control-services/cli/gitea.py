@@ -219,7 +219,7 @@ class Gitea():
 
         if repoID == None:
             # Ensure the repository is available for migration in Gitea
-            self.__copyLatestContentRepo()
+            self.__copyLatestContentRepo('main')
             self.api.post(
                 url = self.cfg['gitea']['api']['repos_migrate'],
                 data = (
