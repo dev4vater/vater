@@ -120,18 +120,6 @@ class Gitea():
         )
 
     def __copyLatestContentRepo(self, branch):
-        # Pull from remote to local, assuming local does not have uncommitted changes
-        # git --git-dir /home/control/$CONFIG_REPO_NAME/.git pull
-        
-        #out = check_output(
-        #    [
-        #        'git', '--git-dir',
-        #        self.cfg['host']['content_git_dir_path'], 'pull',
-        #        'origin', branch
-        #    ],
-        #    universal_newlines=True
-        #)
-
         # Check to see if an old repo exists in gitea
 
         out = ''
@@ -173,9 +161,6 @@ class Gitea():
                 'clone', '-b', branch, '--single-branch',
                 self.cfg['host']['content_dir_path'],
                 self.cfg['gitea']['content_repo_path']
-#                'sudo', 'cp', '-r', '-u',
-#                self.cfg['host']['content_dir_path'],
-#                self.cfg['gitea']['content_repo_path']
             ],
             universal_newlines=True
         )
