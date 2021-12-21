@@ -2,6 +2,7 @@ import argparse
 import copy
 from collections import OrderedDict
 import os
+import subprocess
 import getpass
 
 class Parser():
@@ -16,12 +17,12 @@ class Parser():
         # The path to the configuration file, used
         #   to setup the rest of the parser
 
-        homedir = "/home/" + getpass.getuser()
+        self.homedir = "/home/" + getpass.getuser()
 
         self.__parser.add_argument(
             '-c', '--configPath',
             help =  'The json conifguration file',
-            default = homedir + '/vater/control-services/config.json'
+            default = self.homedir + '/vater/control-services/config.json'
         )
 
         # The path to the env file, used
@@ -29,7 +30,7 @@ class Parser():
         self.__parser.add_argument(
             '-e', '--envPath',
             help =  'The json conifguration file',
-            default = homedir + '/vater/control-services/.env'
+            default = self.homedir + '/vater/control-services/.env'
         )
 
         # Grab the configuration path without completely
@@ -40,7 +41,7 @@ class Parser():
     #   the configuration file
     def completeParser(self, services):
         container_choices = copy.deepcopy(services)
-        
+
         unique_service_choices = []
         for service in services:
             s = service.split('_')[0]
@@ -94,8 +95,32 @@ class Parser():
                     ' with the Gitea content repository'
         )
 
+        branches = subprocess.check_output(
+            [
+                "git", "--git-dir",
+                self.homedir + "/rous/.git",
+                "branch", "-r", "--no-color"
+            ]
+        )
+
+        branches = branches.decode(encoding='utf-8').split()
+        unique_branches = []
+
+        for i in branches:
+            unique_branches.append(i.replace('origin/',''))
+
+        unique_branches = list(set(unique_branches))
+        unique_branches.remove("HEAD")
+        unique_branches.remove("->")
+        self.__parser_sync.add_argument(
+            '-b', '--branch',
+            help = 'Specify a github branch in rous to sync to gitea',
+            choices = unique_branches,
+            default = 'main'
+        )
+
         ### Config subparser
-        self.__parser_sync = self.__subparsers.add_parser(
+        self.__parser_config = self.__subparsers.add_parser(
             'config',
             description =   'Prints the current configuration',
             help =  'Prints the current configuration'
@@ -111,10 +136,10 @@ class Parser():
         self.__parser_stop.add_argument(
             '-s', '--service',
             help = 'A service defined in the configuration file',
-            choices = container_choices + ['all'], 
+            choices = container_choices + ['all'],
             default = 'all'
         )
-        
+
         ### Restart subparser
         self.__parser_restart = self.__subparsers.add_parser(
             'restart',
@@ -127,7 +152,7 @@ class Parser():
         self.__parser_restart.add_argument(
             '-s', '--service',
             help = 'A service defined in the configuration file',
-            choices = unique_service_choices + ['all'], 
+            choices = unique_service_choices + ['all'],
             default = 'all'
         )
 
@@ -145,7 +170,7 @@ class Parser():
         self.__parser_clean.add_argument(
             '-s', '--service',
             help = 'A service defined in the configuration file',
-            choices = container_choices + ['all'], 
+            choices = container_choices + ['all'],
             default = 'all'
         )
 
