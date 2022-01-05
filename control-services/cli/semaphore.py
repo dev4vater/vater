@@ -315,6 +315,26 @@ class Semaphore():
             )
         )
 
+        name = 'Destroy Class'
+        self.__createItemAndID(
+            name = name,
+            key = 'alias',
+            url=self.cfg['semaphore']['api']['project_template'],
+            data = (
+                '{'
+                    '"ssh_key_id": ' + str(self.noneKeyId) +  ', '
+                    '"project_id": ' + str(self.managementProjectId) + ', '
+                    '"inventory_id": ' + str(self.localhostInvId) + ', '
+                    '"repository_id": ' + str(self.repositoryId) + ', '
+                    '"environment_id": ' + str(self.envId) + ', '
+                    '"alias": "' + name + '", '
+                    '"playbook": "' + self.cfg['content_repo']['playbooks']['destroyClass'] + '", '
+                    '"arguments": "[\\"-e\\", \\"class=#####\\"]", '
+                    '"override_args": false}'
+                '}'
+            )
+        )
+
         name = 'Build ISOs'
         self.__createItemAndID(
             name = name,

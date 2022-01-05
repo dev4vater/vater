@@ -33,6 +33,9 @@ class Config():
         cfg['content_repo']['playbooks']['createClass'] =                                   \
             cfg['content_repo']['playbook_dir'] + '/createClass.yml'
 
+        cfg['content_repo']['playbooks']['destroyClass'] =                                   \
+            cfg['content_repo']['playbook_dir'] + '/destroyClass.yml'
+
         cfg['content_repo']['playbooks']['buildISOs'] =                                     \
             cfg['content_repo']['playbook_dir'] + '/buildISOs.yml'
 
