@@ -148,7 +148,7 @@ def loginSemaphore(s):
             break
 
 class CommandArgumentsError(Exception):
-    """Raised when a Semaphore task could not be executed using the given arguments"""
+    """Raised when a vater command could not be executed using the given arguments"""
     pass
 
 if __name__ == "__main__":
