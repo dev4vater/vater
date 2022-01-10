@@ -2,7 +2,7 @@ from parser import Parser
 from config import Config
 from jenkins import Jenkins
 from gitea import Gitea
-from semaphore import Semaphore
+from semaphore import Semaphore, SemaphoreTaskArgumentError
 from vDocker import VDocker
 import getpass as gp
 
@@ -10,33 +10,47 @@ def main():
     p = Parser()
     c = Config(p.args.configPath, p.args.envPath)
     p.completeParser(c.cfg["service_list"])
-
-    if p.args.command == 'init':
-        init(c, p.args)
-    elif p.args.command == 'task':
-        task(c, p.args)
-    elif p.args.command == 'sync':
-        sync(c, p.args)
-    elif p.args.command == 'config':
-        config(c, p.args)
-    elif p.args.command == 'stop':
-        stop(c, p.args)
-    elif p.args.command == 'restart':
-        restart(c, p.args)
-    elif p.args.command == 'clean':
-        clean(c, p.args)
-    elif p.args.command == 'access':
-        access(c, p.args)
+    try:
+        if p.args.command == 'init':
+            init(c, p.args)
+        elif p.args.command == 'task':
+            task(c, p.args)
+        elif p.args.command == 'sync':
+            sync(c, p.args)
+        elif p.args.command == 'config':
+            config(c, p.args)
+        elif p.args.command == 'stop':
+            stop(c, p.args)
+        elif p.args.command == 'restart':
+            restart(c, p.args)
+        elif p.args.command == 'clean':
+            clean(c, p.args)
+        elif p.args.command == 'access':
+            access(c, p.args)
+    except CommandArgumentsError as e:
+        p.error(e)
+    
 
 def init(config, args):
     return
 
 def task(config, args):
+    # Use optional arguments so task status checking can be implemented as a future feature enhancement
+    if args.templateAlias is not None:
+        runSemaphoreTask(config, args)
+
+def runSemaphoreTask(config, args): 
     s = Semaphore(config)
-    loginSemaphore(s)
-    s.runTask(
-        args.name, args.classID, args.size
-    )
+    if args.projectName is None:
+        raise CommandArgumentsError('Use of the --template option requires specifying a project. See "vater task -h"') 
+    try:
+        loginSemaphore(s)
+        taskOutput = s.runTask(
+            args.projectName, args.templateAlias
+        )
+        print(taskOutput)
+    except Exception as e:
+        print(e)
 
 def sync(config, args):
     g = Gitea(config)
@@ -132,6 +146,10 @@ def loginSemaphore(s):
         password = gp.getpass(prompt='Semaphore Password: ')
         if(s.login(password=password)):
             break
+
+class CommandArgumentsError(Exception):
+    """Raised when a Semaphore task could not be executed using the given arguments"""
+    pass
 
 if __name__ == "__main__":
     main()

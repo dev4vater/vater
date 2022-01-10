@@ -61,8 +61,48 @@ class Semaphore():
 
         return True
 
-    def runTask(self):
-        return
+    def runTask(self, projectName, templateAlias):
+        projectId = self.__getProjectIdByName(projectName)
+        template = self.__getProjectTaskTemplateByAlias(projectId, templateAlias)
+        templateId = template['id']
+        response = self.__runProjectTaskFromTemplate(projectId, templateId)
+        return response
+
+
+    def __getProjectIdByName(self, projectName):
+        projectId = self.api.getIDFromName(
+            url=self.cfg['semaphore']['api']['projects'],
+            key="name", name=projectName
+        )
+
+        if projectId is None:
+            raise SemaphoreTaskArgumentError('Error: Project "' + projectName + '" not found')
+        
+        return projectId
+
+    def __getProjectTaskTemplateByAlias(self, projectId, templateAlias):
+        templateUrl = self.cfg['semaphore']['api']['project_template'].replace('#', str(projectId))
+        projectTemplatesResponse = self.api.get(url=templateUrl)
+        projectTemplates = json.loads(projectTemplatesResponse.text)
+        foundTemplate = None
+        for template in projectTemplates:
+            if template['alias'] == templateAlias:
+                foundTemplate = template
+        
+        if foundTemplate is None:
+            raise SemaphoreTaskArgumentError('Error: Task template "' + templateAlias + '" not found '
+                                             'in the specified project')
+        return foundTemplate
+
+    def __runProjectTaskFromTemplate(self, projectId, templateId):
+        taskUrl = self.cfg['semaphore']['api']['project_tasks'].replace('#', str(projectId))
+        taskDefinition = (
+            '{'
+                '"template_id": ' + str(templateId) + ''
+            '}'
+        )
+        response = self.api.s.post(url=taskUrl, data=taskDefinition)
+        return response.text
 
     def restartContainer(self):
         containers = ['semaphore', 'semaphore_db']
@@ -459,3 +499,8 @@ class Semaphore():
             self.cfg['semaphore']['api'][key] = url.replace(
                 '#', str(self.managementProjectId)
             )
+
+
+class SemaphoreTaskArgumentError(Exception):
+    """Raised when a Semaphore task could not be executed using the given arguments"""
+    pass

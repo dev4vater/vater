@@ -213,9 +213,12 @@ class Config():
         cfg['semaphore']['api']['project_template'] =                                       \
             cfg['semaphore']['api_url'] + 'project/#/templates'
 
+        cfg['semaphore']['api']['project_tasks'] =                                                 \
+            cfg['semaphore']['api_url'] + 'project/#/tasks'
+   
         cfg['semaphore']['private_key'] =                                                   \
             cfg['dev']['ssh_path'] + 'semaphore'
-
+        
         # Semaphore Database
 
         # db_password, db_user, port

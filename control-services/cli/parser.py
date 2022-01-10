@@ -68,24 +68,29 @@ class Parser():
         self.__parser_task = self.__subparsers.add_parser(
             'task',
             description =   'Executes a task in Semaphore',
-            help =  'Executes a task in Semaphore'
+            help = 'Executes a task in Semaphore'
         )
 
         self.__parser_task.add_argument(
-            'name',
-            help = 'The name of the task to execute',
+            '--project',
+            dest = 'projectName',
+            help = 'The name of the project where the task will execute (e.g. "Class 21012" or "Management")',
         )
 
         self.__parser_task.add_argument(
-            'classID',
-            help = 'A class name formatted class#####',
+            '--template',
+            dest = 'templateAlias',
+            help = 'The alias of the task template to execute (e.g. "Create Range"). Requires specifying the \
+                    project with the --project option',
         )
 
-        self.__parser_task.add_argument(
-            'size',
-            help = 'The size of the class',
-        )
-
+        # TODO: Currently not supported because semaphore does not allow passing parameters in to task template on a per-run basis
+        # self.__parser_task.add_argument(
+        #    'taskParams',
+        #    nargs='*',
+        #    help = 'Parameters required by the task in key=value format (e.g. class=21012)'
+        # ) 
+        
         ### Sync subparser
         self.__parser_sync = self.__subparsers.add_parser(
             'sync',
@@ -199,3 +204,6 @@ class Parser():
 
         # Process added arguments
         self.args = self.__parser.parse_args()
+
+    def error(self, message):
+        self.__parser.error(message)
