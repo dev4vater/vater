@@ -72,7 +72,9 @@ class Semaphore():
             taskExecutionEnvironment = self.__buildTaskEnvironment(taskParams, templateEnvironment)
         
         response = self.__runProjectTaskFromTemplate(projectId, templateId, env=taskExecutionEnvironment)
-        return response
+        
+        output = 'Task Created!\nTask ID: ' + str(response['id'])
+        return output
 
 
     def __getProjectIdByName(self, projectName):
@@ -126,7 +128,7 @@ class Semaphore():
             taskDefinition['environment'] = json.dumps(env)
 
         response = self.api.s.post(url=taskUrl, data=json.dumps(taskDefinition))
-        return response.text
+        return response.json()
 
     def restartContainer(self):
         containers = ['semaphore', 'semaphore_db']
