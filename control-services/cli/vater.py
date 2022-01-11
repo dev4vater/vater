@@ -10,47 +10,39 @@ def main():
     p = Parser()
     c = Config(p.args.configPath, p.args.envPath)
     p.completeParser(c.cfg["service_list"])
-    try:
-        if p.args.command == 'init':
-            init(c, p.args)
-        elif p.args.command == 'task':
-            task(c, p.args)
-        elif p.args.command == 'sync':
-            sync(c, p.args)
-        elif p.args.command == 'config':
-            config(c, p.args)
-        elif p.args.command == 'stop':
-            stop(c, p.args)
-        elif p.args.command == 'restart':
-            restart(c, p.args)
-        elif p.args.command == 'clean':
-            clean(c, p.args)
-        elif p.args.command == 'access':
-            access(c, p.args)
-    except CommandArgumentsError as e:
-        p.error(e)
-    
+    if p.args.command == 'init':
+        init(c, p.args)
+    elif p.args.command == 'task':
+        task(c, p.args)
+    elif p.args.command == 'sync':
+        sync(c, p.args)
+    elif p.args.command == 'config':
+        config(c, p.args)
+    elif p.args.command == 'stop':
+        stop(c, p.args)
+    elif p.args.command == 'restart':
+        restart(c, p.args)
+    elif p.args.command == 'clean':
+        clean(c, p.args)
+    elif p.args.command == 'access':
+        access(c, p.args)
 
 def init(config, args):
     return
 
 def task(config, args):
-    # Use optional arguments so task status checking can be implemented as a future feature enhancement
-    if args.templateAlias is not None:
-        runSemaphoreTask(config, args)
-
-def runSemaphoreTask(config, args): 
     s = Semaphore(config)
-    if args.projectName is None:
-        raise CommandArgumentsError('Use of the --template option requires specifying a project. See "vater task -h"') 
-    try:
-        loginSemaphore(s)
-        taskOutput = s.runTask(
-            args.projectName, args.templateAlias
-        )
-        print(taskOutput)
-    except Exception as e:
-        print(e)
+    loginSemaphore(s)
+    if args.semaphoreCommand == 'run':
+        try:
+            taskOutput = s.runTask(
+                args.projectName,
+                args.templateAlias,
+                taskParams=args.taskParams
+            )
+            print(taskOutput)
+        except SemaphoreTaskArgumentError as e:
+            print(e)
 
 def sync(config, args):
     g = Gitea(config)
@@ -146,10 +138,6 @@ def loginSemaphore(s):
         password = gp.getpass(prompt='Semaphore Password: ')
         if(s.login(password=password)):
             break
-
-class CommandArgumentsError(Exception):
-    """Raised when a vater command could not be executed using the given arguments"""
-    pass
 
 if __name__ == "__main__":
     main()

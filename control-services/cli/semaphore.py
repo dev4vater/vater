@@ -61,11 +61,17 @@ class Semaphore():
 
         return True
 
-    def runTask(self, projectName, templateAlias):
+    def runTask(self, projectName, templateAlias, taskParams=None):
         projectId = self.__getProjectIdByName(projectName)
         template = self.__getProjectTaskTemplateByAlias(projectId, templateAlias)
         templateId = template['id']
-        response = self.__runProjectTaskFromTemplate(projectId, templateId)
+        taskExecutionEnvironment = None
+        if taskParams is not None:
+            environmentId = template['environment_id']
+            templateEnvironment = self.__getProjectEnvironmentById(projectId, environmentId)
+            taskExecutionEnvironment = self.__buildTaskEnvironment(taskParams, templateEnvironment)
+        
+        response = self.__runProjectTaskFromTemplate(projectId, templateId, env=taskExecutionEnvironment)
         return response
 
 
@@ -94,14 +100,32 @@ class Semaphore():
                                              'in the specified project')
         return foundTemplate
 
-    def __runProjectTaskFromTemplate(self, projectId, templateId):
+    def __getProjectEnvironmentById(self, projectId, environmentId):
+        environmentUrl = self.cfg['semaphore']['api']['project_environment'].replace('#', str(projectId))
+        environmentUrl += '/' + str(environmentId)
+        result = self.api.s.get(url=environmentUrl)
+        environmentObject = result.json()
+        environmentVariables = json.loads(environmentObject['json']) # the actual key on the API definition is called 'json'
+        return environmentVariables
+
+    def __buildTaskEnvironment(self, taskParams, templateEnvironment):
+        newEnv = copy.deepcopy(templateEnvironment)
+        for param in taskParams:
+            if str(param).find('=') == -1:
+                raise SemaphoreTaskArgumentError('Error with task parameter "' + param + '". '
+                        'Task parameters must be provided in the format of key=value pairs') 
+            key = param.split('=')[0]
+            value = param.split('=')[1]
+            newEnv[key] = value
+        return newEnv
+
+    def __runProjectTaskFromTemplate(self, projectId, templateId, env=None):
         taskUrl = self.cfg['semaphore']['api']['project_tasks'].replace('#', str(projectId))
-        taskDefinition = (
-            '{'
-                '"template_id": ' + str(templateId) + ''
-            '}'
-        )
-        response = self.api.s.post(url=taskUrl, data=taskDefinition)
+        taskDefinition = { 'template_id': templateId}
+        if env is not None:
+            taskDefinition['environment'] = json.dumps(env)
+
+        response = self.api.s.post(url=taskUrl, data=json.dumps(taskDefinition))
         return response.text
 
     def restartContainer(self):
