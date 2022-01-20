@@ -213,7 +213,8 @@ class Parser():
         run_task_parser.add_argument(
             'taskParams',
             nargs='*',
-            help = 'Parameters to be passed to the task\'s environment in key=value format (e.g. class=21012). \
+            help = 'Parameters to be passed to the task\'s environment in key=value format (e.g. "vater task \
+                    run Management \'Create Class\' class=21012 classSize=20"). \
                     Note that environment variables provided directly to the task template in the Semaphore UI \
                     will take precedence over variables specified here. If experiencing inconsistencies with \
                     values provided here and the results in Semaphore, verify that the template does not have \
