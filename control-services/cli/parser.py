@@ -65,26 +65,7 @@ class Parser():
         )
 
         ### Task subparser
-        self.__parser_task = self.__subparsers.add_parser(
-            'task',
-            description =   'Executes a task in Semaphore',
-            help =  'Executes a task in Semaphore'
-        )
-
-        self.__parser_task.add_argument(
-            'name',
-            help = 'The name of the task to execute',
-        )
-
-        self.__parser_task.add_argument(
-            'classID',
-            help = 'A class name formatted class#####',
-        )
-
-        self.__parser_task.add_argument(
-            'size',
-            help = 'The size of the class',
-        )
+        self.__addTaskSubparser()
 
         ### Sync subparser
         self.__parser_sync = self.__subparsers.add_parser(
@@ -199,3 +180,43 @@ class Parser():
 
         # Process added arguments
         self.args = self.__parser.parse_args()
+
+    def __addTaskSubparser(self):
+        self.__parser_task = self.__subparsers.add_parser(
+            'task',
+            description = 'Executes a task in Semaphore',
+            help = 'Executes a task in Semaphore'
+        )
+
+        task_command_subparsers = self.__parser_task.add_subparsers(
+            help = 'Semaphore task subcommand',
+            dest = 'semaphoreCommand'
+        )
+        
+        run_task_parser = task_command_subparsers.add_parser(
+            'run',
+            description = 'Runs a semaphore task in the specified project using the specified template',
+            help = 'Must provide project name and task template alias'
+        )
+
+        run_task_parser.add_argument(
+            'projectName',
+            help = 'The name of the project where the task will execute (e.g. "Class 21012" or "Management")',
+        )
+
+        run_task_parser.add_argument(
+            'templateAlias',
+            help = 'The alias of the task template to execute (e.g. "Create Range"). The template must be \
+                    defined in the specified project',
+        )
+
+        run_task_parser.add_argument(
+            'taskParams',
+            nargs='*',
+            help = 'Parameters to be passed to the task\'s environment in key=value format (e.g. "vater task \
+                    run Management \'Create Class\' class=21012 classSize=20"). \
+                    Note that environment variables provided directly to the task template in the Semaphore UI \
+                    will take precedence over variables specified here. If experiencing inconsistencies with \
+                    values provided here and the results in Semaphore, verify that the template does not have \
+                    hard-coded arguments that overwrite parameters you are providing at the command line'
+        ) 

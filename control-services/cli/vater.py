@@ -2,7 +2,7 @@ from parser import Parser
 from config import Config
 from jenkins import Jenkins
 from gitea import Gitea
-from semaphore import Semaphore
+from semaphore import Semaphore, SemaphoreTaskArgumentError
 from vDocker import VDocker
 import getpass as gp
 
@@ -10,7 +10,6 @@ def main():
     p = Parser()
     c = Config(p.args.configPath, p.args.envPath)
     p.completeParser(c.cfg["service_list"])
-
     if p.args.command == 'init':
         init(c, p.args)
     elif p.args.command == 'task':
@@ -34,9 +33,16 @@ def init(config, args):
 def task(config, args):
     s = Semaphore(config)
     loginSemaphore(s)
-    s.runTask(
-        args.name, args.classID, args.size
-    )
+    if args.semaphoreCommand == 'run':
+        try:
+            taskOutput = s.runTask(
+                args.projectName,
+                args.templateAlias,
+                taskParams=args.taskParams
+            )
+            print(taskOutput)
+        except SemaphoreTaskArgumentError as e:
+            print(e)
 
 def sync(config, args):
     g = Gitea(config)
