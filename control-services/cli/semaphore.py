@@ -15,12 +15,6 @@ class Semaphore():
         self.docker = VDocker(configs)
         self.wasTokenGenerated = False
 
-        # Check to see if the built from source image exists
-        #   and build the image if it does not exist
-
-        if not self.docker.imageExists('ansiblesemaphore/semaphore', 'local'):
-            self.buildSemaphore()
-
     def buildSemaphore(self):
 
         # Create all the directories required to build semaphore
@@ -115,7 +109,7 @@ class Semaphore():
 
         # Build image
         cmd = [
-                'sudo', 'context=prod', 'tag=local',
+                'sudo', 'context=prod', 'tag=dynamicVars',
                 'task', 'docker:build'
             ]
 
@@ -254,6 +248,12 @@ class Semaphore():
 
     def restartContainer(self):
         containers = ['semaphore', 'semaphore_db']
+
+        # Check to see if the built from source image exists
+        #   and build the image if it does not exist
+
+        if not self.docker.imageExists('ansiblesemaphore/semaphore', 'dynamicVars'):
+            self.buildSemaphore()
 
         self.docker.compose_stop(containers)
         self.docker.compose_up(containers)

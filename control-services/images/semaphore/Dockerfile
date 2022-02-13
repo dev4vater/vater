@@ -1,4 +1,4 @@
-FROM ansiblesemaphore/semaphore:local
+FROM ansiblesemaphore/semaphore:dynamicVars
 USER root
 RUN apk update
 RUN apk add py3-pip
