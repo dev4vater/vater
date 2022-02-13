@@ -27,11 +27,8 @@ sudo rm -rf /usr/local/go
 wget https://go.dev/dl/go1.17.7.linux-amd64.tar.gz -P /tmp/
 sudo tar -C /usr/local/ -xzf /tmp/go1.17.7.linux-amd64.tar.gz
 
+# Check go version
 go version
-
-# Install task
-#GOBIN=/usr/local/bin/ go install github.com/go-task/task/v3/cmd/task@latest
-#task --version"
 
 # Install npm
 sudo apt install -y npm
