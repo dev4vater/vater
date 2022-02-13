@@ -186,6 +186,17 @@ class Config():
         cfg['semaphore']['related_data_dirs'] =                                             \
             glob.glob(cfg['semaphore']['data_dir'][:-1] + '*')
 
+        # Build information
+
+        cfg['semaphore']['build'] = {}
+        cfg['semaphore']['build']['parent_dir'] =                                           \
+            cfg['host']['vater_dir_path'] + cfg['vater_repo']['rel_image_path'] +           \
+            'semaphore/build/'
+        cfg['semaphore']['build']['dir'] =                                                  \
+            cfg['semaphore']['build']['parent_dir'] + 'src/github.com/ansible-semaphore/'
+        cfg['semaphore']['build']['source_dir'] =                                           \
+             cfg['semaphore']['build']['dir'] + 'semaphore/'
+
         # Many of the APIs have IDs in the middle, so we insert a '#' once in the
         #   URL to represent the project ID
         cfg['semaphore']['api'] = {}
@@ -215,10 +226,10 @@ class Config():
 
         cfg['semaphore']['api']['project_tasks'] =                                                 \
             cfg['semaphore']['api_url'] + 'project/#/tasks'
-   
+
         cfg['semaphore']['private_key'] =                                                   \
             cfg['dev']['ssh_path'] + 'semaphore'
-        
+
         # Semaphore Database
 
         # db_password, db_user, port
