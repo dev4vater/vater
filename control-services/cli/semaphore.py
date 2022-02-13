@@ -1,6 +1,6 @@
 from api import Api
 from vDocker import VDocker
-from subprocess import check_output
+import subprocess
 from pathlib import Path
 import glob
 import json
@@ -14,6 +14,128 @@ class Semaphore():
         self.cfg = configs.cfg
         self.docker = VDocker(configs)
         self.wasTokenGenerated = False
+
+        # Check to see if the built from source image exists
+        #   and build the image if it does not exist
+
+        if not self.docker.imageExists('ansiblesemaphore/semaphore', 'local'):
+            self.buildSemaphore()
+
+    def buildSemaphore(self):
+
+        # Create all the directories required to build semaphore
+        cmd = [
+                'mkdir', '-p', self.cfg['semaphore']['build']['source_dir']
+            ]
+
+        subprocess.check_output(cmd, universal_newlines=True)
+
+        # Ensure repo doesn't exist before cloning
+        cmd = [
+                'rm', '-rf', self.cfg['semaphore']['build']['parent_dir']
+            ]
+
+        subprocess.check_output(cmd, universal_newlines=True)
+
+
+        # Git clone the source code
+        cmd = [
+                'git', 'clone', '--recursive',
+                'https://github.com/ansible-semaphore/semaphore.git',
+                self.cfg['semaphore']['build']['source_dir']
+            ]
+
+        subprocess.check_output(cmd, universal_newlines=True)
+
+        cmd = [
+                'git', 'remote', 'set-url',
+                'origin', 'https://github.com/rmfirth/semaphore.git'
+            ]
+
+        subprocess.check_output(
+            cmd, universal_newlines=True,
+            cwd=self.cfg['semaphore']['build']['source_dir']
+        )
+
+        cmd = [
+                'git', 'fetch'
+            ]
+
+        subprocess.check_output(
+            cmd, universal_newlines=True,
+            cwd=self.cfg['semaphore']['build']['source_dir']
+        )
+
+        cmd = [
+                'git', 'checkout', '-f', 'rfirth/cherryPick'
+            ]
+
+        subprocess.check_output(
+            cmd, universal_newlines=True,
+            cwd=self.cfg['semaphore']['build']['source_dir']
+        )
+
+        # Fix bug
+        cmd = [
+                'sed', '-i',
+                's^db/migrations/*^db/**/migrations/*^',
+                self.cfg['semaphore']['build']['source_dir'] + 'Taskfile.yml'
+            ]
+
+        subprocess.check_output(cmd, universal_newlines=True)
+
+        # Install build tool
+        cmd = [
+                'go', 'install', 'github.com/go-task/task/v3/cmd/task@latest'
+            ]
+
+        subprocess.check_output(
+            cmd, universal_newlines=True,
+            cwd=self.cfg['semaphore']['build']['source_dir']
+        )
+
+        # Compile code and resolve dependencies
+        cmd = [
+                'task', 'deps'
+            ]
+
+        subprocess.check_output(
+            cmd, universal_newlines=True,
+            cwd=self.cfg['semaphore']['build']['source_dir']
+        )
+
+        cmd = [
+                'task', 'compile'
+            ]
+
+        subprocess.check_output(
+            cmd, universal_newlines=True,
+            cwd=self.cfg['semaphore']['build']['source_dir'],
+        )
+
+        # Build image
+        cmd = [
+                'sudo', 'context=prod', 'tag=local',
+                'task', 'docker:build'
+            ]
+
+        subprocess.check_output(
+            cmd, universal_newlines=True,
+            cwd=self.cfg['semaphore']['build']['source_dir']
+        )
+
+        # Clean up old images and build path
+        cmd = [
+                'sudo', 'docker', 'image', 'prune', '-f'
+            ]
+
+        subprocess.check_output(cmd, universal_newlines=True)
+
+        cmd = [
+                'rm', '-rf', self.cfg['semaphore']['build']['parent_dir']
+            ]
+
+        subprocess.check_output(cmd, universal_newlines=True)
 
     def login(self, password=None):
         if password is None:
@@ -70,9 +192,9 @@ class Semaphore():
             environmentId = template['environment_id']
             templateEnvironment = self.__getProjectEnvironmentById(projectId, environmentId)
             taskExecutionEnvironment = self.__buildTaskEnvironment(taskParams, templateEnvironment)
-        
+
         response = self.__runProjectTaskFromTemplate(projectId, templateId, env=taskExecutionEnvironment)
-        
+
         output = 'Task Created!\nTask ID: ' + str(response['id'])
         return output
 
@@ -85,7 +207,7 @@ class Semaphore():
 
         if projectId is None:
             raise SemaphoreTaskArgumentError('Error: Project "' + projectName + '" not found')
-        
+
         return projectId
 
     def __getProjectTaskTemplateByAlias(self, projectId, templateAlias):
@@ -96,7 +218,7 @@ class Semaphore():
         for template in projectTemplates:
             if template['alias'] == templateAlias:
                 foundTemplate = template
-        
+
         if foundTemplate is None:
             raise SemaphoreTaskArgumentError('Error: Task template "' + templateAlias + '" not found '
                                              'in the specified project')
@@ -161,7 +283,7 @@ class Semaphore():
         self.docker.compose_stop(containers)
         self.docker.system_prune_all()
 
-        check_output(
+        subprocess.check_output(
             ['sudo', 'rm', '-rf'] +                                             \
             self.cfg['semaphore']['related_data_dirs'],
             universal_newlines=True
@@ -463,7 +585,7 @@ class Semaphore():
 
         # This private key is used by the rous/setupNewClass.py
         #   when accessing control via Ansible
-        check_output(
+        subprocess.check_output(
             [
                 'sudo', 'cp',
                 self.cfg['semaphore']['private_key'],
