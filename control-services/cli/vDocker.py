@@ -83,6 +83,20 @@ class VDocker():
 
         t.join()
 
+    def imageExists(self, image, tag):
+        cmd = [
+            'sudo', 'docker', 'image',
+            'inspect', image+':'+tag,
+            '--format="true"'
+            ]
+
+        try:
+            out = subprocess.check_output(cmd, universal_newlines=True)
+        except subprocess.CalledProcessError as e:
+            return False
+
+        return True
+
     def __makeStrList(self, s):
         if isinstance(s, str):
             s = list(s.split('~'))
