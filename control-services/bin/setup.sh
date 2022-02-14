@@ -29,10 +29,6 @@ sudo tar -C /usr/local/ -xzf /tmp/go1.17.7.linux-amd64.tar.gz
 rm -f /tmp/go1.17.7.linux-amd64.tar.gz
 
 echo "export PATH=$PATH:/usr/local/go/bin:/home/control/go/bin" | sudo tee -a /etc/profile
-
-
-#echo "export PATH=$PATH:/usr/local/go/bin:/home/control/go/bin" >> ~/.bashrc
-#sudo sh -C "echo export PATH=$PATH:/usr/local/go/bin:/home/control/go/bin" > /etc/profile
 source /etc/profile
 
 # Check go version
