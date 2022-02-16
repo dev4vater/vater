@@ -517,12 +517,12 @@ class Semaphore():
                     '"environment_id": ' + str(self.envId) + ', '
                     '"alias": "' + name + '", '
                     '"playbook": "' + self.cfg['content_repo']['playbooks']['destroyClass'] + '", '
-                    '"arguments": "[{\\"name\\":\\"class\\",\\"required\\":true}]", '
+                    '"dynamic_vars": "[{\\"name\\":\\"class\\",\\"required\\":true}]"' + ', '
                     '"override_args": false}'
                 '}'
             )
         )
-
+        
         name = 'Build ISOs'
         self.__createItemAndID(
             name = name,
