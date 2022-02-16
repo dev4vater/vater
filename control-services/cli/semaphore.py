@@ -497,7 +497,7 @@ class Semaphore():
                     '"environment_id": ' + str(self.envId) + ', '
                     '"alias": "' + name + '", '
                     '"playbook": "' + self.cfg['content_repo']['playbooks']['createClass'] + '", '
-                    '"arguments": "[\\"-e\\", \\"class=##### classSize=##\\"]", '
+                    '"dynamic_vars": "[{\\"name\\":\\"class\\",\\"required\\":true},{\\"name\\":\\"classSize\\",\\"required\\":true}]"' + ', '
                     '"override_args": false}'
                 '}'
             )
@@ -517,7 +517,7 @@ class Semaphore():
                     '"environment_id": ' + str(self.envId) + ', '
                     '"alias": "' + name + '", '
                     '"playbook": "' + self.cfg['content_repo']['playbooks']['destroyClass'] + '", '
-                    '"arguments": "[\\"-e\\", \\"class=#####\\"]", '
+                    '"arguments": "[{\\"name\\":\\"class\\",\\"required\\":true}]", '
                     '"override_args": false}'
                 '}'
             )
