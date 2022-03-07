@@ -26,6 +26,7 @@ sudo apt-get upgrade -y
 sudo rm -rf /usr/local/go
 wget https://go.dev/dl/go1.17.7.linux-amd64.tar.gz -P /tmp/
 sudo tar -C /usr/local/ -xzf /tmp/go1.17.7.linux-amd64.tar.gz
+export PATH=$PATH:/usr/local/go/bin
 
 # Check go version
 go version
