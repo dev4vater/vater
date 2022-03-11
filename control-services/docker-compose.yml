@@ -154,7 +154,9 @@ services:
     environment:
       - JENKINS_ADMIN_ID=${jenkins_admin_id}
       - JENKINS_ADMIN_PASSWORD=${jenkins_admin_password}
+      - CASC_JENKINS_CONFIG=${jenkins_casc_config_dir}
     volumes:
       - ./data/jenkins:/var/jenkins_home
+      - ./images/jenkins/casc_configs/:/var/jenkins_home/casc_configs
     ports:
       - "5000:8080"
