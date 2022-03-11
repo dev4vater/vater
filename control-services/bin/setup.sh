@@ -188,6 +188,9 @@ git --git-dir /home/control/$CONFIG_REPO/.git pull
 
 echo "alias vater=\"python3 ~/vater/control-services/cli/vater.py\"" > ~/.bash_aliases
 echo 'export PATH="$PATH:/usr/local/go/bin:/home/control/go/bin' | sudo tee -a /etc/profile
+
+# Check Go Version
+go version
 source /etc/profile
 source ~/.bashrc
 
