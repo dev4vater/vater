@@ -7,6 +7,7 @@ Welcome to Vater's Test documentation!
 =================================
 
 .. toctree::
+   :maxdepth: 2
    :caption: Contents:
    
    DevandIntNotes
