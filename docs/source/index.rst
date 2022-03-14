@@ -8,21 +8,36 @@ Welcome to Vater's Test documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Project Overview:
+   
+   home
+   resources
+
+   
+.. toctree::
+   :maxdepth: 2
+   :caption: Individual Environment Setup:
+   
+   GettingStarted
+   editlaunch
+  
+.. toctree::
+   :maxdepth: 2
+   :caption: Instructor Guides:
+   
+   terraform
+   Semaphore
+   gitea
+   packer
+   vatercli
+   EditConfig
+   
+.. toctree::
+   :maxdepth: 2
+   :caption: Developer Resources:
    
    DevandIntNotes
-   EditConfig
-   GettingStarted
-   Semaphore
-   editlaunch
-   gitea
-   home
    jenkins
-   packer
-   resources
-   terraform
-   vatercli
-
 
 Indices and tables
 ==================
