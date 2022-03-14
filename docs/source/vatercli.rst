@@ -1,3 +1,6 @@
+Vater CLI
+**********
+
 The VATER CLI is designed so that Instructors and Developers can run
 task templates, restart services and access containers from the command
 line. All actions that are run from ``Semaphore`` can also be run from
