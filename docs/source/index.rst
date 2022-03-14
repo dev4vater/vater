@@ -7,9 +7,20 @@ Welcome to Vater's Test documentation!
 =================================
 
 .. toctree::
-   :maxdepth: 2
    :caption: Contents:
-
+   
+   DevandIntNotes
+   EditConfig
+   GettingStarted
+   Semaphore
+   editlaunch
+   gitea
+   home
+   jenkins
+   packer
+   resources
+   terraform
+   vatercli
 
 
 Indices and tables
