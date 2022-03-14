@@ -1,3 +1,6 @@
+Edit Configuration
+******************
+
 ``config.json`` is used by the CLI to configure the different services
 and has various options for users to edit.
 
