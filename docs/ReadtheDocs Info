@@ -1,0 +1,15 @@
+##Information for Readthedocs
+- When creating new files they need to be in rst
+    - Can upload python converter script or just us online site to do conversion from markdown if desired
+- Once the rst files are uploaded into the /docs/source file in the github you need to add the file name to the contents of index.rst
+- Do a fresh build on readthedocs and check for expected changes
+  - If they do not appear:
+    - First, download the HTML and check for changes there (sometimes the readthdocs site takes an hour or so to update but HTML source updates automatically)
+    - If they are also not listed in the HTML, check the raw for runtime errors/warning
+- Known errors/solutions:
+  - WARNING: document isn't included in any toctree
+    - Make sure you listed the file in index.rst within the toctree
+  - WARNING: toctree contains reference to document 'EditConfig' that doesn't have a title: no link will be generated
+    - Add a title to the top of your rst file. All rst files must have a title for Sphinx to upload them
+  - WARNING: Title underline too short.
+    - Add required characters beneath title to fully underline the words
