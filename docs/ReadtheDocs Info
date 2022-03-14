@@ -1,5 +1,5 @@
 ##Information for Readthedocs
-- When creating new files they need to be in rst
+- When creating new files they need to be in rst (ReStructured)
     - Can upload python converter script or just us online site to do conversion from markdown if desired
 - Once the rst files are uploaded into the /docs/source file in the github you need to add the file name to the contents of index.rst
 - Do a fresh build on readthedocs and check for expected changes
