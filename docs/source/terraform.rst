@@ -1,10 +1,7 @@
-Introduction To Terraform
--------------------------
-
 What Is The Design Of Terraform?
 --------------------------------
 
-.. image:: https://github.com/uwardlaw/vater/blob/main/diagram/terraformDesign.svg
+.. image:: images/terraformDesign.svg
 
 How to Use Terraform
 --------------------
