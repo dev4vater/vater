@@ -1,4 +1,4 @@
-.. image::  https://github.com/dev4vater/vater/blob/readthedocs_setup/diagram/MADDUCK.JPG
+.. image:: diagram/MADDUCK.JPG
    :width: 400
 
 Project goal
