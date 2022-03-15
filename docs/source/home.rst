@@ -1,5 +1,5 @@
 .. image::  https://github.com/uwardlaw/vater/blob/main/diagram/MADDUCK.JPG
-   :width: 600
+   :width: 400
 
 Project goal
 ------------
@@ -65,10 +65,10 @@ configuration resources.
    to a web browser, you have access to your machines.
 
 .. image:: https://github.com/uwardlaw/vater/blob/main/diagram/range.svg
-   :width: 600
+   :width: 400
 
 VATER Interface for Instructors
 -------------------------------
 
 .. image:: https://github.com/uwardlaw/vater/blob/main/diagram/instructorExperience.svg
-   :width: 600
+   :width: 400
