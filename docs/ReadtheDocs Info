@@ -6,6 +6,8 @@
   - If they do not appear:
     - First, download the HTML and check for changes there (sometimes the readthdocs site takes an hour or so to update but HTML source updates automatically)
     - If they are also not listed in the HTML, check the raw for runtime errors/warning
+ - In order to upload an image to the site, the image needs to be in the vater/docs/source/image folder
+    - In the desired rst file, use the command ..:image filepath
 - Known errors/solutions:
   - WARNING: document isn't included in any toctree
     - Make sure you listed the file in index.rst within the toctree
