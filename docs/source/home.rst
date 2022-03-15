@@ -1,5 +1,4 @@
 .. image:: https://github.com/dev4vater/vater/blob/readthedocs_setup/diagram/MADDUCK.JPG
-   :width: 400
 
 Project goal
 ------------
@@ -65,10 +64,8 @@ configuration resources.
    to a web browser, you have access to your machines.
 
 .. image:: https://github.com/uwardlaw/vater/blob/main/diagram/range.svg
-   :width: 400
 
 VATER Interface for Instructors
 -------------------------------
 
 .. image:: https://github.com/uwardlaw/vater/blob/main/diagram/instructorExperience.svg
-   :width: 400
