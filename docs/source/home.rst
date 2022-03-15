@@ -1,4 +1,4 @@
-.. image:: https://github.com/dev4vater/vater/blob/readthedocs_setup/diagram/MADDUCK.JPG
+.. image:: images/MADDUCK.jpg
 
 Project goal
 ------------
@@ -63,9 +63,9 @@ configuration resources.
    standard protocols like VNC, RDP, and SSH. As long as you have access
    to a web browser, you have access to your machines.
 
-.. image:: https://github.com/uwardlaw/vater/blob/main/diagram/range.svg
+.. image:: images/range.svg
 
 VATER Interface for Instructors
 -------------------------------
 
-.. image:: https://github.com/uwardlaw/vater/blob/main/diagram/instructorExperience.svg
+.. image:: images/instructorExperience.svg
