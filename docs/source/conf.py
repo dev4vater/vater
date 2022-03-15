@@ -17,7 +17,7 @@ import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
 
-project = 'Vater'
+project = 'VATER'
 copyright = '2022, Mad Ducks'
 author = 'Mad Ducks'
 
