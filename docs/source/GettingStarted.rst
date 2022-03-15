@@ -1,7 +1,7 @@
 VirtualBox/VMware Set Up
 ========================
 
-Vater will be run on a VM server. VirutalBox or VMWare will work for
+VATER will be run on a VM server. VirutalBox or VMWare will work for
 this project, although experience has seen VirtualBox creating fewer
 issues. - Virtual Box Set Up - VMWare Set Up
 
@@ -16,7 +16,7 @@ Downloading VM server
    -  4 GB RAM
    -  60 GB storage in / # Set up
 
--  Clone Vater repository to your home directory(~)
+-  Clone VATER repository to your home directory(~)
 
    -  In you home directory(~) run “git clone
       https://github.com/uwardlaw/vater”
@@ -43,15 +43,15 @@ Downloading VM server
       Running vater
 
 -  Once setup.sh is complete
--  To run Vater:
+-  To run VATER:
 
    -  cd vater/control-services
    -  sudo docker-compose up
 
--  This will set up and run the docker containing Vater and Vater will
+-  This will set up and run the docker containing VATER and VATER will
    start
 
    -  NOTE: Currently (March 2022) There is an issue with the env name
       on the semaphore configuration that causes a build fail
 
--  Ctrl-C to exit Vater
+-  Ctrl-C to exit VATER
