@@ -21,24 +21,23 @@ A basic command in Ansible will accomplish:
 
 - Copies one or more modules to the remote machines and starts execution there. 
 
-More Information on Ansible: https://docs.ansible.com/ansible/latest/user_guide/intro_getting_started.html#intro-getting-started
-                             https://docs.ansible.com/ansible/latest/user_guide/index.html
+More Information on Getting Started with Ansible: 
+- `Getting Started <https://docs.ansible.com/ansible/latest/user_guide/intro_getting_started.html#intro-getting-started>`
+- `User Guide <https://docs.ansible.com/ansible/latest/user_guide/index.html>`
  
 Ansible & VMware
 =======
 Ansible provides various modules to manage VMware infrastructure. In the context of VATER, Ansible will allow management of the range VMs. The best way to interact with your hosts is to use the VMware dynamic inventory plugin, which dynamically queries VMware APIs and tells Ansible what nodes can be managed. 
 
-More Information: https://docs.ansible.com/ansible/latest/scenario_guides/vmware_scenarios/vmware_inventory.html
+More Information on Ansible & VMWare: 
+- `VMWare Inventory <https://docs.ansible.com/ansible/latest/scenario_guides/vmware_scenarios/vmware_inventory.html>`
 
 A particular scenario within VATER where the interaction between Ansible and VMWare is relevant includes utilizing Ansible to clone a VM from already existing VMware template: 
-- `Deploy VM from
-   template <https://docs.ansible.com/ansible/latest/scenario_guides/vmware_scenarios/scenario_clone_template.html>`__
+- 'Cloning VM <https://docs.ansible.com/ansible/latest/scenario_guides/vmware_scenarios/scenario_clone_template.html>`
    
 More Information on Ansible: 
-- `Ansible VMware
-   Guide <https://docs.ansible.com/ansible/latest/scenario_guides/guide_vmware.html>`__
--  `Primary Ansible reference for
-   VMware <https://docs.ansible.com/ansible/latest/collections/community/vmware/index.html#scenario-guide>`__
+- `Ansible VMware Guide <https://docs.ansible.com/ansible/latest/scenario_guides/guide_vmware.html>`__
+-  `Primary Ansible reference for VMware <https://docs.ansible.com/ansible/latest/collections/community/vmware/index.html#scenario-guide>`__
    
 Ansible Playbooks
 =================
@@ -52,11 +51,8 @@ When a task has executed on all target machines, Ansible moves on to the next ta
 
 More Information on Playbooks: 
 -  `Playbooks <https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html>`__
--  `Playbook
-   Keywords <https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html>`__
--  `AWK Playbooks for
-   vCenter <https://www.robvit.com/ansible-tower-awx/ansible-vmware-playbook-examples/>`__
--  `Implicit
-   localhost <https://docs.ansible.com/ansible/2.6/inventory/implicit_localhost.html>`__
+-  `Playbook Keywords <https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html>`__
+-  `AWK Playbooks for vCenter <https://www.robvit.com/ansible-tower-awx/ansible-vmware-playbook-examples/>`__
+-  `Implicit localhost <https://docs.ansible.com/ansible/2.6/inventory/implicit_localhost.html>`__
 
 
