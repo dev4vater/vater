@@ -22,6 +22,7 @@ A basic command in Ansible will accomplish:
 - Copies one or more modules to the remote machines and starts execution there. 
 
 More Information on Getting Started with Ansible: 
+
 - `Getting Started <https://docs.ansible.com/ansible/latest/user_guide/intro_getting_started.html#intro-getting-started>`_
 - `User Guide <https://docs.ansible.com/ansible/latest/user_guide/index.html>`_
  
@@ -32,6 +33,7 @@ Ansible provides various modules to manage VMware infrastructure. In the context
 The best way to interact with your hosts is to use the VMware dynamic inventory plugin, which dynamically queries VMware APIs and tells Ansible what nodes can be managed. 
 
 More Information on Ansible & VMWare: 
+
 - `VMWare Inventory <https://docs.ansible.com/ansible/latest/scenario_guides/vmware_scenarios/vmware_inventory.html>`_
 
 A particular scenario within VATER where the interaction between Ansible and VMWare is relevant includes utilizing Ansible to clone a VM from already existing VMware template: 
@@ -48,6 +50,7 @@ If you need to execute a task with Ansible more than once, the developer can wri
 In the context of VATER, this will allow the same task to be pushed out to multiple VMs at the same time, allowing for efficient and consistent updates.
 
 A playbook is composed of one or more ‘plays’ in an ordered list. Each play executes part of the overall goal of the playbook, running one or more tasks. Each task calls an Ansible module.  Playbooks with multiple ‘plays’ can orchestrate multi-machine deployment. A Play wil define two things:
+
 - The managed nodes to target, using a pattern
 - The task(s) to execute
 
@@ -61,6 +64,7 @@ If a task fails on a host, Ansible takes that host out of the rotation for the r
 Most Ansible modules check whether the desired final state has already been achieved, and exit without performing any actions if that state has been achieved, so that repeating the task does not change the final state.
 
 More Information on Playbooks: 
+
 -  `Playbooks <https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html>`_
 
 -  `Playbook Keywords <https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html>`_
