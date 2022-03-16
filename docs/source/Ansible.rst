@@ -55,8 +55,11 @@ When a task has executed on all target machines, Ansible moves on to the next ta
 
 More Information on Playbooks: 
 -  `Playbooks <https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html>`
+
 -  `Playbook Keywords <https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html>`
+
 -  `AWK Playbooks for vCenter <https://www.robvit.com/ansible-tower-awx/ansible-vmware-playbook-examples/>`
+
 -  `Implicit localhost <https://docs.ansible.com/ansible/2.6/inventory/implicit_localhost.html>`
 
 
