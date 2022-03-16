@@ -1,6 +1,11 @@
-Ansible
+Getting Started with Ansible
 =======
 
+
+
+More Information: https://docs.ansible.com/ansible/latest/user_guide/index.html
+
+The following documentation provides a guide for deploying a virtual machine from a template.
 -  `Deploy VM from
    template <https://docs.ansible.com/ansible/latest/scenario_guides/vmware_scenarios/scenario_clone_template.html>`__
 -  `Playbooks <https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html>`__
@@ -18,24 +23,3 @@ Ansible
    VMware <https://docs.ansible.com/ansible/latest/collections/community/vmware/index.html#scenario-guide>`__
 -  `Ansible VMware
    Guide <https://docs.ansible.com/ansible/latest/scenario_guides/guide_vmware.html>`__
-
-Containers
-==========
-
-`Root user in
-Semaphore <https://stackoverflow.com/questions/61683448/how-to-run-bash-as-user-root-on-alpine-images-with-docker-su-must-be-suid-to-w>`__
-
-Gitea
-=====
-
-Semaphore
-=========
-
--  `Semaphore
-   dockerfile <https://github.com/ansible-semaphore/semaphore/blob/develop/deployment/docker/dev/Dockerfile>`__
--  `API <https://ansible-semaphore.com/api/>`__
-
-Coding
-======
-
--  `Python Linter <https://infoheap.com/python-lint-online/>`__
