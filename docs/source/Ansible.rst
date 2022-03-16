@@ -51,7 +51,14 @@ A playbook is composed of one or more ‘plays’ in an ordered list. Each play 
 - The managed nodes to target, using a pattern
 - The task(s) to execute
 
-When a task has executed on all target machines, Ansible moves on to the next task. Within each play, Ansible applies the same task directives to all hosts. If a task fails on a host, Ansible takes that host out of the rotation for the rest of the playbook. At the bottom of the playbook execution, Ansible provides a summary of the nodes that were targeted and how they performed. Most Ansible modules check whether the desired final state has already been achieved, and exit without performing any actions if that state has been achieved, so that repeating the task does not change the final state.
+Playbook Task
+=================
+
+When a task has executed on all target machines, Ansible moves on to the next task. Within each play, Ansible applies the same task directives to all hosts.
+
+If a task fails on a host, Ansible takes that host out of the rotation for the rest of the playbook. At the bottom of the playbook execution, Ansible provides a summary of the nodes that were targeted and how they performed. 
+
+Most Ansible modules check whether the desired final state has already been achieved, and exit without performing any actions if that state has been achieved, so that repeating the task does not change the final state.
 
 More Information on Playbooks: 
 -  `Playbooks <https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html>`_
