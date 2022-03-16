@@ -22,8 +22,8 @@ A basic command in Ansible will accomplish:
 - Copies one or more modules to the remote machines and starts execution there. 
 
 More Information on Getting Started with Ansible: 
-- `Getting Started <https://docs.ansible.com/ansible/latest/user_guide/intro_getting_started.html#intro-getting-started>`
-- `User Guide <https://docs.ansible.com/ansible/latest/user_guide/index.html>`
+- `Getting Started <https://docs.ansible.com/ansible/latest/user_guide/intro_getting_started.html#intro-getting-started>`_
+- `User Guide <https://docs.ansible.com/ansible/latest/user_guide/index.html>`_
  
 Ansible & VMware
 =======
@@ -32,14 +32,14 @@ Ansible provides various modules to manage VMware infrastructure. In the context
 The best way to interact with your hosts is to use the VMware dynamic inventory plugin, which dynamically queries VMware APIs and tells Ansible what nodes can be managed. 
 
 More Information on Ansible & VMWare: 
-- `VMWare Inventory <https://docs.ansible.com/ansible/latest/scenario_guides/vmware_scenarios/vmware_inventory.html>`
+- `VMWare Inventory <https://docs.ansible.com/ansible/latest/scenario_guides/vmware_scenarios/vmware_inventory.html>`_
 
 A particular scenario within VATER where the interaction between Ansible and VMWare is relevant includes utilizing Ansible to clone a VM from already existing VMware template: 
-- 'Cloning VM <https://docs.ansible.com/ansible/latest/scenario_guides/vmware_scenarios/scenario_clone_template.html>`
+- 'Cloning VM <https://docs.ansible.com/ansible/latest/scenario_guides/vmware_scenarios/scenario_clone_template.html>`_
    
 More Information on Ansible: 
 - `Ansible VMware Guide <https://docs.ansible.com/ansible/latest/scenario_guides/guide_vmware.html>`__
--  `Primary Ansible reference for VMware <https://docs.ansible.com/ansible/latest/collections/community/vmware/index.html#scenario-guide>`
+-  `Primary Ansible reference for VMware <https://docs.ansible.com/ansible/latest/collections/community/vmware/index.html#scenario-guide>`_
    
 Ansible Playbooks
 =================
@@ -54,12 +54,12 @@ A playbook is composed of one or more ‘plays’ in an ordered list. Each play 
 When a task has executed on all target machines, Ansible moves on to the next task. Within each play, Ansible applies the same task directives to all hosts. If a task fails on a host, Ansible takes that host out of the rotation for the rest of the playbook. At the bottom of the playbook execution, Ansible provides a summary of the nodes that were targeted and how they performed. Most Ansible modules check whether the desired final state has already been achieved, and exit without performing any actions if that state has been achieved, so that repeating the task does not change the final state.
 
 More Information on Playbooks: 
--  `Playbooks <https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html>`
+-  `Playbooks <https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html>`_
 
--  `Playbook Keywords <https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html>`
+-  `Playbook Keywords <https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html>`_
 
--  `AWK Playbooks for vCenter <https://www.robvit.com/ansible-tower-awx/ansible-vmware-playbook-examples/>`
+-  `AWK Playbooks for vCenter <https://www.robvit.com/ansible-tower-awx/ansible-vmware-playbook-examples/>`_
 
--  `Implicit localhost <https://docs.ansible.com/ansible/2.6/inventory/implicit_localhost.html>`
+-  `Implicit localhost <https://docs.ansible.com/ansible/2.6/inventory/implicit_localhost.html>`_
 
 
