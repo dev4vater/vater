@@ -25,6 +25,7 @@ Welcome to VATER Test documentation!
    :maxdepth: 2
    :caption: Instructor Guides:
    
+   instructoroverview
    terraform
    Semaphore
    gitea
