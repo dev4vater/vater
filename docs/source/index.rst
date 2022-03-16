@@ -11,7 +11,7 @@ Welcome to VATER Test documentation!
    :caption: Project Overview:
    
    home
-   resources
+   Ansible
 
    
 .. toctree::
