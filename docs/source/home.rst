@@ -1,9 +1,8 @@
 .. image:: images/MADDUCK.jpg
 
-Project goal
-------------
 
-VATER == Virtualization-Agnostic Training and Evaluation Range
+Virtualization-Agnostic Training and Evaluation Range (VATER)
+------------
 
 The goal of VATER is to develop an interactive range that can be
 utilized by students, with a focus on making the range solution
@@ -64,8 +63,3 @@ configuration resources.
    to a web browser, you have access to your machines.
 
 .. image:: images/range.svg
-
-VATER Interface for Instructors
--------------------------------
-
-.. image:: images/instructorExperience.svg
