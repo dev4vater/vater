@@ -35,7 +35,7 @@ More Information on Ansible & VMWare:
 - `VMWare Inventory <https://docs.ansible.com/ansible/latest/scenario_guides/vmware_scenarios/vmware_inventory.html>`_
 
 A particular scenario within VATER where the interaction between Ansible and VMWare is relevant includes utilizing Ansible to clone a VM from already existing VMware template: 
-- 'Cloning VM <https://docs.ansible.com/ansible/latest/scenario_guides/vmware_scenarios/scenario_clone_template.html>`_
+- `Cloning VM <https://docs.ansible.com/ansible/latest/scenario_guides/vmware_scenarios/scenario_clone_template.html>`_
    
 More Information on Ansible: 
 - `Ansible VMware Guide <https://docs.ansible.com/ansible/latest/scenario_guides/guide_vmware.html>`__
