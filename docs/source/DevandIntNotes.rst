@@ -55,6 +55,16 @@ The easiest way to do that is with a ``-var`` argument to override the
 ex.
 ``packer build --only vsphere-iso.machine --var-file machine.pkrvars.hcl -var vcenter_folder="test" .``
 
+
+Tips for Using the File Provisioner
+------------------------------------
+
+When using the file provisioner to move files, the file source and destination must be explicitly stated on each file being moved. Complications arise when trying to move entire directories; packer puts the files in a random temp folder and the files will not appear in the desired location.
+
+--Note: This only applies to packer. If moving files or directories after the packer template creation process is complete, disregard these steps and move the files/directories normally.
+
+
+
 In the case the Destroy Class does not function
 -----------------------------------------------
 
@@ -82,3 +92,13 @@ of where this is needed)
 without actually installing, finish installation by running the
 installation script in
 ``C:\ProgramData\chocolatey\lib\<programName>\tools``
+
+Server Error
+-------------
+Build 'vsphere-iso.windows' errored after 5 seconds 60 milliseconds: ServerFaultCode: Cannot complete login due to an incorrect user name or password. 
+
+- If these error occurs when attempting and builds - verify vCenter credentials
+
+Using ansible to take actions on individual VMs
+------------------------------------------------
+The module is called `community.vmware.wmware_vm_shell` it uses a unique vm_id to reference the vm.  Current VM naming conventions ensure that the vm name is a uid, but moids ect. can be used as well.  Specifying a folder and a vm name fails as a unique id.  The `vm_shell_cwd` option fails to work as advertised on windows 2019.  Had to specify the absolute path of a script to run it.
