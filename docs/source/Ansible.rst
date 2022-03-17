@@ -26,9 +26,12 @@ More Information on Getting Started with Ansible:
 - `Getting Started <https://docs.ansible.com/ansible/latest/user_guide/intro_getting_started.html#intro-getting-started>`_
 
 - `User Guide <https://docs.ansible.com/ansible/latest/user_guide/index.html>`_
+
+Playbooks & Modules
+~~~~~~~~~~~~~~~~~~~
  
 Ansible & VMware
-=======
+^^^^^^^^^^^^^^^^
 Ansible provides various modules to manage VMware infrastructure. In the context of VATER, Ansible will allow management of the range VMs. 
 
 The best way to interact with your hosts is to use the VMware dynamic inventory plugin, which dynamically queries VMware APIs and tells Ansible what nodes can be managed. 
@@ -48,7 +51,7 @@ More Information on Ansible:
 -  `Primary Ansible reference for VMware <https://docs.ansible.com/ansible/latest/collections/community/vmware/index.html#scenario-guide>`_
    
 Ansible Playbooks
-=================
+^^^^^^^^^^^^^^^^^
 If you need to execute a task with Ansible more than once, the developer can write a playbook. The playbook can push out new configuration or confirm the configuration of remote systems.
 
 In the context of VATER, this will allow the same task to be pushed out to multiple VMs at the same time, allowing for efficient and consistent updates.
@@ -59,7 +62,7 @@ A playbook is composed of one or more ‘plays’ in an ordered list. Each play 
 - The task(s) to execute
 
 Playbook Task
-=================
+^^^^^^^^^^^^^^
 
 When a task has executed on all target machines, Ansible moves on to the next task. Within each play, Ansible applies the same task directives to all hosts.
 
