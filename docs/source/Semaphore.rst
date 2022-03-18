@@ -1,19 +1,23 @@
+Semaphore
+----------
+
+
 Purpose of Semaphore
---------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 Semaphore provides a GUI that Instructors and Developers can use to
 interact with ansible playbooks.
 `Website <https://ansible-semaphore.com/>`__
 
 Dashboard Display
------------------
+^^^^^^^^^^^^^^^^^
 
 Runs on ``control`` port ``4000``.
 
 Access via web browser of choice: ``x.x.x.x:4000``
 
 Relevant Task Templates
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^
 
 From the ``Management`` project, task templates are:
 
@@ -36,7 +40,7 @@ Within a ``Class`` project, task templates are:
    Other Enclave Specific Actions
 
 Create Class
-------------
+^^^^^^^^^^^^^
 
 To create a class click the run button on the right side of the screen.
 A popup will appear asking you to enter the class number and the number
@@ -48,7 +52,7 @@ After successfully running ``Create Class`` template, refresh the
 browser. The new class will appear as a project in the top left.
 
 Troubleshooting Tips
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 If a task fails, the first step is to rerun the task. Occasionally with
 large builds instructions are not processed by ``vsphere`` properly and
