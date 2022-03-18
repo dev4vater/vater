@@ -11,9 +11,7 @@ Welcome to VATER Test documentation!
    :caption: Project Overview:
    
    home
-   Ansible
 
-   
 .. toctree::
    :maxdepth: 2
    :caption: Individual Environment Setup:
@@ -27,6 +25,7 @@ Welcome to VATER Test documentation!
    
    instructoroverview
    terraform
+   Ansible
    Semaphore
    gitea
    packer
