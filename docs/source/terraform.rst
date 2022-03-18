@@ -20,9 +20,12 @@ How is Terraform Integrated within VATER?
 
 Configs
 ~~~~~~~
-**Jinja2**: Jinja2 is a template engine for the Python programming language. Template systems allow designers and developers to work with templates that automatically generate custom pages. They reuse static page elements while defining dynamic elements based on parameters. 
-**Ansible**: Ansible uses Jinja2 for a configuration file, then deploys that configuration file to muliple environments and supply the correct data (IP addresses, hostname, version) for each environment.
-**Terraform**: Terraform states is the mechanism via which it keeps track of resources that are actually deployed in the range. Project workspaces allow you to have multiple states in the same backend, tied to the same configuration. This allows you to deploy multiple distinct instances of the same infrastructure.
+
+- **Jinja2**: Jinja2 is a template engine for the Python programming language. Template systems allow designers and developers to work with templates that automatically generate custom pages. They reuse static page elements while defining dynamic elements based on parameters. 
+
+- **Ansible**: Ansible uses Jinja2 for a configuration file, then deploys that configuration file to muliple environments and supply the correct data (IP addresses, hostname, version) for each environment.
+
+- **Terraform**: Terraform states is the mechanism via which it keeps track of resources that are actually deployed in the range. Project workspaces allow you to have multiple states in the same backend, tied to the same configuration. This allows you to deploy multiple distinct instances of the same infrastructure.
 
 Execution
 ~~~~~~~~~~
