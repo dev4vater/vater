@@ -45,6 +45,14 @@ Build 'vsphere-iso.windows' errored after 5 seconds 60 milliseconds: ServerFault
 
 - If these error occurs when attempting and builds - verify vCenter credentials
 
+
+Limit to parallel builds
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Parallel builds, while time efficient are resource intensive - current
+resources prevent **>4** parallel builds - more builds attempted will
+fail due to memory usage
+
 Terraform
 ~~~~~~~~~
 
