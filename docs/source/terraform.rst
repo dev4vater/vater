@@ -11,7 +11,7 @@ Terraform creates and manages resources through their application programming in
 
 More Information: 
 
-- `Terraform <https://www.terraform.io/intro>`
+- `Terraform <https://www.terraform.io/intro>`__
 
 How is Terraform Designed within VATER?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
