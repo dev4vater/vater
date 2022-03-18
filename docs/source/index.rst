@@ -38,10 +38,3 @@ Welcome to VATER Test documentation!
    
    DevandIntNotes
    jenkins
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
