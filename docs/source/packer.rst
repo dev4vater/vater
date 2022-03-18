@@ -1,12 +1,12 @@
-Packer Intro
-------------
+Getting Started with Packer
+==========================
 
 Packer Docs - `Terminology <https://www.packer.io/docs/terminology>`__ -
 `Commands <https://www.packer.io/docs/commands>`__ - `HCL
 Templates <https://www.packer.io/docs/templates/hcl_templates>`__
 
 Packer Examples
----------------
+~~~~~~~~~~~~~~
 
 `Pack_Everything <https://github.com/rylagek/pack_everything>`__ - repo
 with Generic Packer Builds - **active development**
@@ -24,10 +24,3 @@ example <https://github.com/eaksel/packer-Rocky8>`__
 Chaining -
 https://medium.com/swlh/chaining-machine-image-builds-with-packer-b6fd99e35049
 - https://github.com/uwardlaw/vater/issues/130
-
-Limit to parallel builds
-------------------------
-
-Parallel builds, while time efficient are resource intensive - current
-resources prevent **>4** parallel builds - more builds attempted will
-fail due to memory usage
