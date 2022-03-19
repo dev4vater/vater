@@ -2,6 +2,7 @@ Getting Started with Semaphore
 ==============================
 
 .. image:: images/Semaphore.png
+   :width: 400
 
 Semaphore provides a GUI that Instructors and Developers can use to interact with ansible playbooks. Some benefits of Semaphore include: 
 
@@ -11,26 +12,31 @@ Semaphore provides a GUI that Instructors and Developers can use to interact wit
 - Run playbooks from the browser
 - Get notifications about playbook runs
 
-Dashboard Display
+Accessing the Dashboard 
 ^^^^^^^^^^^^^^^^^
 
 Runs on ``control`` port ``4000``.
 
 Access via web browser of choice: ``x.x.x.x:4000``
 
+Navigating the Webpage 
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- A Project is a place to separate management activity. Projects are useful for managing different teams, infrastructures, environments or applications. On the top left hand side, select the ``Management`` project. 
+- A Template defines how to run Ansible Playbook. While tasks are running or after a task is completed, you can see the task status and running log.
+
 Relevant Task Templates
 ^^^^^^^^^^^^^^^^^^^^^^^
-
-From the ``Management`` project, task templates are:
+Underneath the ``Management`` project pane, the **Task Template**` selection will include: 
 
 ::
-
+   
    Build ISOs
    Build VMs
    Create Class
    Destroy Class
 
-Within a ``Class`` project, task templates are:
+Underneath the ``Class`` project pane, the **Task Template** selection will include: 
 
 ::
 
