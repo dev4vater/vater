@@ -44,21 +44,16 @@ Within a ``Class`` project, task templates are:
 Create Class
 ^^^^^^^^^^^^^
 
-- To create a class click the run button on the right side of the screen.
-- A popup will appear asking you to enter the class number and the number
-of students in the task template. 
+- To create a class click the ``run`` button on the right side of the screen.
+- A popup will appear asking you to enter the class number and the number of students in the task template. 
 
 .. Important:: The class number must start with a ‘U’ for UCWT or a ‘C’ for CWO. The number of students must **not** have a leading zero.
 
 After successfully running ``Create Class`` template, refresh the browser. The new class will appear as a project in the top left.
 
-.. Tip::
-If a task fails, the first step is to rerun the task. Occasionally with
-large builds instructions are not processed by ``vsphere`` properly and
-a 2nd attempt will correct this problem.
+.. Tip:: If a task fails, the first step is to rerun the task. Occasionally with large builds instructions are not processed by ``vsphere`` properly and a 2nd attempt will correct this problem.
 
-If not please create a new issue describing the task you were attempting
-and the error message
+If the aforementioned steps do not work, create a new issue describing the task you were attempting and the error message
 
 More Information: 
 
