@@ -22,12 +22,12 @@ Access via web browser of choice: ``x.x.x.x:4000``
 Navigating the Webpage 
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- A Project is a place to separate management activity. Projects are useful for managing different teams, infrastructures, environments or applications. On the top left hand side, select the ``Management`` project. 
+- A Project is a place to separate management activity. Projects are useful for managing different teams, infrastructures, environments or applications. 
 - A Template defines how to run Ansible Playbook. While tasks are running or after a task is completed, you can see the task status and running log.
 
 Relevant Task Templates
 ^^^^^^^^^^^^^^^^^^^^^^^
-Underneath the ``Management`` project pane, the **Task Template**` selection will include: 
+Underneath the ``Management`` project pane, the **Task Template** selection will include: 
 
 ::
    
@@ -58,8 +58,6 @@ Create Class
 After successfully running ``Create Class`` template, refresh the browser. The new class will appear as a project in the top left.
 
 .. Tip:: If a task fails, the first step is to rerun the task. Occasionally with large builds instructions are not processed by ``vsphere`` properly and a 2nd attempt will correct this problem.
-
-If the aforementioned steps do not work, create a new issue describing the task you were attempting and the error message
 
 More Information: 
 
