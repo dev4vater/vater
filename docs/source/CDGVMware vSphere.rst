@@ -1,4 +1,4 @@
-# VMware vSphere
+VMware vSphere
 ==================
 
 Packer
