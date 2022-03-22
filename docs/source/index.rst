@@ -36,6 +36,7 @@ Welcome to VATER Test documentation!
    :maxdepth: 2
    :caption: Developer Resources
    
+   VaterIntroduction
    DevandIntNotes
    jenkins
    
