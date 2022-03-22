@@ -21,30 +21,30 @@ Welcome to VATER Test documentation!
   
 .. toctree::
    :maxdepth: 2
-   :caption: Instructor Guides:
+   :caption: Instructor Guides
    
    instructoroverview
-   terraform
-   Ansible
    Semaphore
-   gitea
-   packer
-   vatercli
-   EditConfig
    
 .. toctree::
    :maxdepth: 2
-   :caption: Developer Resources
+   :caption: VATER Developer Guides
    
    VaterIntroduction
-   DevandIntNotes
+   gitea
+   vatercli
+   EditConfig
    jenkins
+   DevandIntNotes
    
 .. toctree::
    :maxdepth: 2
    :caption: Content Developer Guide
    
    CDGIntro
+   packer
+   terraform
+   Ansible
    CDGVMware vSphere
    CDGVMware Fusion_Player
    CDGProxMox
