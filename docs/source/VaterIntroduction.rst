@@ -1,3 +1,5 @@
+.. image:: images/MADDUCK.jpg
+
 Theory of VATER
 ===============
 
