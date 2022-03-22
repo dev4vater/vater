@@ -34,7 +34,19 @@ Welcome to VATER Test documentation!
    
 .. toctree::
    :maxdepth: 2
-   :caption: Developer Resources:
+   :caption: Developer Resources
    
    DevandIntNotes
    jenkins
+   
+.. toctree::
+   :maxdepth: 2
+   :caption: Content Developer Guide
+   
+   CDGIntro
+   CDGVMware vSphere
+   CDGVMware Fusion_Player
+   CDGProxMox
+   
+
+   
