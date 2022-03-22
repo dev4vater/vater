@@ -14,7 +14,7 @@ Welcome to VATER Test documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Individual Environment Setup:
+   :caption: Individual Environment Setup Guides:
    
    GettingStarted
    editlaunch
@@ -39,7 +39,7 @@ Welcome to VATER Test documentation!
    
 .. toctree::
    :maxdepth: 2
-   :caption: Content Developer Guide
+   :caption: Content Developer Guides
    
    CDGIntro
    packer
