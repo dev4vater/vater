@@ -25,12 +25,18 @@ The easiest way to do that is with a ``-var`` argument to override the
 ex.
 ``packer build --only vsphere-iso.machine --var-file machine.pkrvars.hcl -var vcenter_folder="test" .``
 
+--> vsphere-iso.win_10_wkst3: File [neo-ds01] win_10_wkst3_template_1/<sensitive>-tmp-created-floppy.flp was not found ` - if you see this error restart the build and the second attempt is likely to build properly
+
 Tips for Using the File Provisioner
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When using the file provisioner to move files, the file source and destination must be explicitly stated on each file being moved. Complications arise when trying to move entire directories; packer puts the files in a random temp folder and the files will not appear in the desired location.
 
 --Note: This only applies to packer. If moving files or directories after the packer template creation process is complete, disregard these steps and move the files/directories normally.
+
+Working with Windows
+^^^^^^^^^^^^^^^^^^^^
+Use Windows System Image Manager to create and verify answer files. Windows 10 has the Administrator account disabled by default - if enabled, it can break parts of your build process. Set packer to winrm into the box you're building via the Administrator account if you need complete access (ex. installing vmware-tools)
 
 In the case the Destroy Class does not function
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
