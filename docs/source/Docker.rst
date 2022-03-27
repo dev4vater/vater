@@ -7,7 +7,7 @@ Docker enables you to separate your applications from your infrastructure so you
 With Docker, you can manage your infrastructure in the same ways you manage your applications.
 
 Containers
-==========
+~~~~~~~~~~
 
 Docker provides the ability to package and run an application in a loosely isolated environment called a **container**. 
 The isolation and security allows you to run many containers simultaneously on a given host.
@@ -30,7 +30,7 @@ A container is a runnable instance of an image. You can create, start, stop, mov
 A container is defined by its image as well as any configuration options you provide to it when you create or start it.
 
 Practical Applications
-======================
+~~~~~~~~~~~~~~~~~~~~~~
 
 - A developer writes code locally and shares their work using Docker containers.
 - A developer uses Docker to push their applications into a test environment and execute automated and manual tests.
