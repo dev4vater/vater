@@ -31,6 +31,7 @@ Welcome to VATER Test documentation!
    :caption: VATER Developer Guides
    
    VaterIntroduction
+   Docker
    gitea
    vatercli
    EditConfig
