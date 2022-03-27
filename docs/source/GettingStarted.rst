@@ -21,8 +21,8 @@ VATER Repository Information
 ============================
 
 -  Clone VATER repository to your home directory(~)
-   -  In your home directory(~) run “git clone
-      https://github.com/uwardlaw/vater”
+   -  In your home directory(~) run
+   “git clone https://github.com/uwardlaw/vater”
 
 -  Navigate to setup.sh
    -  cd vater/control-services/bin
