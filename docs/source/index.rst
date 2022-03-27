@@ -14,7 +14,7 @@ Welcome to VATER Test documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Individual Environment Setup Guides:
+   :caption: Individual Range Setup Guides:
    
    GettingStarted
    editlaunch
