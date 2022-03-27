@@ -22,7 +22,7 @@ VATER Repository Information
 
 -  Clone VATER repository to your home directory(~)
    -  In your home directory(~) run
-   “git clone https://github.com/uwardlaw/vater”
+   -  “git clone https://github.com/uwardlaw/vater”
 
 -  Navigate to setup.sh
    -  cd vater/control-services/bin
@@ -37,13 +37,12 @@ VATER Repository Information
 
 -  This will set up and run the docker containing VATER and VATER will
    start
+   
+-  Ctrl-C to exit VATER
 
 .. NOTE:: Currently (March 2022) There is an issue with the env name
       on the semaphore configuration that causes a build fail
 
--  Ctrl-C to exit VATER
-
-   
 ROUS Repository Information
 ============================
 
