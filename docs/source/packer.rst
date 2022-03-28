@@ -12,7 +12,7 @@ Packer enables developers to create identical machine images for multiple platfo
 More Information:
 
  `Installing Packer <https://learn.hashicorp.com/tutorials/packer/get-started-install-cli?in=packer/docker-get-started>`__ 
-
+ 
  `Terminology <https://www.packer.io/docs/terminology>`__ 
 
 Packer and Docker
@@ -24,9 +24,7 @@ The docker Packer builder builds Docker images using Docker. The builder starts 
 
 The Docker builder must run on a machine that has Docker Engine installed. The builder only works on machines that support Docker and does not support running on a Docker remote host.
 
-More Information:
-
-`Docker Builder <https://www.packer.io/plugins/builders/docker>`_
+More Information: `Docker Builder <https://www.packer.io/plugins/builders/docker>`_
 
 Packer CLI
 ~~~~~~~~~~
@@ -35,9 +33,7 @@ Packer is controlled using a command-line interface. **Commands** are sub-comman
 
 Subcommands are executed with packer SUBCOMMAND, where "SUBCOMMAND" is the actual command you wish to execute. Packer supports a fully machine-readable output setting, allowing you to use Packer in automated environments.
 
-More Information: 
-
-`Commands <https://www.packer.io/docs/commands>`__ 
+More Information: `Commands <https://www.packer.io/docs/commands>`__ 
 
 Packer Templates
 ~~~~~~~~~~~~~~~~~
@@ -46,9 +42,7 @@ Packer's behavior is determined by the Packer template, which consists of a seri
 
 Packer is transitioning to a new template configuration format that uses HCL2 -- the same configuration language used by Terraform and HashiCorp's other products. 
 
-More Information: 
-
-`HCL Templates <https://www.packer.io/docs/templates/hcl_templates>`__
+More Information: `HCL Templates <https://www.packer.io/docs/templates/hcl_templates>`__
 
 Packer Chaining
 ~~~~~~~~~~~~~~~~
@@ -57,11 +51,7 @@ Packer Chaining
 
 Benefits of chaining include a reduction in time during the image building process and image development as well as maximum maintainability of code and reuse of infrastructure code across divergent configurations. 
 
-More Information: 
-
-`Chaining <https://medium.com/swlh/chaining-machine-image-builds-with-packer-b6fd99e35049>`__
-
-`Chaining in VATER <https://github.com/uwardlaw/vater/issues/130>`__
+More Information: `Chaining <https://medium.com/swlh/chaining-machine-image-builds-with-packer-b6fd99e35049>`__ and `Chaining in VATER <https://github.com/uwardlaw/vater/issues/130>`__
 
 VATER Packer Repo 
 ~~~~~~~~~~~~~~
