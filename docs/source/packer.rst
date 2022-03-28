@@ -59,23 +59,39 @@ Benefits of chaining include a reduction in time during the image building proce
 
 More Information: 
 
-`Chaining <https://medium.com/swlh/chaining-machine-image-builds-with-packer-b6fd99e35049> `_
+`Chaining <https://medium.com/swlh/chaining-machine-image-builds-with-packer-b6fd99e35049>`__
+
+`Chaining in VATER <https://github.com/uwardlaw/vater/issues/130>`__
 
 VATER Packer Repo 
 ~~~~~~~~~~~~~~
 
 Generic Packer Templates with chained builders for Proxmox, Vagrant, VirtualBox, VMWare, and vSphere
 
-`Pack_Everything <https://github.com/rylagek/pack_everything>`__ 
+`Pack_Everything <https://github.com/rylagek/pack_everything>`__
 
-Packer Additional Resources
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Windows
+~~~~~~~
 
 `Windows Walkthrough <https://www.danielmartins.online/post/hashicorp-packer-build-hcl-windows-10-pro-using-vmware-vsphere-iso-builder>`__
 
-`Blog <https://beryju.org/blog/automating-ubuntu-server-20-04-with-packer>`__
+*Nix
+~~~~~~~
 
-`Code <https://github.com/BeryJu/infrastructure/tree/master/packer>`__ 
+cloud-init (ubuntu 20.04+)
 
-`Rocky8 example <https://github.com/eaksel/packer-Rocky8>`__
+- `Blog <https://beryju.org/blog/automating-ubuntu-server-20-04-with-packer>`__
+
+- `Code <https://github.com/BeryJu/infrastructure/tree/master/packer>`__ 
+
+kickstarter (rocky/centos) 
+
+- `Rocky8 example <https://github.com/eaksel/packer-Rocky8>`__
+
+Limit to Parallel Builds
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Parallel builds, while time efficient are resource intensive - current resources prevent >4 parallel builds
+
+.. Warning:: More builds attempted will fail due to memory usage
 
