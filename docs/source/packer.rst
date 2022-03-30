@@ -9,11 +9,7 @@ Packer enables developers to create identical machine images for multiple platfo
 
 - **Templates** are files which define one or more builds by configuring the various components of Packer. Packer is able to read a template and use that information to create multiple machine images in parallel.
 
-More Information:
-
- `Installing Packer <https://learn.hashicorp.com/tutorials/packer/get-started-install-cli?in=packer/docker-get-started>`__ 
- 
-`Terminology <https://www.packer.io/docs/terminology>`__ 
+More Information: `Installing Packer <https://learn.hashicorp.com/tutorials/packer/get-started-install-cli?in=packer/docker-get-started>`__ and `Terminology <https://www.packer.io/docs/terminology>`__ 
 
 Packer and Docker
 ~~~~~~~~~~~~~~~~~
@@ -24,9 +20,7 @@ The docker Packer builder builds Docker images using Docker. The builder starts 
 
 The Docker builder must run on a machine that has Docker Engine installed. The builder only works on machines that support Docker and does not support running on a Docker remote host.
 
-More Information: 
-
-- `Docker Builder <https://www.packer.io/plugins/builders/docker>`_
+More Information: `Docker Builder <https://www.packer.io/plugins/builders/docker>`_
 
 Packer CLI
 ~~~~~~~~~~
@@ -60,16 +54,14 @@ VATER Packer Repo
 
 Generic Packer Templates with chained builders for Proxmox, Vagrant, VirtualBox, VMWare, and vSphere
 
-More Information: 
-
-`Pack_Everything <https://github.com/rylagek/pack_everything>`__
+More Information: `Pack_Everything <https://github.com/rylagek/pack_everything>`__
 
 OS Specific 
 ~~~~~~~
 
 Windows 
 
-- `Windows Walkthrough <https://www.danielmartins.online/post/hashicorp-packer-build-hcl-windows-10-pro-using-vmware-vsphere-iso-builder>`__
+- **Windows 10**: `Windows Walkthrough <https://www.danielmartins.online/post/hashicorp-packer-build-hcl-windows-10-pro-using-vmware-vsphere-iso-builder>`__
 
 *Nix
 
