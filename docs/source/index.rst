@@ -36,7 +36,7 @@ Welcome to VATER Test documentation!
    vatercli
    EditConfig
    jenkins
-   DevandIntNotes
+   VaterTroubleshooting
    
 .. toctree::
    :maxdepth: 2
