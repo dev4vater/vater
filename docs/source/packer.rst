@@ -60,6 +60,8 @@ VATER Packer Repo
 
 Generic Packer Templates with chained builders for Proxmox, Vagrant, VirtualBox, VMWare, and vSphere
 
+More Information: 
+
 `Pack_Everything <https://github.com/rylagek/pack_everything>`__
 
 OS Specific 
