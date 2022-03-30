@@ -13,7 +13,7 @@ More Information:
 
  `Installing Packer <https://learn.hashicorp.com/tutorials/packer/get-started-install-cli?in=packer/docker-get-started>`__ 
  
- `Terminology <https://www.packer.io/docs/terminology>`__ 
+`Terminology <https://www.packer.io/docs/terminology>`__ 
 
 Packer and Docker
 ~~~~~~~~~~~~~~~~~
@@ -24,7 +24,9 @@ The docker Packer builder builds Docker images using Docker. The builder starts 
 
 The Docker builder must run on a machine that has Docker Engine installed. The builder only works on machines that support Docker and does not support running on a Docker remote host.
 
-More Information: `Docker Builder <https://www.packer.io/plugins/builders/docker>`_
+More Information: 
+
+- `Docker Builder <https://www.packer.io/plugins/builders/docker>`_
 
 Packer CLI
 ~~~~~~~~~~
@@ -60,23 +62,18 @@ Generic Packer Templates with chained builders for Proxmox, Vagrant, VirtualBox,
 
 `Pack_Everything <https://github.com/rylagek/pack_everything>`__
 
-Windows
+OS Specific 
 ~~~~~~~
 
-`Windows Walkthrough <https://www.danielmartins.online/post/hashicorp-packer-build-hcl-windows-10-pro-using-vmware-vsphere-iso-builder>`__
+Windows 
+
+- `Windows Walkthrough <https://www.danielmartins.online/post/hashicorp-packer-build-hcl-windows-10-pro-using-vmware-vsphere-iso-builder>`__
 
 *Nix
-~~~~~~~
 
-cloud-init (ubuntu 20.04+)
+- **cloud-init (ubuntu 20.04+)**: `Blog <https://beryju.org/blog/automating-ubuntu-server-20-04-with-packer>`__ and `Code <https://github.com/BeryJu/infrastructure/tree/master/packer>`__ 
 
-- `Blog <https://beryju.org/blog/automating-ubuntu-server-20-04-with-packer>`__
-
-- `Code <https://github.com/BeryJu/infrastructure/tree/master/packer>`__ 
-
-kickstarter (rocky/centos) 
-
-- `Rocky8 example <https://github.com/eaksel/packer-Rocky8>`__
+- **kickstarter (rocky/centos)**: `Rocky8 example <https://github.com/eaksel/packer-Rocky8>`__
 
 Limit to Parallel Builds
 ~~~~~~~~~~~~~~~~~~~~~~~~
