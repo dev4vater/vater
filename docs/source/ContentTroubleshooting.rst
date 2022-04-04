@@ -25,7 +25,7 @@ The easiest way to do that is with a ``-var`` argument to override the
 ex.
 ``packer build --only vsphere-iso.machine --var-file machine.pkrvars.hcl -var vcenter_folder="test" .``
 
---> vsphere-iso.win_10_wkst3: File [neo-ds01] win_10_wkst3_template_1/<sensitive>-tmp-created-floppy.flp was not found ` - if you see this error restart the build and the second attempt is likely to build properly
+--> vsphere-iso.win_10_wkst3: File [neo-ds01] win_10_wkst3_template_1/<sensitive>-tmp-created-floppy.flp was not found ` - if you see this error restart the build and the second attempt is likely to build properly.
 
 Tips for Using the File Provisioner
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -57,7 +57,7 @@ Limit to parallel builds
 
 Parallel builds, while time efficient are resource intensive - current
 resources prevent **>4** parallel builds - more builds attempted will
-fail due to memory usage
+fail due to memory usage.
 
 Terraform
 ~~~~~~~~~
@@ -69,7 +69,7 @@ Terraform uses state locks to prevent multiple users from modifying the
 same terraform resources at once. If a task terminates prematurely or is
 completed unsuccessfully, terraform may not release the state lock,
 which causes errors. To forcibly kill the terraform processes holding
-state locks run these commands
+state locks run these commands.
 
 ::
 
@@ -91,7 +91,7 @@ ask for inputs to define variables - these can be found in
 ``groupvars/all/folderOfThingToDebug`` along with the global var files
 
 Note: vm path should be ``class/student`` aka the prev 2 answers
-combined give you the final answer
+combined give you the final answer.
 
 
 Ansible 
