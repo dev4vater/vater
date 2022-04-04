@@ -13,7 +13,7 @@ anytime the code changes in ``gitea``. If it fails to update, you can
 access the docker host with this command \_________. Then navigate to
 ``/tmp/semaphore`` and run the command ``rm -rf repository_project#_#``
 Rerunning the task template will cause semaphore to make a new copy of
-the code in gitea
+the code in gitea.
 
 Gitea
 ~~~~~
