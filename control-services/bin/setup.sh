@@ -197,4 +197,4 @@ echo "alias vater=\"python3 ~/vater/control-services/cli/vater.py\"" > ~/.bash_a
 #echo 'export PATH="$PATH:/usr/local/go/bin:/home/control/go/bin' | sudo tee -a /etc/profile
 #source /etc/profile
 source ~/.bashrc
-
+sudo reboot
