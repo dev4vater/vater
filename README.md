@@ -47,7 +47,7 @@
     - 2 vCPUS
     - 4 GB RAM
     - 60 GB storage in `/`
-- **Manually** git clone `https://github.com/uwardlaw/vater` into `~`
+- **Manually** git clone `https://github.com/dev4vater/vater` into `~`
 - **Manually** run ` ~/vater/control-services/bin/setup.sh`
 - `setup.sh` will create a RSA key pair if one does not exist and print the public key to the terminal
 - **Manually** copy the public RSA key
@@ -55,4 +55,4 @@
 - `setup.sh` will pull `uwardlaw/rous` locally
 - **Manually** run `vater restart`
 
-(Developed in Nano)
+(Sadly Developed in Nano)
