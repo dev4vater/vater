@@ -26,6 +26,10 @@ sudo apt-get upgrade -y
 sudo rm -rf /usr/local/go
 wget https://go.dev/dl/go1.17.7.linux-amd64.tar.gz -P /tmp/
 sudo tar -C /usr/local/ -xzf /tmp/go1.17.7.linux-amd64.tar.gz
+rm -f /tmp/go1.17.7.linux-amd64.tar.gz
+
+echo "export PATH=$PATH:/usr/local/go/bin:/home/control/go/bin" | sudo tee -a /etc/profile
+source /etc/profile
 
 # Check go version
 go version
@@ -190,7 +194,7 @@ echo "Confirm $CONFIG_REPO is up to date"
 git --git-dir /home/control/$CONFIG_REPO/.git pull
 
 echo "alias vater=\"python3 ~/vater/control-services/cli/vater.py\"" > ~/.bash_aliases
-echo 'export PATH="$PATH:/usr/local/go/bin:/home/control/go/bin' | sudo tee -a /etc/profile
-source /etc/profile
+#echo 'export PATH="$PATH:/usr/local/go/bin:/home/control/go/bin' | sudo tee -a /etc/profile
+#source /etc/profile
 source ~/.bashrc
-
+sudo reboot

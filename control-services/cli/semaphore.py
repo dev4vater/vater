@@ -131,6 +131,15 @@ class Semaphore():
 
         subprocess.check_output(cmd, universal_newlines=True)
 
+        # Save docker image
+        cmd = [
+                'sudo', 'docker', 'save', '--output', 
+                '/home/control/vater/control-services/images/semaphore_dynamicVars.tar', 
+                'ansiblesemaphore/semaphore:dynamicVars' 
+          ]
+
+        subprocess.check_output(cmd, universal_newlines=True)
+
     def login(self, password=None):
         if password is None:
             password=self.cfg['semaphore']['password']
@@ -282,12 +291,19 @@ class Semaphore():
 
         self.docker.compose_stop(containers)
         self.docker.system_prune_all()
-
+        
+               
         subprocess.check_output(
             ['sudo', 'rm', '-rf'] +                                             \
             self.cfg['semaphore']['related_data_dirs'],
             universal_newlines=True
         )
+        cmd = [
+                'sudo', 'docker', 'load', '--input',
+                '/home/control/vater/control-services/images/semaphore_dynamicVars.tar'
+                ]
+
+        subprocess.check_output(cmd, universal_newlines=True) 
 
     def stop(self):
         return
@@ -497,7 +513,7 @@ class Semaphore():
                     '"environment_id": ' + str(self.envId) + ', '
                     '"alias": "' + name + '", '
                     '"playbook": "' + self.cfg['content_repo']['playbooks']['createClass'] + '", '
-                    '"arguments": "[\\"-e\\", \\"class=##### classSize=##\\"]", '
+                    '"dynamic_vars": "[{\\"name\\":\\"class\\",\\"required\\":true},{\\"name\\":\\"classSize\\",\\"required\\":true}]"' + ', '
                     '"override_args": false}'
                 '}'
             )
@@ -517,12 +533,12 @@ class Semaphore():
                     '"environment_id": ' + str(self.envId) + ', '
                     '"alias": "' + name + '", '
                     '"playbook": "' + self.cfg['content_repo']['playbooks']['destroyClass'] + '", '
-                    '"arguments": "[\\"-e\\", \\"class=#####\\"]", '
+                    '"dynamic_vars": "[{\\"name\\":\\"class\\",\\"required\\":true}]"' + ', '
                     '"override_args": false}'
                 '}'
             )
         )
-
+        
         name = 'Build ISOs'
         self.__createItemAndID(
             name = name,
