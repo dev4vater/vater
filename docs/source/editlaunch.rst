@@ -34,8 +34,6 @@ Home Deployment - Launch for ``VirtualBox``
 Current Progress
 ~~~~~~~~~~~~~~~~
 
-``launch.ps1`` 
-
 1) Get ``Vbox`` 
 
    - Install ``Chocolatey`` (package manager) 
@@ -52,5 +50,6 @@ Current Progress
    - Build control with packer 
 
 4) Configure Control (2 options)
+
    - run ``control.py`` via ``VboxManage`` 
    - include ``control.py`` in the ``packer`` build of control with a python provisioning block
