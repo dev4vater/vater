@@ -27,7 +27,7 @@ VATER Repository Information
 -  To run VATER:
 
    - Manually copy the public RSA key
-   - Manually input public RSA key into marissaeinhorn/rous as a deploy key
+   - Manually input public RSA key into ``marissaeinhorn/rous`` as a deploy key
    - setup.sh will pull marissaeinhorn/rous locally
    - Manually run ``vater restart``
   
