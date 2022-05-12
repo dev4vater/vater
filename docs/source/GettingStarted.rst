@@ -2,7 +2,7 @@ Downloading VM server
 =====================
 
 -  Manually provision a control VM using Ubuntu 20.04 Server
-   https://releases.ubuntu.com/20.04/
+-  https://releases.ubuntu.com/20.04/
 -  2 vCPUS
 -  4 GB RAM
 -  60 GB storage in / 
