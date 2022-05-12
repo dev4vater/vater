@@ -12,7 +12,8 @@ set -e
 
 SETUP_REPO="vater"
 CONFIG_REPO="rous"
-ORG_OR_USER="uwardlaw"
+SETUP_USER="dev4vater"
+CONFIG_USER="marissaeinhorn"
 SSH_PATH="/home/control/.ssh"
 SETUP_SSH_KEY_PATH="$SSH_PATH/$SETUP_REPO"
 CONFIG_SSH_KEY_PATH="$SSH_PATH/$CONFIG_REPO"
@@ -114,7 +115,7 @@ echo
 ssh-add $SETUP_SSH_KEY_PATH
 
 echo
-echo "Copy this key to the $SETUP_REPO repo as a deploy key. Press any key when done."
+echo "Copy this key to github as an SSH key, call it $SETUP_REPO deploy. Press any key when done."
 
 read -n 1 -s
 
@@ -138,7 +139,7 @@ echo
 ssh-add $CONFIG_SSH_KEY_PATH
 
 echo
-echo "Copy this key to the $CONFIG_REPO as a deploy key. Press any key when done."
+echo "Copy this key to github as an SSH key, call it $CONFIG_REPO deploy. Press any key when done."
 
 read -n 1 -s
 
@@ -158,7 +159,7 @@ if test -f /home/control/$CONFIG_REPO/.git/config; then
     echo
     echo "$CONFIG_REPO exists"
 else
-    git clone git@github.com:$ORG_OR_USER/$CONFIG_REPO.git /home/control/$CONFIG_REPO
+    git clone git@github.com:$CONFIG_REPO/$CONFIG_REPO.git /home/control/$CONFIG_REPO
 fi
 
 # Set up for using SSH keys moving forward with 2 repos
@@ -182,19 +183,21 @@ EOF
 # Setup the URLs
 echo
 echo "Change origin urls for $SETUP_REPO and $CONFIG_REPO"
-git --git-dir /home/control/$SETUP_REPO/.git remote set-url origin "git@$SETUP_REPO:$ORG_OR_USER/$SETUP_REPO.git"
-git --git-dir /home/control/$CONFIG_REPO/.git remote set-url origin "git@$CONFIG_REPO:$ORG_OR_USER/$CONFIG_REPO.git"
+git --git-dir /home/control/$SETUP_REPO/.git remote set-url origin "git@$SETUP_REPO:$SETUP_USER/$SETUP_REPO.git"
+git --git-dir /home/control/$CONFIG_REPO/.git remote set-url origin "git@$CONFIG_REPO:$CONFIG_USER/$CONFIG_REPO.git"
 
-# Git pull to check all is well
+# Git pull from origin main (master branch of repo on github)
+# validate local repo is up to date
 echo
 echo "Confirm $SETUP_REPO is up to date"
-git --git-dir /home/control/$SETUP_REPO/.git pull
+git --git-dir /home/control/$SETUP_REPO/.git pull origin main
 echo
 echo "Confirm $CONFIG_REPO is up to date"
-git --git-dir /home/control/$CONFIG_REPO/.git pull
+git --git-dir /home/control/$CONFIG_REPO/.git pull origin main
 
 echo "alias vater=\"python3 ~/vater/control-services/cli/vater.py\"" > ~/.bash_aliases
 #echo 'export PATH="$PATH:/usr/local/go/bin:/home/control/go/bin' | sudo tee -a /etc/profile
 #source /etc/profile
 source ~/.bashrc
+echo "rebooting"
 sudo reboot
