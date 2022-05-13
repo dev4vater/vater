@@ -14,5 +14,4 @@ VATER consists of:
 - Gitea (verson)
 - Gitea_db
 - Jenkins (version)
-- Guacamole (version)
 - vater cli: written in python utilizing argparse
