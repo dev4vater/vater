@@ -58,8 +58,4 @@ configuration resources.
    high-level configuration language in human-readable, declarative
    configuration files.
 
--  **Guacamole:** is a clientless remote desktop gateway that supports
-   standard protocols like VNC, RDP, and SSH. As long as you have access
-   to a web browser, you have access to your machines.
-
 .. image:: images/range.svg
