@@ -53,6 +53,7 @@
 - **Manually** run ` ~/vater/control-services/bin/setup.sh`
 - `setup.sh` will create a RSA key pair if one does not exist and print the public key to the terminal
 - **Manually** copy the public RSA key
-- **Manually** input public RSA key into `marissaeinhorn/rous` as a deploy key 
+- **Manually** input public RSA key into `github` settings ssh key
 - `setup.sh` will pull `marissaeinhorn/rous` locally
+- **Manually** pip install -r requirements.txt to install required python modules for env variables
 - **Manually** run `vater restart`
