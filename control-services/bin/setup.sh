@@ -23,6 +23,7 @@ SSH_AUTH_KEYS_PATH="/home/control/.ssh/authorized_keys"
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
+
 # Install go for building semaphore
 sudo rm -rf /usr/local/go
 wget https://go.dev/dl/go1.17.7.linux-amd64.tar.gz -P /tmp/
@@ -195,9 +196,46 @@ echo
 echo "Confirm $CONFIG_REPO is up to date"
 git --git-dir /home/control/$CONFIG_REPO/.git pull origin main
 
+
+# Install dependencies for python
+sudo apt-get install python3 && sudo apt-get install python3-pip
+pip install -r /home/control/$SETUP_REPO/requirements/requirements.txt
 echo "alias vater=\"python3 ~/vater/control-services/cli/vater.py\"" > ~/.bash_aliases
-#echo 'export PATH="$PATH:/usr/local/go/bin:/home/control/go/bin' | sudo tee -a /etc/profile
-#source /etc/profile
+
+# Prompt user for environment variable values to save in .env
+# Uses .env.example as the basis
+echo
+echo "Configuring Environment variables"
+env_path="/home/control/${SETUP_REPO}/control-services/.env"
+touch $env_path
+echo "# .env created " `date` > $env_path
+while read line_str; do
+    if [[ $line_str != "#"* ]] && [[ ! -z $line_str ]]; then
+        echo "Default is" $line_str
+        read -p 'Change? Y/N '  changeOption < /dev/tty
+        if [[ -z $changeOption ]] || [[ $changeOption == "N" ]] || [[ $changeOption == "n" ]]; then
+            # writeout default to .env
+            echo $line_str >> $env_path
+        else
+            # prompt user and save into file
+            envKey=${line_str%=*}
+            if [[ $envKey == *"password" ]]; then
+                read -p "${envKey}=" envValue < /dev/tty
+                echo "${envKey}=${envValue}" >> $env_path
+            else
+                read -p "${envKey}=" envValue < /dev/tty
+                echo "${envKey}=${envValue}" >> $env_path
+            fi
+        fi
+
+    fi
+ done < /home/control/vater/control-services/.env.example
+
+ echo
+ echo "Saved to file"
+ echo "If you wish to alter the environment variables later,"
+ echo "you may change them at ${env_path}"
+
 source ~/.bashrc
 echo "rebooting"
 sudo reboot
