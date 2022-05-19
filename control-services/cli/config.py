@@ -15,7 +15,8 @@ class Config:
             exit()
 
         # Load environment variables
-        env_vars = dotenv_values(find_dotenv(".env"))
+        env_path = find_dotenv(".env")
+        env_vars = dotenv_values(env_path)
 
         cfg = {}
 
@@ -197,20 +198,20 @@ class Config:
             "port": env_vars.get("semaphore_port"),
         }
 
-        cfg["semaphore"]["api_url"] = cfg["semaphore"]["url"] + "api/"
-
         cfg["semaphore"]["url"] = (
             "http://" + cfg["host"]["ip"] + ":" + cfg["semaphore"]["port"] + "/"
         )
 
-        cfg["semaphore"]["related_data_dirs"] = glob.glob(
-            cfg["semaphore"]["data_dir"][:-1] + "*"
-        )
+        cfg["semaphore"]["api_url"] = cfg["semaphore"]["url"] + "api/"
 
         cfg["semaphore"]["data_dir"] = (
             cfg["host"]["vater_dir_path"]
             + cfg["vater_repo"]["rel_data_dir"]
             + "semaphore/"
+        )
+
+        cfg["semaphore"]["related_data_dirs"] = glob.glob(
+            cfg["semaphore"]["data_dir"][:-1] + "*"
         )
 
         # Build information
@@ -273,6 +274,20 @@ class Config:
             "user": env_vars.get("semaphore_db_user"),
             "port": env_vars.get("semaphore_db_port"),
         }
+
+        ## Docker variables
+        cfg["docker"] = {
+            "compose_file_path": "/home/control/vater/control-services/docker-compose.yml",
+            "env_path": env_path,
+            "env": [],
+        }
+
+        """
+        Save docker environment variables into a formatted list for vDocker.py
+        to utilize in managing/interfacing with containers
+        """
+        for env_key in env_vars:
+            cfg["docker"]["env"].append(f"{env_key}={env_vars[env_key]}")
 
         self.cfg = cfg
 
