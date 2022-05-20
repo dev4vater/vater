@@ -50,8 +50,8 @@ services:
      container_name: gitea_db
      environment:
        - MYSQL_ROOT_PASSWORD=${gitea_db_root_password}
-       - MYSQL_USER=${gitea_db_user}
-       - MYSQL_PASSWORD=${gitea_db_password}
+       - MYSQL_USER=${gitea_user}
+       - MYSQL_PASSWORD=${gitea_password}
        - MYSQL_DATABASE=gitea
      volumes:
        - ./data/gitea_db:/var/lib/mysql
