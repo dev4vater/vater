@@ -200,7 +200,6 @@ git --git-dir /home/control/$CONFIG_REPO/.git pull origin main
 # Install dependencies for python
 sudo apt-get install python3 && sudo apt-get install python3-pip
 pip install -r /home/control/$SETUP_REPO/requirements/requirements.txt
-echo "alias vater=\"python3 ~/vater/control-services/cli/vater.py\"" > ~/.bash_aliases
 
 # Prompt user for environment variable values to save in .env
 # Uses .env.example as the basis
@@ -219,13 +218,8 @@ while read line_str; do
         else
             # prompt user and save into file
             envKey=${line_str%=*}
-            if [[ $envKey == *"password" ]]; then
-                read -p "${envKey}=" envValue < /dev/tty
-                echo "${envKey}=${envValue}" >> $env_path
-            else
-                read -p "${envKey}=" envValue < /dev/tty
-                echo "${envKey}=${envValue}" >> $env_path
-            fi
+            read -p "${envKey}=" envValue < /dev/tty
+            echo "${envKey}=${envValue}" >> $env_path
         fi
 
     fi
@@ -236,6 +230,7 @@ while read line_str; do
  echo "If you wish to alter the environment variables later,"
  echo "you may change them at ${env_path}"
 
+echo "alias vater=\"python3 ~/vater/control-services/cli/vater.py\"" > ~/.bash_aliases
 source ~/.bashrc
 echo "rebooting"
 sudo reboot
