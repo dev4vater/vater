@@ -165,10 +165,18 @@ class Parser():
         self.__parser_access.add_argument(
             '-s', '--service',
             help = 'A service defined in the configuration file',
-            choices = container_choices, 
+            choices = container_choices,
         )
 
-        # Help was disabled when the parser was instantiated, 
+        # Kill subparser
+        self.__parser_kill = self.__subparsers.add_parser(
+            'kill',
+            description = 'Kill terraform proccesses',
+            help = 'When terraform doesn\'t complete tasks, it hangs. This command kills it'
+        )
+
+
+        # Help was disabled when the parser was instantiated,
         #   so rebuild it now
         self.__parser.add_argument(
             '-h', '--help',
@@ -192,7 +200,7 @@ class Parser():
             help = 'Semaphore task subcommand',
             dest = 'semaphoreCommand'
         )
-        
+
         run_task_parser = task_command_subparsers.add_parser(
             'run',
             description = 'Runs a semaphore task in the specified project using the specified template',
@@ -219,4 +227,4 @@ class Parser():
                     will take precedence over variables specified here. If experiencing inconsistencies with \
                     values provided here and the results in Semaphore, verify that the template does not have \
                     hard-coded arguments that overwrite parameters you are providing at the command line'
-        ) 
+        )

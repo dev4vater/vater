@@ -4,6 +4,7 @@ from jenkins import Jenkins
 from gitea import Gitea
 from semaphore import Semaphore, SemaphoreTaskArgumentError
 from vDocker import VDocker
+from os import system
 import getpass as gp
 
 def main():
@@ -26,6 +27,8 @@ def main():
         clean(c, p.args)
     elif p.args.command == 'access':
         access(c, p.args)
+    elif p.args.command == 'kill':
+        killTerraform(c, p.args)
 
 def init(config, args):
     return
@@ -127,17 +130,31 @@ def access(config, args):
         j = Jenkins(config)
         j.access()
 
+
+def killTerraform(config, args):
+    savePIDs = "pgrep terraform | tee /tmp/pids"
+    killPIDs = "sudo kill $(cat /tmp/pids)"
+    if system("pgrep terraform") == 0:
+        system(savePIDs)
+        if system(killPIDs) == 0:
+            print("successfully killed terraform processes")
+    else:
+        print("No terraform processes found")
+
+
 def loginGitea(g):
     while True:
         password = gp.getpass(prompt='Gitea Password: ')
         if(g.login(password=password)):
             break
 
+
 def loginSemaphore(s):
     while True:
         password = gp.getpass(prompt='Semaphore Password: ')
         if(s.login(password=password)):
             break
+
 
 if __name__ == "__main__":
     main()
