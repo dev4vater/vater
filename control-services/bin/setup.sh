@@ -167,7 +167,7 @@ if test -f /home/control/$CONFIG_REPO/.git/config; then
     echo
     echo "$CONFIG_REPO exists"
 else
-    git clone git@github.com:$CONFIG_REPO/$CONFIG_REPO.git /home/control/$CONFIG_REPO
+    git clone git@github.com:$CONFIG_USER/$CONFIG_REPO.git /home/control/$CONFIG_REPO
 fi
 
 # Set up for using SSH keys moving forward with 2 repos
