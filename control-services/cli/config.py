@@ -81,11 +81,11 @@ class Config:
         # Gitea
         # Obtain user/pass from environment var
         cfg["gitea"] = {
-            "password": env_vars.get("gitea_password"),
-            "user": env_vars.get("gitea_user"),
+            "password": env_vars["gitea_password"],
+            "user": env_vars["gitea_user"],
             "email": "config@example.com",
             "org_or_user": "333TRS",
-            "port": env_vars.get("gitea_port"),
+            "port": env_vars["gitea_port"],
         }
 
         cfg["gitea"]["url"] = (
@@ -155,17 +155,17 @@ class Config:
         ### Gitea Database
         # Obtain user/pass from environment var
         cfg["gitea_db"] = {
-            "password": env_vars.get("gitea_db_password"),
-            "user": env_vars.get("gitea_db_user"),
-            "port": env_vars.get("gitea_db_port"),
+            "password": env_vars["gitea_db_password"],
+            "user": env_vars["gitea_db_user"],
+            "port": env_vars["gitea_db_port"],
         }
 
         ### Jenkins
         # Obtain user/pass from environment var
         cfg["jenkins"] = {
-            "password": env_vars.get("jenkins_admin_password"),
-            "user": env_vars.get("jenkins_admin_id"),
-            "port": env_vars.get("jenkins_port"),
+            "password": env_vars["jenkins_admin_password"],
+            "user": env_vars["jenkins_admin_id"],
+            "port": env_vars["jenkins_port"],
         }
 
         cfg["jenkins"]["image_dir_path"] = (
@@ -193,9 +193,9 @@ class Config:
         ### Semaphore
         # Obtain user/pass from environment var
         cfg["semaphore"] = {
-            "password": env_vars.get("semaphore_admin_password"),
-            "user": env_vars.get("semaphore_admin_name"),
-            "port": env_vars.get("semaphore_port"),
+            "password": env_vars["semaphore_admin_password"],
+            "user": env_vars["semaphore_admin_name"],
+            "port": env_vars["semaphore_port"],
         }
 
         cfg["semaphore"]["url"] = (
@@ -270,9 +270,9 @@ class Config:
         ## Semaphore Database
         # Obtain user/pass from environment var
         cfg["semaphore_db"] = {
-            "password": env_vars.get("semaphore_db_password"),
-            "user": env_vars.get("semaphore_db_user"),
-            "port": env_vars.get("semaphore_db_port"),
+            "password": env_vars["semaphore_db_password"],
+            "user": env_vars["semaphore_db_user"],
+            "port": env_vars["semaphore_db_port"],
         }
 
         ## Docker variables
