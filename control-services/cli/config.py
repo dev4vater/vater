@@ -155,8 +155,8 @@ class Config:
         ### Gitea Database
         # Obtain user/pass from environment var
         cfg["gitea_db"] = {
-            "password": env_vars["gitea_db_password"],
-            "user": env_vars["gitea_db_user"],
+            "password": env_vars["gitea_password"],
+            "user": env_vars["gitea_user"],
             "port": env_vars["gitea_db_port"],
         }
 
