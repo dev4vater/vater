@@ -74,6 +74,15 @@ sudo apt autoremove -y
 # Create .ssh if it doesn't exist
 mkdir -p $SSH_PATH
 
+
+# Setting up git global configurations
+echo "Setting up git configurations"
+read -p 'github username: ' gitUsername
+read -p 'github email: ' gitEmail
+git config --global user.name "$gitUsername"
+git config --global user.email "$gitEmail"
+
+
 # Key creation for the Semaphore container
 #   used to execute commands like Terraform
 
@@ -114,7 +123,7 @@ echo
 ssh-add $SETUP_SSH_KEY_PATH
 
 echo
-echo "Copy this key to github as an SSH key, call it $SETUP_REPO deploy. Press any key when done."
+echo "Copy this key to your github settings as an SSH key, call it $SETUP_REPO deploy. Press any key when done."
 
 read -n 1 -s
 
@@ -138,7 +147,7 @@ echo
 ssh-add $CONFIG_SSH_KEY_PATH
 
 echo
-echo "Copy this key to github as an SSH key, call it $CONFIG_REPO deploy. Press any key when done."
+echo "Copy this key to your github settings as an SSH key, call it $CONFIG_REPO deploy. Press any key when done."
 
 read -n 1 -s
 
