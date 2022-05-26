@@ -196,8 +196,12 @@ echo "Confirm $CONFIG_REPO is up to date"
 git --git-dir /home/control/$CONFIG_REPO/.git pull origin main
 
 echo "alias vater=\"python3 ~/vater/control-services/cli/vater.py\"" > ~/.bash_aliases
-#echo 'export PATH="$PATH:/usr/local/go/bin:/home/control/go/bin' | sudo tee -a /etc/profile
-#source /etc/profile
 source ~/.bashrc
+
+# configure DoD warning banner for ssh
+BANNER_DIR="/home/control/$SETUP_REPO/control-services/bin/dod_warning.txt"
+sudo sed -i "s|#Banner none|Banner $BANNER_DIR|g" /etc/ssh/sshd_config
+
+
 echo "rebooting"
 sudo reboot
