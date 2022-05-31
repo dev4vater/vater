@@ -239,5 +239,11 @@ while read line_str; do
 
 echo "alias vater=\"python3 ~/vater/control-services/cli/vater.py\"" > ~/.bash_aliases
 source ~/.bashrc
+
+# configure DoD warning banner for ssh
+BANNER_DIR="/home/control/$SETUP_REPO/control-services/bin/dod_warning.txt"
+sudo sed -i "s|#Banner none|Banner $BANNER_DIR|g" /etc/ssh/sshd_config
+
+
 echo "rebooting"
 sudo reboot
