@@ -208,6 +208,7 @@ netplanConfig="/etc/netplan/00-installer-config.yaml"
 echo "Configuring static IP"
 echo "Current configuration: "
 ip address show label ens160
+ip route
 echo
 read -p "Would you like to configure a static IP address? Y/N  " staticIPChoice
 if [[ $staticIPChoice == 'Y' ]] || [[ $staticIPChoice == 'y'  ]]; then
