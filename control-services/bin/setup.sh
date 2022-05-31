@@ -213,7 +213,7 @@ echo
 read -p "Would you like to configure a static IP address? Y/N  " staticIPChoice
 if [[ $staticIPChoice == 'Y' ]] || [[ $staticIPChoice == 'y'  ]]; then
     echo "Editing $netplanConfig"
-    cat $netplanConfig | sudo tee /etc/netplan/backup
+    cat $netplanConfig | sudo tee /etc/netplan/backup >/dev/null
 
     while :
     do
