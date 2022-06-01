@@ -1,8 +1,6 @@
 #!/bin/bash
 
 # https://docs.gitea.io/en-us/install-with-docker/
-# https://github.com/boschkundendienst/guacamole-docker-compose
-# https://techblog.jeppson.org/2021/03/guacamole-docker-quick-and-easy/
 
 # ---
 
