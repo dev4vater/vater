@@ -75,7 +75,6 @@ class Config:
             "gitea_db",
             "semaphore",
             "semaphore_db",
-            "jenkins",
         ]
 
         # Gitea
@@ -160,35 +159,6 @@ class Config:
             "port": env_vars["gitea_db_port"],
         }
 
-        ### Jenkins
-        # Obtain user/pass from environment var
-        cfg["jenkins"] = {
-            "password": env_vars["jenkins_admin_password"],
-            "user": env_vars["jenkins_admin_id"],
-            "port": env_vars["jenkins_port"],
-        }
-
-        cfg["jenkins"]["image_dir_path"] = (
-            cfg["host"]["vater_dir_path"]
-            + cfg["vater_repo"]["rel_image_path"]
-            + "jenkins/"
-        )
-
-        cfg["jenkins"]["data_dir_path"] = (
-            cfg["host"]["vater_dir_path"] + "control-services/data/jenkins/"
-        )
-
-        cfg["jenkins"]["casc_file_path"] = (
-            cfg["jenkins"]["image_dir_path"] + "casc.yaml"
-        )
-
-        casc_temp_str = cfg["jenkins"]["image_dir_path"] + "casc_template.yaml"
-        with open(casc_temp_str, "r") as cascTemplate:
-            cfg["jenkins"]["casc"] = yaml.load(cascTemplate, yaml.SafeLoader)
-
-        cfg["jenkins"]["casc"]["unclassified"]["location"]["url"] = (
-            "http://" + cfg["host"]["ip"] + ":" + cfg["jenkins"]["port"] + "/"
-        )
 
         ### Semaphore
         # Obtain user/pass from environment var

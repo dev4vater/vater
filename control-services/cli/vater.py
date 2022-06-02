@@ -1,6 +1,5 @@
 from parser import Parser
 from config import Config
-from jenkins import Jenkins
 from gitea import Gitea
 from semaphore import Semaphore, SemaphoreTaskArgumentError
 from vDocker import VDocker
@@ -92,9 +91,6 @@ def restart(config, args):
             s.restartContainer()
             loginSemaphore(s)
             s.setup()
-        if service == "jenkins":
-            j = Jenkins(config)
-            j.restart()
 
 
 def clean(config, args):
@@ -112,9 +108,6 @@ def clean(config, args):
         if service == "semaphore":
             s = Semaphore(config)
             s.clean()
-        if service == "jenkins":
-            j = Jenkins(config)
-            j.clean()
 
 
 def access(config, args):
@@ -130,9 +123,6 @@ def access(config, args):
     elif args.service == "semaphore_db":
         s = Semaphore(config)
         s.access_semaphore_db()
-    elif args.service == "jenkins":
-        j = Jenkins(config)
-        j.access()
 
 
 def loginGitea(g):

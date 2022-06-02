@@ -22,8 +22,6 @@
 │   ├── data                            # Persistent service data
 │   │   ├── gitea
 │   │   ├── gitea_db
-│   │   ├── guacd
-│   │   ├── guac_db
 │   │   ├── semaphore
 │   │   └── semaphore_db
 │   ├── docker-compose.yml              # Instructions for configuring the service containers
