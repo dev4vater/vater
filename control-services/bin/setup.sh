@@ -28,8 +28,12 @@ wget https://go.dev/dl/go1.17.7.linux-amd64.tar.gz -P /tmp/
 sudo tar -C /usr/local/ -xzf /tmp/go1.17.7.linux-amd64.tar.gz
 rm -f /tmp/go1.17.7.linux-amd64.tar.gz
 
+<<<<<<< HEAD
 echo "export PATH=$PATH:/usr/local/go/bin:/home/control/go/bin" | sudo tee -a /etc/profile
 sudo sed -i s@/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin@/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/usr/local/go/bin:/home/control/go/bin@g /etc/sudoers
+=======
+echo "export PATH=$PATH:/usr/local/go/bin:/home/control/go/bin" | sudo tee -a /etc/environment
+>>>>>>> 260c823ab90e3cdd798ae82250c54dfe7cfb9eac
 source /etc/profile
 
 # Check go version
