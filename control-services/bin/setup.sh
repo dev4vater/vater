@@ -29,6 +29,7 @@ sudo tar -C /usr/local/ -xzf /tmp/go1.17.7.linux-amd64.tar.gz
 rm -f /tmp/go1.17.7.linux-amd64.tar.gz
 
 echo "export PATH=$PATH:/usr/local/go/bin:/home/control/go/bin" | sudo tee -a /etc/profile
+sudo sed -i s@/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin@/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/usr/local/go/bin:/home/control/go/bin@g /etc/sudoers
 source /etc/profile
 
 # Check go version
@@ -197,9 +198,6 @@ echo "alias vater=\"python3 ~/vater/control-services/cli/vater.py\"" > ~/.bash_a
 #echo 'export PATH="$PATH:/usr/local/go/bin:/home/control/go/bin' | sudo tee -a /etc/profile
 #source /etc/profile
 source ~/.bashrc
-
-# Allow control user to run docker commands
-sudo usermod -aG docker control
 
 echo "Rebooting"
 wait 20
