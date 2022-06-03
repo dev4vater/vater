@@ -279,6 +279,9 @@ if test -f /home/control/rous/terraform/variables.tfvars.example; then
                "vsphere_resource_pool")
                    $currentSemKey="resource_pool"
                    ;;
+               *)
+                   $currentSemKey=''
+                   ;;
             esac
 
 
@@ -286,14 +289,22 @@ if test -f /home/control/rous/terraform/variables.tfvars.example; then
             read -p "change? Y/N " change_tf_option < /dev/tty
             if [[ $change_tf_option == 'y' ]] || [[ $change_tf_option == 'Y' ]]; then
                 # prompt for change
-                read -p "${tfKey}=" tfValue < /dev/tty
+                read -p "${tfKey}= " tfValue < /dev/tty
                 echo $tfKey = \"$tfValue\" >> $tfvars_path
-                sed -i "s/$currentSemKey: .*/$currentSemKey: \"$tfValue\"/g" $sem_path
+
+                # save new value for semaphore cred
+                if [[ ! -z $currentSemKey ]]; then
+                    sed -i "s/$currentSemKey: .*/$currentSemKey: \"$tfValue\"/g" $sem_path
+                fi
             else
-                # save default
+                # save default var for terraform
                 echo $tf_var >> $tfvars_path
-                tfValue=`echo $tf_var | awk '{print $3}'`
-                sed -i "s/$currentSemKey: .*/$currentSemKey: $tfValue/g" $sem_path
+
+                # default creds for semaphore yml
+                if [[ ! -z $currentSemKey ]]; then
+                    tfValue=`echo $tf_var | awk '{print $3}'`
+                    sed -i "s/$currentSemKey: .*/$currentSemKey: $tfValue/g" $sem_path
+                fi
             fi
         fi
     done < /home/control/rous/terraform/variables.tfvars.example
@@ -360,5 +371,11 @@ if [[ $staticIPChoice == 'Y' ]] || [[ $staticIPChoice == 'y'  ]]; then
 
 fi
 
-echo "rebooting"
-sudo reboot
+echo
+echo "###### Configuration completed ######"
+
+read -p "Would you like to reboot now? Y/N" rebootChoice
+if [[ $rebootChoice == 'y' ]] || [[ $rebootChoice == 'Y' ]]; then
+    echo "rebooting"
+    sudo reboot
+fi
