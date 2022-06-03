@@ -3,6 +3,7 @@ from config import Config
 from gitea import Gitea
 from semaphore import Semaphore, SemaphoreTaskArgumentError
 from vDocker import VDocker
+from os import system
 import getpass as gp
 
 
@@ -26,6 +27,8 @@ def main():
         clean(c, p.args)
     elif p.args.command == "access":
         access(c, p.args)
+    elif p.args.command == 'kill':
+        killTerraform(c, p.args)
 
 
 def init(config, args):
@@ -123,6 +126,18 @@ def access(config, args):
     elif args.service == "semaphore_db":
         s = Semaphore(config)
         s.access_semaphore_db()
+
+
+
+def killTerraform(config, args):
+    savePIDs = "pgrep terraform | tee /tmp/pids"
+    killPIDs = "sudo kill $(cat /tmp/pids)"
+    if system("pgrep terraform") == 0:
+        system(savePIDs)
+        if system(killPIDs) == 0:
+            print("successfully killed terraform processes")
+    else:
+        print("No terraform processes found")
 
 
 def loginGitea(g):
