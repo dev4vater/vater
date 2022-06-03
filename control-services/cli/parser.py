@@ -216,5 +216,5 @@ class Parser:
                     Note that environment variables provided directly to the task template in the Semaphore UI \
                     will take precedence over variables specified here. If experiencing inconsistencies with \
                     values provided here and the results in Semaphore, verify that the template does not have \
-                    hard-coded arguments that overwrite parameters you are providing at the command line'
+                    hard-coded arguments that overwrite parameters you are providing at the command line'"
         )
