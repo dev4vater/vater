@@ -280,7 +280,7 @@ if test -f /home/control/rous/terraform/variables.tfvars.example; then
                    $currentSemKey="resource_pool"
                    ;;
                *)
-                   $currentSemKey=''
+                   $currentSemKey=""
                    ;;
             esac
 
