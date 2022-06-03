@@ -101,16 +101,3 @@ services:
       - semaphore_network
     ports:
       - "${semaphore_db_port}:${semaphore_db_port}"
-
-  jenkins:
-    image: jenkins
-    build: ./images/jenkins/
-    container_name: jenkins
-    environment:
-      - JENKINS_ADMIN_ID=${jenkins_admin_id}
-      - JENKINS_ADMIN_PASSWORD=${jenkins_admin_password}
-    volumes:
-      - ./data/jenkins:/var/jenkins_home
-      - ./images/jenkins/casc_configs/:/var/jenkins_home/casc_configs
-    ports:
-      - "${jenkins_port}:8080"
