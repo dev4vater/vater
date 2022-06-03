@@ -208,6 +208,7 @@ git --git-dir /home/control/$CONFIG_REPO/.git pull origin main
 sudo apt-get install python3 && sudo apt-get install python3-pip
 pip install -r /home/control/$SETUP_REPO/requirements/requirements.txt
 
+### DOCKER ###
 # Prompt user for environment variable values to save in .env
 # Uses .env.example as the basis
 echo
@@ -228,7 +229,6 @@ while read line_str; do
             read -p "${envKey}=" envValue < /dev/tty
             echo "${envKey}=${envValue}" >> $env_path
         fi
-
     fi
  done < /home/control/vater/control-services/.env.example
 
@@ -240,10 +240,70 @@ while read line_str; do
 echo "alias vater=\"python3 ~/vater/control-services/cli/vater.py\"" > ~/.bash_aliases
 source ~/.bashrc
 
+
+echo
+echo "ROUS configurations"
+tfvars_path=/home/control/rous/terraform/vsphere.tfvars
+sem_path=/home/control/rous/tasks/group_vars/all/creds.yml
+### ROUS ###
+if test -f /home/control/rous/terraform/vsphere.tfvars.example; then
+    touch $tfvars_path
+    cat /home/control/rous/tasks/group_vars/all/creds.example > $sem_path
+
+    while read tf_var; do
+        if [[ $tf_var != "#"* ]] && [[ ! -z $tf_var ]]; then
+            tfKey=${tf_var%=*}
+            currentSemKey=''
+
+            # find matching semaphore var
+            case $tfKey in
+                "vsphere_user")
+                    $currentSemKey="vsphereUsername"
+                    ;;
+                "vsphere_password")
+                    $currentSemKey="vspherePassword"
+                    ;;
+                "vsphere_server")
+                    $currentSemKey="hostname"
+                    ;;
+                "vsphere_datacenter")
+                    $currentSemKey="datacenter_name"
+                    ;;
+                "vsphere_datastore")
+                    $currentSemKey="datastore"
+                    ;;
+                "vsphere_host")
+                    $currentSemKey="host"
+                    ;;
+               "vsphere_resource_pool")
+                   $currentSemKey="resource_pool"
+                   ;;
+            esac
+
+
+            echo "Default is" $tf_var
+            read -p "change? Y/N " change_tf_optio < /dev/tty
+            if [[ $change_tf_option == 'y' ]] || [[ $change_tf_option == 'Y' ]]; then
+                # prompt for change
+                read -p "${tfKey}=" tfValue < /dev/tty
+                echo $tfKey = \"$tfValue\" >> $tfvars_path
+                sed -i "s/$currentSemKey: .*/$currentSemKey: \"$tfValue\"/g" $sem_path
+            else
+                # save default
+                echo $tf_var >> $tfvars_path
+                tfValue=`echo $tf_var | awk '{print $3}'`
+                sed -i "s/$currentSemKey: .*/$currentSemKey: $tfValue/g" $sem_path
+            fi
+        fi
+    done < /home/control/rous/terraform/vsphere.tfvars.example
+fi
+
+
+
 # configure DoD warning banner for ssh
 BANNER_DIR="/home/control/$SETUP_REPO/control-services/bin/dod_warning.txt"
 sudo sed -i "s|#Banner none|Banner $BANNER_DIR|g" /etc/ssh/sshd_config
 
 
 echo "rebooting"
-sudo reboot
+#sudo reboot
