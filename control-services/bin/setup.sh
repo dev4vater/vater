@@ -244,10 +244,10 @@ source ~/.bashrc
 
 echo
 echo "ROUS configurations"
-tfvars_path=/home/control/rous/terraform/vsphere.tfvars
+tfvars_path=/home/control/rous/terraform/variables.tfvars
 sem_path=/home/control/rous/tasks/group_vars/all/creds.yml
 ### ROUS ###
-if test -f /home/control/rous/terraform/vsphere.tfvars.example; then
+if test -f /home/control/rous/terraform/variables.tfvars.example; then
     touch $tfvars_path
     cat /home/control/rous/tasks/group_vars/all/creds.example > $sem_path
 
@@ -283,7 +283,7 @@ if test -f /home/control/rous/terraform/vsphere.tfvars.example; then
 
 
             echo "Default is" $tf_var
-            read -p "change? Y/N " change_tf_optio < /dev/tty
+            read -p "change? Y/N " change_tf_option < /dev/tty
             if [[ $change_tf_option == 'y' ]] || [[ $change_tf_option == 'Y' ]]; then
                 # prompt for change
                 read -p "${tfKey}=" tfValue < /dev/tty
@@ -296,7 +296,7 @@ if test -f /home/control/rous/terraform/vsphere.tfvars.example; then
                 sed -i "s/$currentSemKey: .*/$currentSemKey: $tfValue/g" $sem_path
             fi
         fi
-    done < /home/control/rous/terraform/vsphere.tfvars.example
+    done < /home/control/rous/terraform/variables.tfvars.example
 fi
 
 
@@ -361,5 +361,4 @@ if [[ $staticIPChoice == 'Y' ]] || [[ $staticIPChoice == 'y'  ]]; then
 fi
 
 echo "rebooting"
-wait 20
 sudo reboot
