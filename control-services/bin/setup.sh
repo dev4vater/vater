@@ -21,6 +21,7 @@ SSH_AUTH_KEYS_PATH="/home/control/.ssh/authorized_keys"
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
+
 # Install go for building semaphore
 sudo rm -rf /usr/local/go
 wget https://go.dev/dl/go1.17.7.linux-amd64.tar.gz -P /tmp/
@@ -74,6 +75,15 @@ sudo apt autoremove -y
 # Create .ssh if it doesn't exist
 mkdir -p $SSH_PATH
 
+
+# Setting up git global configurations
+echo "Setting up git configurations"
+read -p 'github username: ' gitUsername
+read -p 'github email: ' gitEmail
+git config --global user.name "$gitUsername"
+git config --global user.email "$gitEmail"
+
+
 # Key creation for the Semaphore container
 #   used to execute commands like Terraform
 
@@ -114,7 +124,7 @@ echo
 ssh-add $SETUP_SSH_KEY_PATH
 
 echo
-echo "Copy this key to github as an SSH key, call it $SETUP_REPO deploy. Press any key when done."
+echo "Copy this key to your github settings as an SSH key, call it $SETUP_REPO deploy. Press any key when done."
 
 read -n 1 -s
 
@@ -138,7 +148,7 @@ echo
 ssh-add $CONFIG_SSH_KEY_PATH
 
 echo
-echo "Copy this key to github as an SSH key, call it $CONFIG_REPO deploy. Press any key when done."
+echo "Copy this key to your github settings as an SSH key, call it $CONFIG_REPO deploy. Press any key when done."
 
 read -n 1 -s
 
@@ -158,7 +168,7 @@ if test -f /home/control/$CONFIG_REPO/.git/config; then
     echo
     echo "$CONFIG_REPO exists"
 else
-    git clone git@github.com:$CONFIG_REPO/$CONFIG_REPO.git /home/control/$CONFIG_REPO
+    git clone git@github.com:$CONFIG_USER/$CONFIG_REPO.git /home/control/$CONFIG_REPO
 fi
 
 # Set up for using SSH keys moving forward with 2 repos
@@ -194,8 +204,109 @@ echo
 echo "Confirm $CONFIG_REPO is up to date"
 git --git-dir /home/control/$CONFIG_REPO/.git pull origin main
 
+
+# Install dependencies for python
+sudo apt-get install python3 && sudo apt-get install python3-pip
+pip install -r /home/control/$SETUP_REPO/requirements/requirements.txt
+
+### DOCKER ###
+# Prompt user for environment variable values to save in .env
+# Uses .env.example as the basis
+echo
+echo "Configuring Environment variables"
+env_path="/home/control/${SETUP_REPO}/control-services/.env"
+touch $env_path
+echo "# .env created " `date` > $env_path
+while read line_str; do
+    if [[ $line_str != "#"* ]] && [[ ! -z $line_str ]]; then
+        echo "Default is" $line_str
+        read -p 'Change? Y/N '  changeOption < /dev/tty
+        if [[ -z $changeOption ]] || [[ $changeOption == "N" ]] || [[ $changeOption == "n" ]]; then
+            # writeout default to .env
+            echo $line_str >> $env_path
+        else
+            # prompt user and save into file
+            envKey=${line_str%=*}
+            read -p "${envKey}=" envValue < /dev/tty
+            echo "${envKey}=${envValue}" >> $env_path
+        fi
+    fi
+ done < /home/control/vater/control-services/.env.example
+
+ echo
+ echo "Saved to file"
+ echo "If you wish to alter the environment variables later,"
+ echo "you may change them at ${env_path}"
+
 echo "alias vater=\"python3 ~/vater/control-services/cli/vater.py\"" > ~/.bash_aliases
 source ~/.bashrc
+
+
+echo
+echo "ROUS configurations"
+tfvars_path=/home/control/rous/terraform/variables.tfvars
+sem_path=/home/control/rous/tasks/group_vars/all/creds.yml
+### ROUS ###
+if test -f /home/control/rous/terraform/variables.tfvars.example; then
+    echo -n '' > $tfvars_path
+    cat /home/control/rous/tasks/group_vars/all/creds.example > $sem_path
+
+    while read tf_var; do
+        if [[ $tf_var != "#"* ]] && [[ ! -z $tf_var ]]; then
+            tfKey=`echo ${tf_var%=*} | cut -d' ' -f1`
+            currentSemKey=''
+
+            # find matching semaphore var
+            case $tfKey in
+                vsphere_user)
+                    currentSemKey="vsphereUsername"
+                    echo "tis a match"
+                    ;;
+                vsphere_password)
+                    currentSemKey="vspherePassword"
+                    ;;
+                vsphere_server)
+                    currentSemKey="hostname"
+                    ;;
+                vsphere_datacenter)
+                    currentSemKey="datacenter_name"
+                    ;;
+                vsphere_datastore)
+                    currentSemKey="datastore"
+                    ;;
+                vsphere_host)
+                    currentSemKey="host"
+                    ;;
+               vsphere_resource_pool)
+                   currentSemKey="resource_pool"
+                   ;;
+               *)
+                   currentSemKey=""
+                   ;;
+            esac
+
+
+            echo "Default is" $tf_var
+            read -p "change? Y/N " change_tf_option < /dev/tty
+            if [[ $change_tf_option == 'y' ]] || [[ $change_tf_option == 'Y' ]]; then
+                # prompt for change
+                read -p "${tfKey} = " tfValue < /dev/tty
+                echo $tfKey = \"$tfValue\" >> $tfvars_path
+
+                # save new value for semaphore cred
+                if [[ ! -z $currentSemKey ]]; then
+                    echo "change"
+                    sed -i "s/$currentSemKey: .*/$currentSemKey: \"$tfValue\"/g" $sem_path
+                fi
+            else
+                # save default var for terraform
+                echo $tf_var >> $tfvars_path
+            fi
+        fi
+    done < /home/control/rous/terraform/variables.tfvars.example
+fi
+
+
 
 # configure DoD warning banner for ssh
 BANNER_DIR="/home/control/$SETUP_REPO/control-services/bin/dod_warning.txt"
@@ -256,6 +367,11 @@ if [[ $staticIPChoice == 'Y' ]] || [[ $staticIPChoice == 'y'  ]]; then
 
 fi
 
-echo "rebooting"
-wait 20
-sudo reboot
+echo
+echo "###### Configuration completed ######"
+
+read -p "Would you like to reboot now? Y/N" rebootChoice
+if [[ $rebootChoice == 'y' ]] || [[ $rebootChoice == 'Y' ]]; then
+    echo "rebooting"
+    sudo reboot
+fi

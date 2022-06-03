@@ -22,8 +22,6 @@
 │   ├── data                            # Persistent service data
 │   │   ├── gitea
 │   │   ├── gitea_db
-│   │   ├── guacd
-│   │   ├── guac_db
 │   │   ├── semaphore
 │   │   └── semaphore_db
 │   ├── docker-compose.yml              # Instructions for configuring the service containers
@@ -53,6 +51,6 @@
 - **Manually** run ` ~/vater/control-services/bin/setup.sh`
 - `setup.sh` will create a RSA key pair if one does not exist and print the public key to the terminal
 - **Manually** copy the public RSA key
-- **Manually** input public RSA key into `marissaeinhorn/rous` as a deploy key 
+- **Manually** input public RSA key into `github` settings ssh key
 - `setup.sh` will pull `marissaeinhorn/rous` locally
 - **Manually** run `vater restart`

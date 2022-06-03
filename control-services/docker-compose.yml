@@ -29,8 +29,8 @@ services:
       - GITEA__database__DB_TYPE=mysql
       - GITEA__database__HOST=gitea_db:3306
       - GITEA__database__NAME=gitea
-      - GITEA__database__USER=${gitea_db_user}
-      - GITEA__database__PASSWD=${gitea_db_password}
+      - GITEA__database__USER=${gitea_user}
+      - GITEA__database__PASSWD=${gitea_password}
       - GITEA__security__INSTALL_LOCK=true
       - GITEA__security__IMPORT_LOCAL_PATHS=true
     volumes:
@@ -40,7 +40,7 @@ services:
     networks:
       - gitea_network
     ports:
-       - "3000:3000"
+      - "${gitea_port}:${gitea_port}"
     depends_on:
        - gitea_db
     restart: always
@@ -49,16 +49,16 @@ services:
      image: mysql:8
      container_name: gitea_db
      environment:
-       - MYSQL_ROOT_PASSWORD=gitea
-       - MYSQL_USER=gitea
-       - MYSQL_PASSWORD=gitea
+       - MYSQL_ROOT_PASSWORD=${gitea_db_root_password}
+       - MYSQL_USER=${gitea_user}
+       - MYSQL_PASSWORD=${gitea_password}
        - MYSQL_DATABASE=gitea
      volumes:
        - ./data/gitea_db:/var/lib/mysql
      networks:
        - gitea_network
      ports:
-       - "3305:3306"
+       - "${gitea_db_port}:3306"
      restart: always
 
   semaphore:
@@ -66,14 +66,14 @@ services:
     build: ./images/semaphore/
     container_name: semaphore
     environment:
-      - SEMAPHORE_DB_USER=semaphore
-      - SEMAPHORE_DB_PASS=semaphore
+      - SEMAPHORE_DB_USER=${semaphore_db_user}
+      - SEMAPHORE_DB_PASS=${semaphore_db_password}
       - SEMAPHORE_DB_HOST=semaphore_db
       - SEMAPHORE_DB_PORT=3306
       - SEMAPHORE_DB=semaphore
       - SEMAPHORE_PLAYBOOK_PATH=/data/semaphore/
       - SEMAPHORE_ADMIN_PASSWORD=${semaphore_admin_password}
-      - SEMAPHORE_ADMIN_NAME=admin
+      - SEMAPHORE_ADMIN_NAME=${semaphore_admin_name}
       - SEMAPHORE_ADMIN_EMAIL=admin@localhost
       - SEMAPHORE_ADMIN=admin
       - ANSIBLE_HOST_KEY_CHECKING=False
@@ -82,7 +82,7 @@ services:
     networks:
       - semaphore_network
     ports:
-      - "4000:3000"
+      - "${semaphore_port}:3000"
     depends_on:
       - semaphore_db
     restart: always
@@ -93,23 +93,11 @@ services:
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
       MYSQL_DATABASE: semaphore
-      MYSQL_USER: semaphore
-      MYSQL_PASSWORD: semaphore
+      MYSQL_USER: ${semaphore_db_user}
+      MYSQL_PASSWORD: ${semaphore_db_password}
     volumes:
       - ./data/semaphore_db:/var/lib/mysql
     networks:
       - semaphore_network
     ports:
-      - "3306:3306"
-
-  jenkins:
-    image: jenkins
-    build: ./images/jenkins/
-    container_name: jenkins
-    environment:
-      - JENKINS_ADMIN_ID=${jenkins_admin_id}
-      - JENKINS_ADMIN_PASSWORD=${jenkins_admin_password}
-    volumes:
-      - ./data/jenkins:/var/jenkins_home
-    ports:
-      - "5000:8080"
+      - "${semaphore_db_port}:${semaphore_db_port}"
