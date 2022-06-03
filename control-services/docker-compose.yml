@@ -13,8 +13,6 @@ version: "3"
 networks:
   gitea_network:
     external: false
-  guacamole_network:
-    external: false
   semaphore_network:
     external: false
 
