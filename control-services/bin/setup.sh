@@ -1,8 +1,6 @@
 #!/bin/bash
 
 # https://docs.gitea.io/en-us/install-with-docker/
-# https://github.com/boschkundendienst/guacamole-docker-compose
-# https://techblog.jeppson.org/2021/03/guacamole-docker-quick-and-easy/
 
 # ---
 
@@ -30,6 +28,7 @@ sudo tar -C /usr/local/ -xzf /tmp/go1.17.7.linux-amd64.tar.gz
 rm -f /tmp/go1.17.7.linux-amd64.tar.gz
 
 echo "export PATH=$PATH:/usr/local/go/bin:/home/control/go/bin" | sudo tee -a /etc/profile
+sudo sed -i s@/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin@/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/usr/local/go/bin:/home/control/go/bin@g /etc/sudoers
 source /etc/profile
 
 # Check go version
@@ -257,7 +256,6 @@ if [[ $staticIPChoice == 'Y' ]] || [[ $staticIPChoice == 'y'  ]]; then
 
 fi
 
-
-
 echo "rebooting"
+wait 20
 sudo reboot
