@@ -154,17 +154,10 @@ class Parser:
         )
 
         self.__parser_access.add_argument(
-<<<<<<< HEAD
             "-s",
             "--service",
             help="A service defined in the configuration file",
             choices=container_choices,
-        )
-
-=======
-            '-s', '--service',
-            help = 'A service defined in the configuration file',
-            choices = container_choices,
         )
 
         # Kill subparser
@@ -174,8 +167,6 @@ class Parser:
             help = 'When terraform doesn\'t complete tasks, it hangs. This command kills it'
         )
 
-
->>>>>>> 7084a556051a6414e1a5e128d37cf97dc5b662c0
         # Help was disabled when the parser was instantiated,
         #   so rebuild it now
         self.__parser.add_argument(
