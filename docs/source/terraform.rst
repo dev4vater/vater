@@ -20,12 +20,10 @@ How is Terraform Integrated within VATER?
 
 Configs
 ~~~~~~~
+**Ansible**: Ansible is used to kick off terraform builds and provides run time variables to terraform.
 
-- **Jinja2**: Jinja2 is a template engine for the Python programming language. Template systems allow designers and developers to work with templates that automatically generate custom pages. They reuse static page elements while defining dynamic elements based on parameters. 
+**Terraform**: Terraform states is the mechanism via which it keeps track of resources that are actually deployed in the range. Project workspaces allow you to have multiple states in the same backend, tied to the same configuration. This allows you to deploy multiple distinct instances of the same infrastructure. Each student or team will have their own terraform workspace
 
-- **Ansible**: Ansible uses Jinja2 for a configuration file, then deploys that configuration file to muliple environments and supply the correct data (IP addresses, hostname, version) for each environment.
-
-- **Terraform**: Terraform states is the mechanism via which it keeps track of resources that are actually deployed in the range. Project workspaces allow you to have multiple states in the same backend, tied to the same configuration. This allows you to deploy multiple distinct instances of the same infrastructure.
 
 Execution
 ~~~~~~~~~~
@@ -35,3 +33,11 @@ Execution
 - A Terraform project workspace is created that will allow the deployment of multiple distinct instances of the VMs. 
 - The Terraform apply while make the changes to the infrastructure resources to match the desired state (as specified by the Terraform config file).
 - Once Terraform apply is run, Terraform must store the state about the managed infrastructure. This will allow Terraform to keep track of metadata, map real world resources to the configuration file, and improve performance for large infrastructure.
+
+How to Use Terraform
+~~~~~~~~~~~~~~~~~~~~
+
+- First decide what the networks terraform will build look like. 
+- Then determine what resources such as folders, VM templates ect. already exist and what resources terraform needs to build on the virtualization platform. Terraform maintains state information about the network and determines what order to build and destroy resources in.
+- If there is a problem, it likely is with the virtualization platform or the VM templates not terraform. Attempt a task manually and look into errors for from the virtualization platform before spending time debugging terraform.
+- Terraform resource blocks reference items that terraform will create on the virtualization platform. Data blocks reference items that already exist.
