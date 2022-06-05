@@ -80,7 +80,7 @@ If semaphore is hanging and not showing helpful errors or warnings,
 
 - `Plan <https://www.terraform.io/cli/commands/plan>`_ and `Apply <https://www.terraform.io/cli/commands/apply>`_ are two helpful Terraform CLI commands.
 
-``terraform plan -out fileName`` and ``terraform apply "fileName"`` allow for troubleshooting terraform specifically and in a more isolated manner. 
+- ``terraform plan -out fileName`` and ``terraform apply "fileName"`` allow for troubleshooting terraform specifically and in a more isolated manner. 
 
 The ``plan`` command will ask for inputs to define variables - these can be found in `groupvars/all/folderOfThingToDebug` along with the global var files
 
