@@ -45,6 +45,10 @@ Welcome to VATER Test documentation!
    CDGVMware Fusion_Player
    CDGProxMox
    ContentTroubleshooting
+   
+.. toctree::
+   :maxdepth: 2
+   :caption: Labnet
     
 .. toctree::
    :maxdepth: 2
