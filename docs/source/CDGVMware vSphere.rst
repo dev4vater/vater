@@ -74,16 +74,16 @@ Ansible playbooks use the following structure:
 
 ::
     - hosts: localhost
-      tasks:
-      - name: <task name> 
-        <task function name if necessary>
+       tasks:
+      
+    - name: <task name> 
+       <task function name if necessary>
           <task body>
         register: output 
 
     - name: debug <task name> 
       ansible.builtin.debug:
         var: output
-
 ::
 
 If you're using an ansible playbook to call a different ansible playbook then omit the hosts and tasks lines. 
