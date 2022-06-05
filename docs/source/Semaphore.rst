@@ -30,22 +30,22 @@ Relevant Task Templates
 Underneath the ``Management`` project pane, the **Task Template** selection will include: 
 
 ::
-   
-   Build ISOs
-   Build VMs
+
    Create Class
    Destroy Class
 
 Underneath the ``Class`` project pane, the **Task Template** selection will include: 
 
 ::
-
+   
    Create Range
    Destroy Range
    Revert VM
    Reset VM
    Rebuild VM
-   Other Enclave Specific Actions
+   DCO scenario injects
+   Create Falling Star
+   Destroy Falling Star
 
 Create Class
 ^^^^^^^^^^^^^
