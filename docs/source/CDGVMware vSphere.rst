@@ -84,7 +84,6 @@ Ansible playbooks use the following structure:
     - name: debug <task name> 
       ansible.builtin.debug:
         var: output
-::
 
 If you're using an ansible playbook to call a different ansible playbook then omit the hosts and tasks lines. 
 
