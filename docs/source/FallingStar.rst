@@ -1,8 +1,5 @@
 Falling Star Guide 
 ====================
-.. image:: images/fallingstar.JPG
-   :width: 800
-
 
 Day Before Exercise 
 ^^^^^^^^^^^^^^^^^^^
