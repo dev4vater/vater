@@ -24,6 +24,7 @@ Welcome to VATER Test documentation!
    :caption: Instructor Guides
    
    instructoroverview
+   FallingStar
    Semaphore
    
 .. toctree::
