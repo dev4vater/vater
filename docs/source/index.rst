@@ -31,13 +31,11 @@ Welcome to VATER Test documentation!
    :maxdepth: 2
    :caption: Developer Guides
    
-   EditConfig
-   VaterTroubleshooting
    CDGIntro
    CDGVMware vSphere
    CDGVMware Fusion_Player
-   CDGProxMox
    ContentTroubleshooting
+   VaterTroubleshooting
    vatercli
    Labnet
     
