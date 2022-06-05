@@ -1,6 +1,8 @@
-Labnet
+Getting Started with Labnet
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-..Note :: 
+
+.. Note:: These notes are specific to Labnet transitions but will largely apply for any network VATER is moved to
 
 Network
 ~~~~~~~~
