@@ -46,6 +46,7 @@ Debugging
 ~~~~~~~~~~~~~~~~
 
 **Lock State Errors**
+
 Terraform uses state locks to prevent multiple users from modifying the same terraform resources at once.  If a task terminates prematurely or is completed unsuccessfully, terraform may not release the state lock, which causes errors.  To forcibly kill the terraform processes holding state locks run `vater kill`. 
 
 **Hanging Tasks**
