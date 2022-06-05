@@ -1,5 +1,8 @@
 Falling Star Guide 
 ====================
+.. image:: images/pooh.JPG
+   :width: 400
+
 
 Day Before Exercise 
 ^^^^^^^^^^^^^^^^^^^
