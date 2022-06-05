@@ -53,11 +53,7 @@ Terraform uses state locks to prevent multiple users from modifying the same ter
 
 If semaphore is hanging and not showing helpful errors or warnings, 
 
-- [plan]: (https://www.terraform.io/cli/commands/plan) 
-
-- [apply]: (https://www.terraform.io/cli/commands/apply) 
-
-Are two helpful Terraform CLI commands.
+- `Plan <https://www.terraform.io/cli/commands/plan>`_ and `Apply <https://www.terraform.io/cli/commands/apply>`_ are two helpful Terraform CLI commands.
 
 ``terraform plan -out fileName`` and ``terraform apply "fileName"`` allow for troubleshooting terraform specifically and in a more isolated manner. 
 
