@@ -29,27 +29,17 @@ Welcome to VATER Test documentation!
    
 .. toctree::
    :maxdepth: 2
-   :caption: VATER Developer Guides
+   :caption: Developer Guides
    
    VaterIntroduction
-   vatercli
    EditConfig
    VaterTroubleshooting
-   
-.. toctree::
-   :maxdepth: 2
-   :caption: Content Developer Guides
-   
    CDGIntro
    CDGVMware vSphere
    CDGVMware Fusion_Player
    CDGProxMox
    ContentTroubleshooting
-   
-.. toctree::
-   :maxdepth: 2
-   :caption: Labnet
-   
+   vatercli
    Labnet
     
 .. toctree::
