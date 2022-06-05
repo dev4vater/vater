@@ -35,7 +35,6 @@ Welcome to VATER Test documentation!
    CDGVMware vSphere
    CDGVMware Fusion_Player
    ContentTroubleshooting
-   VaterTroubleshooting
    vatercli
    Labnet
     
