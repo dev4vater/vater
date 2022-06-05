@@ -41,3 +41,19 @@ How to Use Terraform
 - Then determine what resources such as folders, VM templates ect. already exist and what resources terraform needs to build on the virtualization platform. Terraform maintains state information about the network and determines what order to build and destroy resources in.
 - If there is a problem, it likely is with the virtualization platform or the VM templates not terraform. Attempt a task manually and look into errors for from the virtualization platform before spending time debugging terraform.
 - Terraform resource blocks reference items that terraform will create on the virtualization platform. Data blocks reference items that already exist.
+
+Debugging
+~~~~~~~~~~~~~~~~
+
+**Lock State Errors**
+Terraform uses state locks to prevent multiple users from modifying the same terraform resources at once.  If a task terminates prematurely or is completed unsuccessfully, terraform may not release the state lock, which causes errors.  To forcibly kill the terraform processes holding state locks run `vater kill`. 
+
+**Hanging Tasks**
+
+If semaphore is hanging and not showing helpful errors or warnings, [plan](https://www.terraform.io/cli/commands/plan) and [apply](https://www.terraform.io/cli/commands/apply) are two helpful Terraform CLI commands.
+``terraform plan -out fileName`` and ``terraform apply "fileName"`` allow for troubleshooting terraform specifically and in a more isolated manner. 
+
+The ``plan`` command will ask for inputs to define variables - these can be found in `groupvars/all/folderOfThingToDebug` along with the global var files
+
+.. Note:: All run time variables have default values associated with them you can provide specific values by adding this to the end of your terraform command ``-var="<variable name>=<value>"``
+
