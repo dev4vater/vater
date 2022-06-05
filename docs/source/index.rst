@@ -31,7 +31,6 @@ Welcome to VATER Test documentation!
    :maxdepth: 2
    :caption: Developer Guides
    
-   VaterIntroduction
    EditConfig
    VaterTroubleshooting
    CDGIntro
