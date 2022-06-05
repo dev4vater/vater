@@ -1,6 +1,6 @@
 Falling Star Guide 
 ====================
-.. image:: images/FallingStar.JPG
+.. image:: images/fallingstar.JPG
    :width: 400
 
 
