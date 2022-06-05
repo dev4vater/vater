@@ -7,6 +7,7 @@ Day Before Exercise
 - Notify COTR with which students belong to each team. They will set the AD permissions so the students can only view their teams range.
 
 - Navigate to Semaphore GUI. From the main Instructor web page click:
+
   ``COTR Vater Range Automation Controller`` link
 
 - Login with provided credentials and select the Management page from the dropdown in the top left corner
