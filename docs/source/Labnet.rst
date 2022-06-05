@@ -39,7 +39,8 @@ The vsphere networks section must be modified in all `.tf` files.  When testing 
 
 ::
 
-   data "vsphere_distributed_virtual_switch" "vds" {
+   data "vsphere_distributed_virtual_switch" "vds"
+   {
      name = var.vsphere_distributed_switch
      datacenter_id = data.vsphere_datacenter.dc.id
      }
@@ -50,25 +51,28 @@ After this block have terraform build the distributed port groups for all requir
 
 ::
    
-    resource "vsphere_distributed_port_group" "test"{
-    name = "${var.class}_${var.team}_${var.testName}"
-    distributed_virtual_switch_uuid = "${data.vsphere_distributed_virtual_switch.vds.id}"
-    active_uplinks = ["${data.vsphere_distributed_virtual_switch.vds.uplinks[0]}",
+    resource "vsphere_distributed_port_group" "test"
+    {
+     name = "${var.class}_${var.team}_${var.testName}"
+     distributed_virtual_switch_uuid = "${data.vsphere_distributed_virtual_switch.vds.id}"
+     active_uplinks = ["${data.vsphere_distributed_virtual_switch.vds.uplinks[0]}",
                     "${data.vsphere_distributed_virtual_switch.vds.uplinks[1]}"
                   ]
      number_of_ports = 8
     }
 
     #wait time to ensure port group is built before reference
-    resource "time_sleep" "wait_on_networks" {
-    depends_on = [vsphere_distributed_port_group.test]
-    create_duration = "60s"
-   }
+    resource "time_sleep" "wait_on_networks"
+    {
+     depends_on = [vsphere_distributed_port_group.test]
+     create_duration = "60s"
+    }
   
-   data "vsphere_network" "test" {
-   name = "${var.class}_${var.team}_test"
-   datacenter_id = data.vsphere_datacenter.dc.id
-   depends_on = [time_sleep.wait_on_networks]
+   data "vsphere_network" "test"
+   {
+    name = "${var.class}_${var.team}_test"
+    datacenter_id = data.vsphere_datacenter.dc.id
+    depends_on = [time_sleep.wait_on_networks]
    }
 
 ::
