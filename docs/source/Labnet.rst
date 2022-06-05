@@ -49,25 +49,27 @@ The vsphere networks section must be modified in all `.tf` files.  When testing 
 After this block have terraform build the distributed port groups for all required networks.  Then terraform waits 60 seconds for the port groups to build before pulling the network information from vsphere for use later when cloning the VMs. 
 
 ::
-   resource "vsphere_distributed_port_group" "test"{
+   
+    resource "vsphere_distributed_port_group" "test"{
     name = "${var.class}_${var.team}_${var.testName}"
     distributed_virtual_switch_uuid = "${data.vsphere_distributed_virtual_switch.vds.id}"
     active_uplinks = ["${data.vsphere_distributed_virtual_switch.vds.uplinks[0]}",
                     "${data.vsphere_distributed_virtual_switch.vds.uplinks[1]}"
                   ]
      number_of_ports = 8
-}
+    }
 
-#wait time to ensure port group is built before reference
-resource "time_sleep" "wait_on_networks" {
-  depends_on = [vsphere_distributed_port_group.test]
-  create_duration = "60s"
-}
-data "vsphere_network" "test" {
-  name = "${var.class}_${var.team}_test"
-  datacenter_id = data.vsphere_datacenter.dc.id
-  depends_on = [time_sleep.wait_on_networks]
-}
+    #wait time to ensure port group is built before reference
+    resource "time_sleep" "wait_on_networks" {
+    depends_on = [vsphere_distributed_port_group.test]
+    create_duration = "60s"
+   }
+  
+   data "vsphere_network" "test" {
+   name = "${var.class}_${var.team}_test"
+   datacenter_id = data.vsphere_datacenter.dc.id
+   depends_on = [time_sleep.wait_on_networks]
+   }
 
 ::
 
