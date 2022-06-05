@@ -1,6 +1,6 @@
 Falling Star Guide 
 ====================
-.. image:: images/pooh.JPG
+.. image:: images/FallingStar.JPG
    :width: 400
 
 
@@ -24,7 +24,9 @@ Day Before Exercise
 
 - Run the ``Create Falling Star`` task and enter the number of teams. A maximum of 2 ranges can be supported on LABNET. 
 
+
 .. Notice:: This will take ~45 min to complete
+
 
 - Verify the task completed successfully and the VMs exist in vsphere.
 
