@@ -32,11 +32,8 @@ Welcome to VATER Test documentation!
    :caption: VATER Developer Guides
    
    VaterIntroduction
-   Docker
-   gitea
    vatercli
    EditConfig
-   jenkins
    VaterTroubleshooting
    
 .. toctree::
@@ -44,13 +41,21 @@ Welcome to VATER Test documentation!
    :caption: Content Developer Guides
    
    CDGIntro
-   packer
-   terraform
-   Ansible
    CDGVMware vSphere
    CDGVMware Fusion_Player
    CDGProxMox
    ContentTroubleshooting
+    
+.. toctree::
+   :maxdepth: 2
+   :caption: Tools
+   
+   packer
+   terraform
+   Ansible
+   Docker
+   gitea
+   
    
 
    
