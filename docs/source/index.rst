@@ -49,6 +49,8 @@ Welcome to VATER Test documentation!
 .. toctree::
    :maxdepth: 2
    :caption: Labnet
+   
+   Labnet
     
 .. toctree::
    :maxdepth: 2
