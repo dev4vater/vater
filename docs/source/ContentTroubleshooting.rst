@@ -1,4 +1,4 @@
-Management & Troubleshooting
+Developer and Integration Notes
 ============================
 
 Packer
