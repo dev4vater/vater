@@ -25,7 +25,7 @@ Day Before Exercise
 - Run the ``Create Falling Star`` task and enter the number of teams. A maximum of 2 ranges can be supported on LABNET. 
 
 
-.. Notice:: This will take ~45 min to complete
+.. Tip:: This will take ~45 min to complete
 
 
 - Verify the task completed successfully and the VMs exist in vsphere.
