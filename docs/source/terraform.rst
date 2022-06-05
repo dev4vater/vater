@@ -48,21 +48,21 @@ File Structure
 
 :: 
 
-terraform
-| main.tf                 # Calls for all terraform modules
-| variables.auto.tfvars   # Contains all variable definitions for non run time variables
-| variables.tf            # Contains all variable declarations and default values for variables provided at run time
-| modules                 #Each enclave in the network diagram is coded into a terraform module.  This allows for segmented builds and testing of the larger network pieces
--- | dco                  # DCO enclave module
-   --| dco.tf             # Contains references to VM templates, creates networks, clones VMs, takes snapshots
-   --| student.tf         # Contains references to class folders and creates student folders
-   --| variables.tf       # Contains variable declarations for all variables used by the module.  Required duplicate of content in terraform/variables.tf
-   --| vsphere.tf         # Contains required references for vsphere (host, cluster, resource pool, credentials)
+   terraform
+   | main.tf                 # Calls for all terraform modules
+   | variables.auto.tfvars   # Contains all variable definitions for non run time variables
+   | variables.tf            # Contains all variable declarations and default values for variables provided at run time
+   | modules                 #Each enclave in the network diagram is coded into a terraform module.This allows for segmented builds and testing of the larger network pieces
+   -- | dco                  # DCO enclave module
+     --| dco.tf             # Contains references to VM templates, creates networks, clones VMs, takes snapshots
+      --| student.tf         # Contains references to class folders and creates student folders
+      --| variables.tf       # Contains variable declarations for all variables used by the module.  Required duplicate of content in terraform/variables.tf
+      --| vsphere.tf         # Contains required references for vsphere (host, cluster, resource pool, credentials)
 
--- | fallingStar          # Falling Star enclave module
-   -- |sisi.tf            # Contains references to VM templates, folders, creates networks, clones VMs, takes snapshots 
-   -- | variables.tf      # Contains variable declarations for all variables used by the module.  Required duplicate of content in terraform/variables.tf
-   -- |vsphere.tf         # Contains required references for vsphere (host, cluster, resource pool, credentials)
+   -- | fallingStar          # Falling Star enclave module
+      -- |sisi.tf            # Contains references to VM templates, folders, creates networks, clones VMs, takes snapshots 
+      -- | variables.tf      # Contains variable declarations for all variables used by the module.  Required duplicate of content in terraform/variables.tf
+      -- |vsphere.tf         # Contains required references for vsphere (host, cluster, resource pool, credentials)
    
 ::
 
