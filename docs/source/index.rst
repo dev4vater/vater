@@ -32,6 +32,7 @@ Welcome to VATER Test documentation!
    :caption: Developer Guides
    
    CDGIntro
+   WindowsSpecificDeveloper
    CDGVMware vSphere
    CDGVMware Fusion_Player
    ContentTroubleshooting
