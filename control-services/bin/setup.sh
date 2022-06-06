@@ -244,7 +244,7 @@ source ~/.bashrc
 
 echo
 echo "ROUS configurations"
-tfvars_path=/home/control/rous/terraform/variables.tfvars
+tfvars_path=/home/control/rous/terraform/variables.auto.tfvars
 sem_path=/home/control/rous/tasks/group_vars/all/creds.yml
 ### ROUS ###
 if test -f /home/control/rous/terraform/variables.tfvars.example; then
@@ -265,21 +265,6 @@ if test -f /home/control/rous/terraform/variables.tfvars.example; then
                 vsphere_password)
                     currentSemKey="vspherePassword"
                     ;;
-                vsphere_server)
-                    currentSemKey="hostname"
-                    ;;
-                vsphere_datacenter)
-                    currentSemKey="datacenter_name"
-                    ;;
-                vsphere_datastore)
-                    currentSemKey="datastore"
-                    ;;
-                vsphere_host)
-                    currentSemKey="host"
-                    ;;
-               vsphere_resource_pool)
-                   currentSemKey="resource_pool"
-                   ;;
                *)
                    currentSemKey=""
                    ;;
