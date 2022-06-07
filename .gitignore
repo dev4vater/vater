@@ -6,3 +6,5 @@ control-services/.env
 
 # From ./vater/control-services/cli/.gitignore
 /control-services/cli/__pycache__ 
+*tar
+*swp
