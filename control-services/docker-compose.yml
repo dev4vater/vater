@@ -27,7 +27,7 @@ services:
       - GITEA__database__DB_TYPE=mysql
       - GITEA__database__HOST=gitea_db:3306
       - GITEA__database__NAME=gitea
-      - GITEA__database__USER=${gitea_user}
+      - GITEA__database__USER=gitea
       - GITEA__database__PASSWD=${gitea_password}
       - GITEA__security__INSTALL_LOCK=true
       - GITEA__security__IMPORT_LOCAL_PATHS=true
@@ -48,7 +48,7 @@ services:
      container_name: gitea_db
      environment:
        - MYSQL_ROOT_PASSWORD=${gitea_db_root_password}
-       - MYSQL_USER=${gitea_user}
+       - MYSQL_USER=gitea
        - MYSQL_PASSWORD=${gitea_password}
        - MYSQL_DATABASE=gitea
      volumes:
@@ -71,7 +71,7 @@ services:
       - SEMAPHORE_DB=semaphore
       - SEMAPHORE_PLAYBOOK_PATH=/data/semaphore/
       - SEMAPHORE_ADMIN_PASSWORD=${semaphore_admin_password}
-      - SEMAPHORE_ADMIN_NAME=${semaphore_admin_name}
+      - SEMAPHORE_ADMIN_NAME=admin
       - SEMAPHORE_ADMIN_EMAIL=admin@localhost
       - SEMAPHORE_ADMIN=admin
       - ANSIBLE_HOST_KEY_CHECKING=False
