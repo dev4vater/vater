@@ -11,12 +11,18 @@ class Config:
     def __init__(self):
 
         if os.getuid() == 0:
-            print("Please do not run with sudo")
-            exit()
+            os.write(2, b"Please do not run with sudo\n")
+            exit(-1)
 
         # Load environment variables
         env_path = find_dotenv(".env")
-        env_vars = dotenv_values(env_path)
+        env_vars = {}
+
+        if env_path:
+            env_vars = dotenv_values(env_path)
+        else:
+            os.write(2, b"ERROR: .env file, please run setup.sh\n")
+            exit(-1)
 
         cfg = {}
 
@@ -158,7 +164,6 @@ class Config:
             "user": env_vars["gitea_user"],
             "port": env_vars["gitea_db_port"],
         }
-
 
         ### Semaphore
         # Obtain user/pass from environment var
