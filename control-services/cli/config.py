@@ -87,7 +87,7 @@ class Config:
         # Obtain user/pass from environment var
         cfg["gitea"] = {
             "password": env_vars["gitea_password"],
-            "user": env_vars["gitea_user"],
+            "user": "gitea",
             "email": "config@example.com",
             "org_or_user": "333TRS",
             "port": env_vars["gitea_port"],
@@ -161,7 +161,7 @@ class Config:
         # Obtain user/pass from environment var
         cfg["gitea_db"] = {
             "password": env_vars["gitea_password"],
-            "user": env_vars["gitea_user"],
+            "user": "gitea",
             "port": env_vars["gitea_db_port"],
         }
 
@@ -169,7 +169,7 @@ class Config:
         # Obtain user/pass from environment var
         cfg["semaphore"] = {
             "password": env_vars["semaphore_admin_password"],
-            "user": env_vars["semaphore_admin_name"],
+            "user": "admin",
             "port": env_vars["semaphore_port"],
         }
 
