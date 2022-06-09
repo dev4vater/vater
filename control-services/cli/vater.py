@@ -130,8 +130,8 @@ def access(config, args):
 
 
 def killTerraform(config, args):
-    savePIDs = "pgrep terraform | tee /tmp/pids"
-    killPIDs = "sudo kill $(cat /tmp/pids)"
+    savePIDs = "pgrep terraform | tee /tmp/pids > /dev/null"
+    killPIDs = "sudo kill -9 $(cat /tmp/pids)"
     if system("pgrep terraform") == 0:
         system(savePIDs)
         if system(killPIDs) == 0:
