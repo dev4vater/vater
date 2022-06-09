@@ -91,10 +91,16 @@ echo "Checking for key at $SEMAPHORE_SSH_KEY_PATH"
 if test -f "$SEMAPHORE_SSH_KEY_PATH"; then
     echo
     echo "Key exists"
+    SEMVAR="$(cat $SSH_PATH/semaphore.pub)"
+    if [[ $(grep -c "$SEMVAR" $SSH_PATH/authorized_keys) -lt 1 ]]; then
+        echo "key is authorized"
+        cat $SSH_PATH/semaphore.pub >> $SSH_PATH/authorized_keys
+    fi
 else
     echo
     echo "Key does not exist"
     ssh-keygen -b 2048 -t rsa -f $SEMAPHORE_SSH_KEY_PATH -q -N ""
+    cat $SSH_PATH/semaphore.pub >> $SSH_PATH/authorized_keys
 fi
 
 # Create authorized keys with only the Semaphore key
@@ -245,31 +251,13 @@ source ~/.bashrc
 echo
 echo "ROUS configurations"
 tfvars_path=/home/control/rous/terraform/variables.auto.tfvars
-sem_path=/home/control/rous/tasks/group_vars/all/creds.yml
 ### ROUS ###
 if test -f /home/control/rous/terraform/variables.tfvars.example; then
     echo -n '' > $tfvars_path
-    cat /home/control/rous/tasks/group_vars/all/creds.example > $sem_path
 
     while read tf_var; do
         if [[ $tf_var != "#"* ]] && [[ ! -z $tf_var ]]; then
             tfKey=`echo ${tf_var%=*} | cut -d' ' -f1`
-            currentSemKey=''
-
-            # find matching semaphore var
-            case $tfKey in
-                vsphere_user)
-                    currentSemKey="vsphereUsername"
-                    echo "tis a match"
-                    ;;
-                vsphere_password)
-                    currentSemKey="vspherePassword"
-                    ;;
-               *)
-                   currentSemKey=""
-                   ;;
-            esac
-
 
             echo "Default is" $tf_var
             read -p "change? Y/N " change_tf_option < /dev/tty
@@ -278,16 +266,12 @@ if test -f /home/control/rous/terraform/variables.tfvars.example; then
                 read -p "${tfKey} = " tfValue < /dev/tty
                 echo $tfKey = \"$tfValue\" >> $tfvars_path
 
-                # save new value for semaphore cred
-                if [[ ! -z $currentSemKey ]]; then
-                    echo "change"
-                    sed -i "s/$currentSemKey: .*/$currentSemKey: \"$tfValue\"/g" $sem_path
-                fi
             else
                 # save default var for terraform
                 echo $tf_var >> $tfvars_path
             fi
         fi
+
     done < /home/control/rous/terraform/variables.tfvars.example
 fi
 
