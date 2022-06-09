@@ -255,7 +255,7 @@ sem_path=/home/control/rous/tasks/group_vars/all/creds.yml
 ### ROUS ###
 if test -f /home/control/rous/terraform/variables.tfvars.example; then
     echo -n '' > $tfvars_path
-    cat /home/control/rous/tasks/group_vars/all/creds.example > $sem_path
+    mv /home/control/rous/tasks/group_vars/all/creds.example $sem_path
 
     while read tf_var; do
         if [[ $tf_var != "#"* ]] && [[ ! -z $tf_var ]]; then
@@ -293,6 +293,7 @@ if test -f /home/control/rous/terraform/variables.tfvars.example; then
                 echo $tf_var >> $tfvars_path
             fi
         fi
+
     done < /home/control/rous/terraform/variables.tfvars.example
 fi
 
