@@ -69,6 +69,11 @@ sudo apt-get update && sudo apt-get install -y packer
 # Install a tool used in start script
 sudo apt-get install -y wait-for-it
 
+# Install nginx
+sudo apt-get install nginx
+sudo systemctl enable nginx
+sudo systemctl start nginx
+
 # Clean up
 sudo apt autoremove -y
 
