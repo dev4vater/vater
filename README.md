@@ -42,7 +42,7 @@
 
 ## Day 0 Deployment
 - **Manually** provision `Control` VM
-  - The user and hostname need to be `Control` or you need to edit the `config.json`
+  - The user and hostname need to be `control` or you need to edit the `config.json`
   - `Ubuntu 20.04`
     - 2 vCPUS
     - 4 GB RAM
