@@ -54,4 +54,4 @@
 - **Manually** input public RSA key into `github` settings ssh key
 - `setup.sh` will pull `marissaeinhorn/rous` locally
 - **Manually** run `vater restart`
-- When prompted to enter the `gitea` and `semaphore` passwords wait 2 min before entering password to ensure database is fully initialized
+- When prompted to enter the `gitea` and `semaphore` passwords wait 10 min before entering password to ensure database is fully initialized
