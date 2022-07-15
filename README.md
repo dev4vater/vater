@@ -42,7 +42,7 @@
 
 ## Day 0 Deployment
 - **Manually** provision `Control` VM
-  - The user and hostname need to be `Control` or you need to edit the `config.json`
+  - The user and hostname need to be `control` or you need to edit the `config.json`
   - `Ubuntu 20.04`
     - 2 vCPUS
     - 4 GB RAM
@@ -54,4 +54,4 @@
 - **Manually** input public RSA key into `github` settings ssh key
 - `setup.sh` will pull `marissaeinhorn/rous` locally
 - **Manually** run `vater restart`
-- When prompted to enter the `gitea` and `semaphore` passwords wait 2 min before entering password to ensure database is fully initialized
+- When prompted to enter the `gitea` and `semaphore` passwords wait 10 min before entering password to ensure database is fully initialized
