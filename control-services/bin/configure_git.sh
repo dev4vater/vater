@@ -198,6 +198,13 @@ while read line_str; do
  echo "If you wish to alter the environment variables later,"
  echo "you may change them at ${env_path}"
 
+# export environment vars for vater/control-services/config.py
+echo "export SETUP_USER=$SETUP_USER" >> $HOME/.bashrc
+echo "export SETUP_REPO=$SETUP_REPO" >> $HOME/.bashrc
+echo "export CONFIG_USER=$CONFIG_USER" >> $HOME/.bashrc
+echo "export CONFIG_REPO=$CONFIG_REPO" >> $HOME/.bashrc
+echo "export HOSTNAME=$(hostname)" >> $HOME/.bashrc
+
 echo "alias vater=\"python3 $HOME/$SETUP_REPO/control-services/cli/vater.py\"" > $HOME/.bash_aliases
 source $HOME/.bashrc
 

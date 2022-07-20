@@ -30,8 +30,8 @@ class Config:
         cfg["vater_repo"] = {
             "rel_data_dir": "control-services/data/",
             "rel_image_path": "control-services/images/",
-            "name": "vater",
-            "org_or_user": "dev4vater",
+            "name": os.environ["SETUP_REPO"],
+            "org_or_user": os.environ["SETUP_USER"],
         }
 
         cfg["content_repo"] = {
@@ -39,8 +39,8 @@ class Config:
             "terraform_dir": "terraform",
             "vms_dir": "vms",
             "vCenter_inventory_path": "tasks/vm.vmware.yml",
-            "name": "rous",
-            "org_or_user": "marissaeinhorn",
+            "name": os.environ["CONFIG_REPO"],
+            "org_or_user": os.environ["CONFIG_USER"],
             "playbooks": {
                 "createClass": "tasks/createClass.yml",
                 "destroyClass": "tasks/destroyClass.yml",
@@ -52,13 +52,13 @@ class Config:
 
         ### Host variables
         cfg["host"] = {
-            "hostname": "control",
-            "project_path": "/home/control/",
-            "content_dir_path": "/home/control/rous/",
-            "vater_dir_path": "/home/control/vater/",
-            "content_git_dir_path": "/home/control/rous/.git/",
-            "terraform_path": "/home/control/rous/terraform/",
-            "vms_path": "/home/control/rous/vms/",
+            "hostname": os.environ["HOSTNAME"],
+            "project_path": os.environ["HOME"],
+            "content_dir_path": os.environ["HOME"]+"/"+os.environ["CONFIG_REPO"],
+            "vater_dir_path": os.environ["HOME"]+"/"+os.environ["SETUP_REPO"],
+            "content_git_dir_path": os.environ["HOME"]+"/"+os.environ["CONFIG_REPO"]+"/.git/",
+            "terraform_path": os.environ["HOME"] + "/" + os.environ["CONFIG_REPO"] +"/terraform/",
+            "vms_path": os.environ["HOME"]+"/"+os.environ["CONFIG_REPO"]+"/vms/",
         }
 
         # Get host ip
@@ -69,10 +69,10 @@ class Config:
         ### Development variables
         cfg["dev"] = {
             "enable": True,
-            "ssh_path": "/home/control/.ssh/",
-            "ssh_auth_key_path": "/home/control/.ssh/authorized_keys",
-            "vater_key_path": "/home/control/.ssh/vater",
-            "content_key_path": "/home/control/.ssh/rous",
+            "ssh_path": os.environ["HOME"]+"/.ssh/",
+            "ssh_auth_key_path": os.environ["HOME"]+"/.ssh/authorized_keys",
+            "vater_key_path": os.environ["HOME"]+"/.ssh/vater",
+            "content_key_path": os.environ["HOME"]+"/.ssh/rous",
         }
 
         ### Services

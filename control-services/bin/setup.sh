@@ -27,6 +27,7 @@ sudo sed -i "s|#Banner none|Banner $BANNER_DIR|g" /etc/ssh/sshd_config
 # configure static IP
 source ${__dir}/configure_ip.sh
 
+source $HOME/.bashrc
 echo
 echo "###### Configuration completed ######"
 
