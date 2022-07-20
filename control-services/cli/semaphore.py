@@ -552,50 +552,6 @@ class Semaphore:
             ),
         )
 
-        name = "Build ISOs"
-        self.__createItemAndID(
-            name=name,
-            key="alias",
-            url=self.cfg["semaphore"]["api"]["project_template"],
-            data=(
-                "{"
-                '"ssh_key_id": ' + str(self.noneKeyId) + ", "
-                '"project_id": ' + str(self.managementProjectId) + ", "
-                '"inventory_id": ' + str(self.controlInvId) + ", "
-                '"repository_id": ' + str(self.repositoryId) + ", "
-                '"environment_id": ' + str(self.envId) + ", "
-                '"alias": "' + name + '", '
-                '"playbook": "'
-                + self.cfg["content_repo"]["playbooks"]["buildISOs"]
-                + '", '
-                '"arguments": "[]", '
-                '"override_args": false}'
-                "}"
-            ),
-        )
-
-        name = "Build VMs"
-        self.__createItemAndID(
-            name=name,
-            key="alias",
-            url=self.cfg["semaphore"]["api"]["project_template"],
-            data=(
-                "{"
-                '"ssh_key_id": ' + str(self.noneKeyId) + ", "
-                '"project_id": ' + str(self.managementProjectId) + ", "
-                '"inventory_id": ' + str(self.controlInvId) + ", "
-                '"repository_id": ' + str(self.repositoryId) + ", "
-                '"environment_id": ' + str(self.envId) + ", "
-                '"alias": "' + name + '", '
-                '"playbook": "'
-                + self.cfg["content_repo"]["playbooks"]["buildVMs"]
-                + '", '
-                '"arguments": "[]", '
-                '"override_args": false}'
-                "}"
-            ),
-        )
-
         name = "Get VM Info"
         self.__createItemAndID(
             name=name,
