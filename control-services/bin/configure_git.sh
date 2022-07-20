@@ -6,7 +6,7 @@ SETUP_REPO="vater"
 CONFIG_REPO="rous"
 SETUP_USER="dev4vater"
 CONFIG_USER="dev4vater"
-SSH_PATH="$HOME/.ssh/"
+SSH_PATH="$HOME/.ssh"
 SETUP_SSH_KEY_PATH="$SSH_PATH/$SETUP_REPO"
 CONFIG_SSH_KEY_PATH="$SSH_PATH/$CONFIG_REPO"
 SEMAPHORE_SSH_KEY_PATH="$SSH_PATH/semaphore"
@@ -19,7 +19,7 @@ read -p 'Y/N ? ' changeOption < /dev/tty
 if [[ $changeOption == "N" ]] || [[ $changeOption == "n" ]]; then
    read -p "Enter setup username: " SETUP_USER < /dev/tty
    read -p "Enter setup repo: " SETUP_REPO < /dev/tty
-fi 
+fi
 
 echo "Is the following config repo correct? (username/repo)"
 echo "$CONFIG_USER/$CONFIG_REPO"
@@ -27,7 +27,7 @@ read -p 'Y/N ? ' changeOption < /dev/tty
 if [[ $changeOption == "N" ]] || [[ $changeOption == "n" ]]; then
    read -p "Enter setup username: " CONFIG_USER < /dev/tty
    read -p "Enter setup repo: " CONFIG_REPO < /dev/tty
-fi 
+fi
 
 # Create .ssh if it doesn't exist
 mkdir -p $SSH_PATH
