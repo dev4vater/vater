@@ -53,9 +53,9 @@ class Config:
         ### Host variables
         cfg["host"] = {
             "hostname": os.environ["HOSTNAME"],
-            "project_path": os.environ["HOME"],
-            "content_dir_path": os.environ["HOME"]+"/"+os.environ["CONFIG_REPO"],
-            "vater_dir_path": os.environ["HOME"]+"/"+os.environ["SETUP_REPO"],
+            "project_path": os.environ["HOME"]+"/",
+            "content_dir_path": os.environ["HOME"]+"/"+os.environ["CONFIG_REPO"]+"/",
+            "vater_dir_path": os.environ["HOME"]+"/"+os.environ["SETUP_REPO"]+"/",
             "content_git_dir_path": os.environ["HOME"]+"/"+os.environ["CONFIG_REPO"]+"/.git/",
             "terraform_path": os.environ["HOME"] + "/" + os.environ["CONFIG_REPO"] +"/terraform/",
             "vms_path": os.environ["HOME"]+"/"+os.environ["CONFIG_REPO"]+"/vms/",
