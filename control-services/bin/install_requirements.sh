@@ -5,7 +5,7 @@ set -e
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
-# Install go, task, pkr for building semaphore
+# Install go building semaphore
 sudo snap install go --channel=1.19/stable --classic
 
 # Fix pathing to use go installed binaries
