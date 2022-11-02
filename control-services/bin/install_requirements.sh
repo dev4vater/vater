@@ -7,7 +7,6 @@ sudo apt-get upgrade -y
 
 # Install go, task, pkr for building semaphore
 sudo snap install go --channel=1.19/stable --classic
-#sudo snap install task --classic
 
 # Fix pathing to use go installed binaries
 export PATH=$PATH:$HOME/go/bin

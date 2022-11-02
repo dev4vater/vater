@@ -109,18 +109,17 @@ class Semaphore:
         # Must have gcc added as part of the image when docker is being built
         # Alpine does not have gcc by default
         cmd = [
-                "sed",
-                "-i",
-                "s/-U libc-dev/-U libc-dev build-base/",
-                self.cfg["semaphore"]["build"]["source_dir"] + "deployment/docker/prod/Dockerfile",
+            "sed",
+            "-i",
+            "s/-U libc-dev/-U libc-dev build-base/",
+            self.cfg["semaphore"]["build"]["source_dir"]
+            + "deployment/docker/prod/Dockerfile",
         ]
         subprocess.check_output(
-                cmd,
-                universal_newlines=True,
-                cwd=self.cfg["semaphore"]["build"]["source_dir"],
+            cmd,
+            universal_newlines=True,
+            cwd=self.cfg["semaphore"]["build"]["source_dir"],
         )
-
-
 
         # Build image
         cmd = ["sudo", "context=prod", "tag=dynamicVars", "task", "docker:build"]
