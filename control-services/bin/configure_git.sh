@@ -166,7 +166,7 @@ git --git-dir $HOME/$CONFIG_REPO/.git pull origin main
 
 
 # Install dependencies for python
-sudo apt-get install python3 && sudo apt-get install python3-pip
+sudo apt-get install -y python3 && sudo apt-get install -y python3-pip
 pip install -r $HOME/$SETUP_REPO/requirements/requirements.txt
 
 ### DOCKER ###

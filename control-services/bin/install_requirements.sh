@@ -9,13 +9,13 @@ sudo apt-get upgrade -y
 sudo snap install go --channel=1.19/stable --classic
 
 # Fix pathing to use go installed binaries
-export PATH=$PATH:$HOME/go/bin
+export PATH=$PATH:$HOME/go/bin:/usr/local/go/bin
 # add to /etc/profile for persistence if it's not there already
-if [[ $(grep export /etc/profile) == *"/home/control/go/bin"* ]]; then
+if [[ $(grep export /etc/profile) == *"/home/control/go/bin:/usr/local/go/bin"* ]]; then
     echo "path to go binaries exists in /etc/profile"
 else
     sudo cp /etc/profile /etc/profile.backup
-    sudo sed -i sed "s%PATH=.\+%PATH=$PATH:$HOME/go/bin%g" /etc/profile
+    sudo sed -i "s%PATH=.\+%PATH=$PATH:$HOME/go/bin:/usr/local/go/bin%g" /etc/profile
 fi
 
 # Confirm go was installed and exported
@@ -57,7 +57,7 @@ sudo apt-get update && sudo apt-get install -y terraform
 sudo apt-get install -y wait-for-it
 
 # Install nginx
-sudo apt-get install nginx
+sudo apt-get install -y nginx
 sudo systemctl enable nginx
 sudo systemctl start nginx
 
