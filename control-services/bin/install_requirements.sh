@@ -15,7 +15,7 @@ if [[ $(grep export /etc/profile) == *"/home/control/go/bin:/usr/local/go/bin"* 
     echo "path to go binaries exists in /etc/profile"
 else
     sudo cp /etc/profile /etc/profile.backup
-    sudo sed -i "s%PATH=.\+%PATH=$PATH:$HOME/go/bin:/usr/local/go/bin%g" /etc/profile
+    echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" | sudo tee -a /etc/profile
     sudo sed -i "s%/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin%/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/home/control/go/bin:/usr/local/go/bin%g" /etc/sudoers 
 fi
 
