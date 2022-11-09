@@ -5,8 +5,11 @@ set -e
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
-# Install go building semaphore
-sudo snap install go --channel=1.19/stable --classic
+# Install go for building semaphore
+sudo rm -rf /usr/local/go
+wget https://go.dev/dl/go1.19.3.linux-amd64.tar.gz -P /tmp/
+sudo tar -C /usr/local/ -xzf /tmp/go1.19.3.linux-amd64.tar.gz
+sudo rm -f /tmp/go1.19.3.linux-amd64.tar.gz
 
 # Fix pathing to use go installed binaries
 export PATH=$PATH:$HOME/go/bin:/usr/local/go/bin
