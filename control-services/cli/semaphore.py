@@ -105,13 +105,26 @@ class Semaphore:
             cwd=self.cfg["semaphore"]["build"]["source_dir"],
         )
 
-        # Fix rmfirth/semaphore bug in their Dockerfile
+        # Fix bug in semaphore Dockerfile
         # Must have gcc added as part of the image when docker is being built
         # Alpine does not have gcc by default
         cmd = [
             "sed",
             "-i",
             "s/-U libc-dev/-U libc-dev build-base/",
+            self.cfg["semaphore"]["build"]["source_dir"]
+            + "deployment/docker/prod/Dockerfile",
+        ]
+        subprocess.check_output(
+            cmd,
+            universal_newlines=True,
+            cwd=self.cfg["semaphore"]["build"]["source_dir"],
+        )
+        # Fix issue in semaphore DockerFile where golang 17 is required instead of 16
+        cmd = [
+            "sed",
+            "-i",
+            "s/golang:1.16.3-alpine3.13 as builder/golang:1.17.3-alpine3.13 as builder/",
             self.cfg["semaphore"]["build"]["source_dir"]
             + "deployment/docker/prod/Dockerfile",
         ]
